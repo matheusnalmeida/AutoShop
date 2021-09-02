@@ -804,20 +804,35 @@
 													"top": 298,
 													"width": 174.59716796875,
 													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAF7qKsQYMbVBDQ=",
+													"_parent": {
+														"$ref": "AAAAAAF7kt4syI7w9Qk="
+													},
+													"model": {
+														"$ref": "AAAAAAF7qKsQVMbSY9w="
+													},
+													"font": "Arial;13;0",
+													"left": 141,
+													"top": 313,
+													"width": 174.59716796875,
+													"height": 13
 												}
 											],
 											"font": "Arial;13;0",
 											"left": 136,
 											"top": 263,
 											"width": 184.59716796875,
-											"height": 53
+											"height": 68
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 136,
 									"top": 240,
 									"width": 184.59716796875,
-									"height": 76,
+									"height": 91,
 									"nameLabel": {
 										"$ref": "AAAAAAF7kt4syI7vh0Y="
 									},
@@ -1203,7 +1218,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 212,
-											"top": 334,
+											"top": 349,
 											"height": 13,
 											"alpha": -0.5235987755982988,
 											"distance": 30,
@@ -1220,7 +1235,7 @@
 										"$ref": "AAAAAAF7krQnQo3bvUQ="
 									},
 									"lineStyle": 2,
-									"points": "416:368;227:368;227:315",
+									"points": "416:368;227:368;227:330",
 									"nameLabel": {
 										"$ref": "AAAAAAF7kubNnJAfgfU="
 									},
@@ -1793,6 +1808,16 @@
 									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAF7qKsQVMbSY9w=",
+									"_parent": {
+										"$ref": "AAAAAAF7kt4sx47sTSI="
+									},
+									"name": "DataCriacao",
+									"type": "DATE",
+									"length": 0
 								}
 							]
 						}
