@@ -19,10 +19,10 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Add(Produto produto)
         {
+            ValidateInstituicaoFinanceiraExiste(produto);
             if (produto.IsValid) {
                 _repository.Add(produto);
             }
-
             return produto;
         }
 
@@ -51,19 +51,29 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Update(Produto produto)
         {
-            if (_repository.GetById(produto?.Id) == null)
-            {
-                produto.AddNotification("Produto", "Não existe produto com o id informado");
-            }
-            if (_repositoryInstituicaoFinanceira.GetById(produto?.IdInstituicaoFinanceira) == null) 
-            {
-                produto.AddNotification("Produto", "Não existe instituicao financeira com o id informado para o produto");
-            }
+            ValidateProdutoExiste(produto);
+            ValidateInstituicaoFinanceiraExiste(produto);
             if (produto.IsValid)
             {
                 _repository.Update(produto);
             }
             return produto;
+        }
+
+        private void ValidateProdutoExiste(Produto produto)
+        {
+            if (_repository.GetById(produto?.Id) == null)
+            {
+                produto.AddNotification("Produto", "Não existe produto com o id informado");
+            }
+        }
+
+        private void ValidateInstituicaoFinanceiraExiste(Produto produto)
+        {
+            if (_repositoryInstituicaoFinanceira.GetById(produto?.IdInstituicaoFinanceira) == null)
+            {
+                produto.AddNotification("Produto", "Não existe instituicao financeira com o id informado para o produto");
+            }
         }
     }
 }
