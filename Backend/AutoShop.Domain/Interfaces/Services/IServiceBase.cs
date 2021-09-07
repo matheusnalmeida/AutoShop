@@ -1,4 +1,5 @@
 ﻿using AutoShop.Shared.Entities;
+using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace AutoShop.Domain.Interfaces.Services
 {
     public interface IServiceBase<TEntity> where TEntity : Entity
     {
-        void Add(TEntity obj);
+        Notifiable<Notification> Add(TEntity obj);
 
-        void Update(TEntity obj);
+        Notifiable<Notification> Update(TEntity obj);
 
-        void Remove(TEntity obj);
+        Notifiable<Notification> Remove(TEntity obj);
 
         IEnumerable<TEntity> GetAll();
 
-        TEntity GetById(int id);
+        TEntity GetById(string id);
     }
 }

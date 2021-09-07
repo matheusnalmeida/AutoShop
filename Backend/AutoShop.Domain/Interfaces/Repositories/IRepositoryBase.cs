@@ -11,7 +11,7 @@ namespace AutoShop.Domain.Interfaces.Repositories
     {
         void Add(TEntity obj);
 
-        TEntity GetById(int id);
+        TEntity GetById(string id);
 
         IEnumerable<TEntity> GetAll();
 
