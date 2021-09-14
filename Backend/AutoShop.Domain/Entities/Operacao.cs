@@ -14,13 +14,15 @@ namespace AutoShop.Domain.Entities
         public CNPJ Cnpj { get; set; }
         public Preco ValorTotal { get; set; }
         public Preco ValorFinanciado { get; set; }
+        public Preco ValorVeiculo { get; set; }
 
-        public Operacao(Nome nome, CNPJ cnpj, Preco valorTotal, Preco valorFinanciado)
+        public Operacao(Nome nome, CNPJ cnpj, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo)
         {
             Nome = nome;
             Cnpj = cnpj;
             ValorTotal = valorTotal;
             ValorFinanciado = valorFinanciado;
+            ValorVeiculo = valorVeiculo;
 
             AddNotifications(Nome, Cnpj, ValorTotal, ValorFinanciado);
             AddEntityValidation();
