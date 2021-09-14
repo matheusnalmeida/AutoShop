@@ -20,6 +20,7 @@ namespace AutoShop.Domain.Entities
         public string Senha { get; set; }
         public ClienteTipoEnum Tipo { get; set; }
         public List<Operacao> Operacoes { get; set; }
+        public bool Ativo { get; set; }
 
         public Usuario(CPF cpf, decimal rendaMedia, int idade, Telefone telefone, Email email, string senha, ClienteTipoEnum tipo)
         {
@@ -31,6 +32,7 @@ namespace AutoShop.Domain.Entities
             Senha = senha;
             Tipo = tipo;
             Operacoes = new List<Operacao>();
+            Ativo = true;
 
             AddNotifications(cpf, telefone, email);
             AddEntityValidation();

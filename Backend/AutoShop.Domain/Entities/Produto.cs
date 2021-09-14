@@ -15,6 +15,7 @@ namespace AutoShop.Domain.Entities
         public ProdutoTipoEnum Tipo { get; set; }
         public string IdInstituicaoFinanceira { get; set; }
         public InstituicaoFinanceira InstituicaoFinanceira { get; set; }
+        public bool Ativo { get; set; }
 
         public Produto(Nome nome, Preco preco, ProdutoTipoEnum tipo, InstituicaoFinanceira instituicaoFinanceira)
         {
@@ -22,6 +23,7 @@ namespace AutoShop.Domain.Entities
             Preco = preco;
             Tipo = tipo;
             InstituicaoFinanceira = instituicaoFinanceira;
+            Ativo = true;
 
             AddNotifications(Nome, Preco, InstituicaoFinanceira);
         }

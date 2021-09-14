@@ -13,12 +13,14 @@ namespace AutoShop.Domain.Entities
         public CNPJ Cnpj { get; set; }
         public Nome Nome { get; set; }
         public List<Produto> Produtos { get; set; }
+        public bool Ativo { get; set; }
 
         public InstituicaoFinanceira(CNPJ cnpj, Nome nome)
         {
             Cnpj = cnpj;
             Nome = nome;
             Produtos = new List<Produto>();
+            Ativo = true;
 
             AddNotifications(Cnpj, Nome);            
         }

@@ -18,6 +18,8 @@ namespace AutoShop.Domain.Entities
         public Preco Preco { get; set; }
         public VeiculoTipoEnum Tipo { get; set; }
         public List<Operacao> Operacoes { get; set; }
+        public bool Ativo { get; set; }
+
         public Veiculo(Nome nome, int ano, string modelo, Preco preco, VeiculoTipoEnum tipo)
         {
             Nome = nome;
@@ -26,6 +28,7 @@ namespace AutoShop.Domain.Entities
             Preco = preco;
             Tipo = tipo;
             Operacoes = new List<Operacao>();
+            Ativo = true;
 
             AddNotifications(Nome, Preco);
             AddEntityValidation();
