@@ -27,7 +27,6 @@ namespace AutoShop.Domain.Entities
 
         public void FillUpdate(InstituicaoFinanceira instituicaoFinanceira)
         {
-            this.Cnpj = instituicaoFinanceira.Cnpj;
             this.Nome = instituicaoFinanceira.Nome;
         }
     }
