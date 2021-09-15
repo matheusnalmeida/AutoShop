@@ -24,5 +24,11 @@ namespace AutoShop.Domain.Entities
 
             AddNotifications(Cnpj, Nome);            
         }
+
+        public void FillUpdate(InstituicaoFinanceira instituicaoFinanceira)
+        {
+            this.Cnpj = instituicaoFinanceira.Cnpj;
+            this.Nome = instituicaoFinanceira.Nome;
+        }
     }
 }

@@ -27,5 +27,10 @@ namespace AutoShop.Domain.Entities
 
             AddNotifications(Nome, Preco, InstituicaoFinanceira);
         }
+
+        //Somente pode ser atualizado o valor de um produto
+        public void FillUpdate(Produto produto) {
+            this.Preco = produto.Preco;
+        }
     }
 }

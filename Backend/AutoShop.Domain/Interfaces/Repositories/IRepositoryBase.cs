@@ -13,7 +13,7 @@ namespace AutoShop.Domain.Interfaces.Repositories
 
         TEntity GetById(string id);
 
-        IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
 
         void Update(TEntity obj);
 

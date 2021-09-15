@@ -8,10 +8,10 @@ namespace AutoShop.Domain.Service.Services
 {
     public class ServiceProduto : IServiceProduto 
     {
-        private readonly IRepositoryBase<Produto> _repository;
-        private readonly IRepositoryBase<InstituicaoFinanceira> _repositoryInstituicaoFinanceira;
+        private readonly IRepositoryProduto _repository;
+        private readonly IRepositoryInstituicaoFinanceira _repositoryInstituicaoFinanceira;
 
-        public ServiceProduto(IRepositoryBase<Produto> repository, IRepositoryBase<InstituicaoFinanceira> repositoryInstituicaoFinanceira)
+        public ServiceProduto(IRepositoryProduto repository, IRepositoryInstituicaoFinanceira repositoryInstituicaoFinanceira)
         {
             _repository = repository;
             _repositoryInstituicaoFinanceira = repositoryInstituicaoFinanceira;
@@ -38,31 +38,33 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Remove(Produto produto)
         {
-            if (GetById(produto?.Id) == null) 
+            var produtoAtual = GetById(produto?.Id);
+            ValidaProdutoExiste(produto, produtoAtual);
+            if (!produto.IsValid)
             {
-                //Limpando notificações e adicionando notificação informado que o produto não existe
-                produto.Clear();
-                produto.AddNotification("Produto", "Não existe produto com o id informado");
                 return produto;
             }
-            _repository.Remove(produto);
+            _repository.Remove(produtoAtual);
             return produto;
         }
 
         public Notifiable<Notification> Update(Produto produto)
         {
-            ValidateProdutoExiste(produto);
+            var produtoAtual = _repository.GetById(produto?.Id);
+            ValidaProdutoExiste(produto, produtoAtual);
             ValidateInstituicaoFinanceiraExiste(produto);
-            if (produto.IsValid)
+            if (!produto.IsValid)
             {
-                _repository.Update(produto);
+                return produto;
             }
+            produtoAtual.FillUpdate(produto);
+            _repository.Update(produtoAtual);
             return produto;
         }
 
-        private void ValidateProdutoExiste(Produto produto)
+        private void ValidaProdutoExiste(Produto produto, Produto produtoAtual)
         {
-            if (_repository.GetById(produto?.Id) == null)
+            if (produtoAtual == null)
             {
                 produto.AddNotification("Produto", "Não existe produto com o id informado");
             }
