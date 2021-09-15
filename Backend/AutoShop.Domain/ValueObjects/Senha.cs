@@ -1,0 +1,41 @@
+﻿using AutoShop.Shared.ValueObjects;
+using Flunt.Validations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AutoShop.Domain.ValueObjects
+{
+    public class Senha : ValueObject
+    {
+        [Column("Senha")]
+        public string Valor { get; set; }
+        public Senha(string senha)
+        {
+            AddNotifications(
+                new Contract<Senha>()
+                .Requires()
+                .IsNotNullOrEmpty(senha, "Senha.Valor", "Senha inválida")
+                .IsNotNullOrWhiteSpace(senha, "Senha.Valor", "Senha inválida"));
+
+            Valor = HashPassword(senha);
+        }
+
+        private string HashPassword(string senha) {
+            if (!IsValid) {
+                return senha;
+            }
+
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
+                var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                return hash;
+            }
+        }
+    }
+}

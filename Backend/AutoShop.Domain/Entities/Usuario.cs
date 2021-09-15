@@ -17,12 +17,12 @@ namespace AutoShop.Domain.Entities
         public int Idade { get; set; }
         public Telefone Telefone { get; set; }
         public Email Email { get; set; }
-        public string Senha { get; set; }
+        public Senha Senha { get; set; }
         public ClienteTipoEnum Tipo { get; set; }
         public List<Operacao> Operacoes { get; set; }
         public bool Ativo { get; set; }
 
-        public Usuario(CPF cpf, decimal rendaMedia, int idade, Telefone telefone, Email email, string senha, ClienteTipoEnum tipo)
+        public Usuario(CPF cpf, decimal rendaMedia, int idade, Telefone telefone, Email email, Senha senha, ClienteTipoEnum tipo)
         {
             Cpf = cpf;
             RendaMedia = rendaMedia;
@@ -34,7 +34,7 @@ namespace AutoShop.Domain.Entities
             Operacoes = new List<Operacao>();
             Ativo = true;
 
-            AddNotifications(cpf, telefone, email);
+            AddNotifications(cpf, telefone, email, senha);
             AddEntityValidation();
         }
 
@@ -44,11 +44,7 @@ namespace AutoShop.Domain.Entities
                     .Requires()
                     .IsGreaterThan(Idade, 17, "Usuario.Idade", "A idade minima para o usuário é de 18 anos");
 
-            var senhaContract = new Contract<Usuario>()
-                    .Requires()
-                    .IsNotNullOrEmpty(Senha,"Usuario.Senha", "A senha não pode ser vazia");
-
-            AddNotifications(idadeContract, senhaContract);
+            AddNotifications(idadeContract);
         }
     }
 }
