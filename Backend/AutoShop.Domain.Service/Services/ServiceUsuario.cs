@@ -19,9 +19,13 @@ namespace AutoShop.Domain.Service.Services
             _repository = repository;
         }
 
-        public Notifiable<Notification> Add(Usuario obj)
+        public Notifiable<Notification> Add(Usuario usuario)
         {
-            throw new NotImplementedException();
+            if (usuario.IsValid)
+            {
+                _repository.Add(usuario);
+            }
+            return usuario;
         }
 
         public IEnumerable<Usuario> GetAll()

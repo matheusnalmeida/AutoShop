@@ -48,5 +48,12 @@ namespace AutoShop.Domain.Entities
 
             AddNotifications(anoContract, modeloContract);
         }
+
+        public void FillUpdate(Veiculo veiculo) {
+            if (veiculo == null) return;
+            Preco = veiculo.Preco;
+            AddNotifications(Preco);
+        }
+
     }
 }
