@@ -30,7 +30,9 @@ namespace AutoShop.Domain.Entities
 
         //Somente pode ser atualizado o valor de um produto
         public void FillUpdate(Produto produto) {
-            this.Preco = produto.Preco;
+            if (produto == null) return;
+            Preco = produto.Preco;
+            AddNotifications(Preco);
         }
     }
 }

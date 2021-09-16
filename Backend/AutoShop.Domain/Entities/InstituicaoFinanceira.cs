@@ -27,7 +27,9 @@ namespace AutoShop.Domain.Entities
 
         public void FillUpdate(InstituicaoFinanceira instituicaoFinanceira)
         {
+            if (instituicaoFinanceira == null) return;
             this.Nome = instituicaoFinanceira.Nome;
+            AddNotifications(Nome);
         }
     }
 }

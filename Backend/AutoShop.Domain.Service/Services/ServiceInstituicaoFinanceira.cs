@@ -59,7 +59,7 @@ namespace AutoShop.Domain.Service.Services
                 scope.Complete();
             }
 
-            return instituicaoFinanceira;
+            return instituicaoFinanceiraAtual;
         }
 
         public Notifiable<Notification> Update(InstituicaoFinanceira instituicaoFinanceira)
@@ -72,7 +72,7 @@ namespace AutoShop.Domain.Service.Services
             }
             instituicaoFinanceiraAtual.FillUpdate(instituicaoFinanceira);
             _repository.Update(instituicaoFinanceiraAtual);
-            return instituicaoFinanceira;
+            return instituicaoFinanceiraAtual;
         }
 
         private void ValidaInstituicaoFinanceiraExiste(InstituicaoFinanceira instituicaoFinanceira, InstituicaoFinanceira instituicaoFinanceiraAtual)

@@ -45,7 +45,7 @@ namespace AutoShop.Domain.Service.Services
                 return produto;
             }
             _repository.Remove(produtoAtual);
-            return produto;
+            return produtoAtual;
         }
 
         public Notifiable<Notification> Update(Produto produto)
@@ -59,7 +59,7 @@ namespace AutoShop.Domain.Service.Services
             }
             produtoAtual.FillUpdate(produto);
             _repository.Update(produtoAtual);
-            return produto;
+            return produtoAtual;
         }
 
         private void ValidaProdutoExiste(Produto produto, Produto produtoAtual)
