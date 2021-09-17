@@ -16,6 +16,7 @@ namespace AutoShop.Domain.Entities
         public string IdInstituicaoFinanceira { get; set; }
         public InstituicaoFinanceira InstituicaoFinanceira { get; set; }
         public bool Ativo { get; set; }
+        public IList<ProdutoOperacao> ProdutoOperacoes { get; set; }
 
         public Produto(Nome nome, Preco preco, ProdutoTipoEnum tipo, InstituicaoFinanceira instituicaoFinanceira)
         {
@@ -24,6 +25,7 @@ namespace AutoShop.Domain.Entities
             Tipo = tipo;
             InstituicaoFinanceira = instituicaoFinanceira;
             Ativo = true;
+            ProdutoOperacoes = new List<ProdutoOperacao>();
 
             AddNotifications(Nome, Preco, InstituicaoFinanceira);
         }

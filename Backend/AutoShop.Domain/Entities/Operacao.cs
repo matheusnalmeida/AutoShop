@@ -15,6 +15,7 @@ namespace AutoShop.Domain.Entities
         public Preco ValorTotal { get; set; }
         public Preco ValorFinanciado { get; set; }
         public Preco ValorVeiculo { get; set; }
+        public IList<ProdutoOperacao> ProdutoOperacoes { get; set; }
 
         public Operacao(Nome nome, CNPJ cnpj, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo)
         {
@@ -23,6 +24,7 @@ namespace AutoShop.Domain.Entities
             ValorTotal = valorTotal;
             ValorFinanciado = valorFinanciado;
             ValorVeiculo = valorVeiculo;
+            ProdutoOperacoes = new List<ProdutoOperacao>();
 
             AddNotifications(Nome, Cnpj, ValorTotal, ValorFinanciado);
             AddEntityValidation();

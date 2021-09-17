@@ -1,5 +1,6 @@
 ﻿using AutoShop.Domain.ValueObjects;
 using AutoShop.Shared.Entities;
+using Flunt.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,15 @@ namespace AutoShop.Domain.Entities
         public string IdProduto { get; set; }
         public Produto Produto { get; set; }
 
-        public ProdutoOperacao(Preco preco, Operacao operacao, Produto produto)
+        public ProdutoOperacao(string idOperacao, string idProduto)
         {
-            Operacao = operacao;
-            Produto = produto;
+            IdOperacao = idOperacao;
+            IdProduto = idProduto;
             DataCriacao = DateTime.Now;
-            Preco = preco;
 
-            AddNotifications(Preco, operacao, produto);
+            AddNotifications(new Contract<ProdutoOperacao>()
+                                .Requires()
+                                .IsNotNullOrEmpty(IdProduto, "ProdutoOperacao.IdProduto", "O id do produto vinculado com a operação, não pode ser nulo"));
         }
     }
 }
