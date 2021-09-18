@@ -1,6 +1,6 @@
-﻿using AutoShop.Domain.Enums;
-using AutoShop.Domain.ValueObjects;
+﻿using AutoShop.Domain.ValueObjects;
 using AutoShop.Shared.Entities;
+using AutoShop.Shared.Enums;
 using Flunt.Validations;
 using System;
 using System.Collections.Generic;
@@ -16,16 +16,20 @@ namespace AutoShop.Domain.Entities
         public int Ano { get; set; }
         public string Modelo { get; set; }
         public Preco Preco { get; set; }
+        public string ImagemURL { get; set; }
         public VeiculoTipoEnum Tipo { get; set; }
         public List<Operacao> Operacoes { get; set; }
         public bool Ativo { get; set; }
 
-        public Veiculo(Nome nome, int ano, string modelo, Preco preco, VeiculoTipoEnum tipo)
+        private Veiculo(){}
+
+        public Veiculo(Nome nome, int ano, string modelo, Preco preco, string imagemURL, VeiculoTipoEnum tipo)
         {
-            Nome = nome;
+            Nome = nome; 
             Ano = ano;
             Modelo = modelo;
             Preco = preco;
+            ImagemURL = imagemURL;
             Tipo = tipo;
             Operacoes = new List<Operacao>();
             Ativo = true;
@@ -46,7 +50,11 @@ namespace AutoShop.Domain.Entities
                 .IsNotNullOrEmpty(Modelo, "Veiculo.Modelo", "Modelo não informado")
                 .IsLowerOrEqualsThan(Modelo, 50, "Veiculo.Modelo", "O Modelo deve ter até 50 caracteres");
 
-            AddNotifications(anoContract, modeloContract);
+            var imagemUrContract = new Contract<Veiculo>()
+                .Requires()
+                .IsUrl(ImagemURL, "Veiculo.ImagemURL", "Url para imagem do veiculo é inválida");
+
+            AddNotifications(anoContract, modeloContract, imagemUrContract);
         }
 
         public void FillUpdate(Veiculo veiculo) {

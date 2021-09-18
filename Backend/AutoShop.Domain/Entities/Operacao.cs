@@ -10,23 +10,30 @@ namespace AutoShop.Domain.Entities
 {
     public class Operacao : Entity, IEntityValidate<Operacao>
     {
-        public Nome Nome { get; set; }
-        public CNPJ Cnpj { get; set; }
-        public Preco ValorTotal { get; set; }
-        public Preco ValorFinanciado { get; set; }
-        public Preco ValorVeiculo { get; set; }
-        public IList<ProdutoOperacao> ProdutoOperacoes { get; set; }
+        public Nome Nome { get; private set; } 
+        public Preco ValorTotal { get; private set; }
+        public Preco ValorFinanciado { get; private set; }
+        public Preco ValorVeiculo { get; private set; }
+        public IList<ProdutoOperacao> ProdutoOperacoes { get; private set; }
+        public string IdVeiculo { get; private set; }
+        public Veiculo Veiculo { get; private set; }
+        public string IdCliente { get; private set; }
+        public Usuario Cliente { get; private set; }
 
-        public Operacao(Nome nome, CNPJ cnpj, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo)
+        private Operacao(){}
+
+        public Operacao(Nome nome, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo, Veiculo veiculo, Usuario cliente)
         {
             Nome = nome;
-            Cnpj = cnpj;
             ValorTotal = valorTotal;
             ValorFinanciado = valorFinanciado;
             ValorVeiculo = valorVeiculo;
+            Veiculo = veiculo;
+            Cliente = cliente;
+
             ProdutoOperacoes = new List<ProdutoOperacao>();
 
-            AddNotifications(Nome, Cnpj, ValorTotal, ValorFinanciado);
+            AddNotifications(Nome, ValorTotal, ValorFinanciado, veiculo, cliente);
             AddEntityValidation();
         }
 

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoShop.Domain.Enums
+namespace AutoShop.Shared.Enums
 {
-    public enum ClienteTipoEnum
-    {
+    public enum UsuarioTipoEnum
+    {        
         Cliente = 1,
-        GerenteFI = 2
+        Vendedor = 2,
+        Administrador = 3
     }
 }

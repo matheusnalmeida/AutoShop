@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoShop.Domain.Enums
+namespace AutoShop.Shared.Enums
 {
     public enum ProdutoTipoEnum
     {

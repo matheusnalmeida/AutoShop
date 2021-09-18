@@ -17,6 +17,8 @@ namespace AutoShop.Domain.Entities
         public string IdProduto { get; set; }
         public Produto Produto { get; set; }
 
+        private ProdutoOperacao(){}
+        
         public ProdutoOperacao(string idOperacao, string idProduto)
         {
             IdOperacao = idOperacao;

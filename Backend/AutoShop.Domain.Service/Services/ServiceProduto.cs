@@ -9,17 +9,14 @@ namespace AutoShop.Domain.Service.Services
     public class ServiceProduto : IServiceProduto 
     {
         private readonly IRepositoryProduto _repository;
-        private readonly IRepositoryInstituicaoFinanceira _repositoryInstituicaoFinanceira;
 
-        public ServiceProduto(IRepositoryProduto repository, IRepositoryInstituicaoFinanceira repositoryInstituicaoFinanceira)
+        public ServiceProduto(IRepositoryProduto repository)
         {
             _repository = repository;
-            _repositoryInstituicaoFinanceira = repositoryInstituicaoFinanceira;
         }
 
         public Notifiable<Notification> Add(Produto produto)
         {
-            ValidateInstituicaoFinanceiraExiste(produto);
             if (produto.IsValid) {
                 _repository.Add(produto);
             }
@@ -52,7 +49,6 @@ namespace AutoShop.Domain.Service.Services
         {
             var produtoAtual = _repository.GetById(produto?.Id);
             ValidaProdutoExiste(produto, produtoAtual);
-            ValidateInstituicaoFinanceiraExiste(produto);
             if (!produto.IsValid)
             {
                 return produto;
@@ -67,14 +63,6 @@ namespace AutoShop.Domain.Service.Services
             if (produtoAtual == null)
             {
                 produto.AddNotification("Produto", "Não existe produto com o id informado");
-            }
-        }
-
-        private void ValidateInstituicaoFinanceiraExiste(Produto produto)
-        {
-            if (_repositoryInstituicaoFinanceira.GetById(produto?.IdInstituicaoFinanceira) == null)
-            {
-                produto.AddNotification("Produto", "Não existe instituicao financeira com o id informado para o produto");
             }
         }
     }

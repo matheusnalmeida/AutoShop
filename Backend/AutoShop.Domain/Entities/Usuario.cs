@@ -1,6 +1,6 @@
-﻿using AutoShop.Domain.Enums;
-using AutoShop.Domain.ValueObjects;
+﻿using AutoShop.Domain.ValueObjects;
 using AutoShop.Shared.Entities;
+using AutoShop.Shared.Enums;
 using Flunt.Validations;
 using System;
 using System.Collections.Generic;
@@ -13,19 +13,19 @@ namespace AutoShop.Domain.Entities
     public class Usuario : Entity, IEntityValidate<Usuario>
     {
         public CPF Cpf { get; set; }
-        public decimal RendaMedia { get; set; }
         public int Idade { get; set; }
         public Telefone Telefone { get; set; }
         public Email Email { get; set; }
         public Senha Senha { get; set; }
-        public ClienteTipoEnum Tipo { get; set; }
+        public UsuarioTipoEnum Tipo { get; set; }
         public List<Operacao> Operacoes { get; set; }
         public bool Ativo { get; set; }
 
-        public Usuario(CPF cpf, decimal rendaMedia, int idade, Telefone telefone, Email email, Senha senha, ClienteTipoEnum tipo)
+        private Usuario(){}
+        
+        public Usuario(CPF cpf, int idade, Telefone telefone, Email email, Senha senha, UsuarioTipoEnum tipo)
         {
             Cpf = cpf;
-            RendaMedia = rendaMedia;
             Idade = idade;
             Telefone = telefone;
             Email = email;

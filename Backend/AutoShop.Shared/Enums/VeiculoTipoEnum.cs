@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoShop.Domain.Enums
+namespace AutoShop.Shared.Enums
 {
     public enum VeiculoTipoEnum
     {
         Automovel = 1,
         Motocicleta = 2,
-        Triciclo = 3,
-        Onibus = 4
+        Triciclo = 3
     }
 }
