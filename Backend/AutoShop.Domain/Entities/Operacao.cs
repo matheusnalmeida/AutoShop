@@ -14,6 +14,7 @@ namespace AutoShop.Domain.Entities
         public Preco ValorTotal { get; private set; }
         public Preco ValorFinanciado { get; private set; }
         public Preco ValorVeiculo { get; private set; }
+        public int QuantidadeDeParcelas { get; set; }
         public IList<ProdutoOperacao> ProdutoOperacoes { get; private set; }
         public string IdVeiculo { get; private set; }
         public Veiculo Veiculo { get; private set; }
@@ -22,12 +23,13 @@ namespace AutoShop.Domain.Entities
 
         private Operacao(){}
 
-        public Operacao(Nome nome, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo, Veiculo veiculo, Usuario cliente)
+        public Operacao(Nome nome, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo, int quantidadeDeParcelas, Veiculo veiculo, Usuario cliente)
         {
             Nome = nome;
             ValorTotal = valorTotal;
             ValorFinanciado = valorFinanciado;
             ValorVeiculo = valorVeiculo;
+            QuantidadeDeParcelas = quantidadeDeParcelas;
             Veiculo = veiculo;
             Cliente = cliente;
 
@@ -42,13 +44,20 @@ namespace AutoShop.Domain.Entities
             var possuiValorFinanciadoMaiorOuIgualQueFinanciado = ValorTotal != null 
                                                                 && ValorFinanciado != null
                                                                 && ValorTotal.Valor >= ValorFinanciado.Valor ;
+
             var valorTotalMaiorOuIgualQueFinanciadoContract = new Contract<Operacao>()
                     .Requires()
                     .IsTrue(possuiValorFinanciadoMaiorOuIgualQueFinanciado,
                     "Operacao",
                     "O valor total da operação tem que ser maior ou igual ao valor financiado!");
+            
+            var quantidadeDeParcelasContract = new Contract<Operacao>()
+                .Requires()
+                .IsGreaterThan(QuantidadeDeParcelas,0,
+                "Operacao",
+                "A quantidade de parcelas não pode ser nula ou negativa!");
 
-            AddNotifications(valorTotalMaiorOuIgualQueFinanciadoContract);
+            AddNotifications(valorTotalMaiorOuIgualQueFinanciadoContract, quantidadeDeParcelasContract);
         }
     }
 }

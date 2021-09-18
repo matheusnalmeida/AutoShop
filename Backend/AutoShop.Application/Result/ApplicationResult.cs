@@ -4,14 +4,16 @@ namespace AutoShop.Application.Result
 {
     public class ApplicationResult
     {
-        public bool Successo { get; set; }
+        public bool Sucesso { get; set; }
         public IEnumerable<string> Mensagens { get; set; }
 
-        public ApplicationResult(){}
-
-        public ApplicationResult(bool successo, IEnumerable<string> mensagens)
+        private ApplicationResult(bool sucesso)
         {
-            Successo = successo;
+            Sucesso = sucesso;
+        }
+
+        public ApplicationResult(bool successo, IEnumerable<string> mensagens) : this(successo)
+        {
             Mensagens = mensagens ?? new List<string>();
         }
     }
