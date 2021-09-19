@@ -45,24 +45,14 @@ namespace AutoShop.Application.Services
 
         public IEnumerable<ProdutoGetDTO> GetAll()
         {
-            var produtosDTO = _serviceProduto.GetAll().Select(produto => 
-                                                        new ProdutoGetDTO() {
-                                                            Nome = produto.Nome.Valor,
-                                                            Preco = produto.Preco.Valor,
-                                                            Tipo = produto.ToString()
-                                                        });
+            var produtosDTO = _serviceProduto.GetAll().Select(produto => ProdutoGetDTO.MapEntityAsDTO(produto));
             return produtosDTO;
         }
 
         public ProdutoGetDTO GetById(string id)
         {
             var produto = _serviceProduto.GetById(id);
-            var produtoDTO = new ProdutoGetDTO()
-            {
-                Nome = produto.Nome.Valor,
-                Preco = produto.Preco.Valor,
-                Tipo = produto.ToString()
-            };
+            var produtoDTO = ProdutoGetDTO.MapEntityAsDTO(produto);
             return produtoDTO;
         }
 
@@ -75,26 +65,27 @@ namespace AutoShop.Application.Services
         public ApplicationResult Update(string id, ProdutoUpdateDTO produtoDTO)
         {
             produtoDTO.Validate();
+            var produtoAtual = _serviceProduto.GetById(id);
+            if (produtoAtual == null)
+            {
+                produtoDTO.AddNotification("Produto", "Não existe produto com o id informado!");
+                return MountApplicationResultFromNotifiable(produtoDTO);
+            }
             if (!produtoDTO.IsValid)
             {
                 return MountApplicationResultFromNotifiable(produtoDTO);
             }
-            var produtoAtual = _serviceProduto.GetById(id);
-            if (produtoAtual == null) {
-                produtoDTO.AddNotification("Produto", "Não existe produto com o id informado!");
-                return MountApplicationResultFromNotifiable(produtoDTO);
-            }
             var novoPreco = new Preco(produtoDTO.Preco);
-            produtoAtual.FillUpdate(novoPreco);
+            produtoAtual?.FillUpdate(novoPreco);
             var result = _serviceProduto.Update(produtoAtual);
             if (result.IsValid)
             {
-                result.AddNotification("Produto", "Produto cadastrado com sucesso!");
+                result.AddNotification("Produto", "Produto atualizado com sucesso!");
             }
             return MountApplicationResultFromNotifiable(result);
         }
 
-        private ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable) {
+        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable) {
             return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
         }
     }

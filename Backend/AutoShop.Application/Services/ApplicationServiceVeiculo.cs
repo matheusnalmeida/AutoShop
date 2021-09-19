@@ -1,6 +1,11 @@
 ﻿using AutoShop.Application.DTO.Veiculo;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using AutoShop.Domain.Entities;
+using AutoShop.Domain.Interfaces.Services;
+using AutoShop.Domain.ValueObjects;
+using AutoShop.Shared.Enums;
+using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +16,77 @@ namespace AutoShop.Application.Services
 {
     public class ApplicationServiceVeiculo : IApplicationServiceVeiculo
     {
-        public ApplicationResult Add(VeiculoCreateDTO obj)
+        private readonly IServiceVeiculo _serviceVeiculo;
+
+        public ApplicationServiceVeiculo(IServiceVeiculo serviceVeiculo)
         {
-            throw new NotImplementedException();
+            _serviceVeiculo = serviceVeiculo;
+        }
+
+        public ApplicationResult Add(Veoculo veiculoDTO)
+        {
+            veiculoDTO.Validate();
+            if (!veiculoDTO.IsValid)
+            {
+                return MountApplicationResultFromNotifiable(veiculoDTO);
+            }
+            // VO
+            var nome = new Nome(veiculoDTO.Nome);
+            var preco = new Preco(veiculoDTO.Valor);
+            //Entidade
+            var veiculo = new Veiculo(nome, veiculoDTO.Ano,veiculoDTO.Modelo, preco, veiculoDTO.ImageURL, (VeiculoTipoEnum)veiculoDTO.Tipo);
+            var result = _serviceVeiculo.Add(veiculo);
+            if (result.IsValid)
+            {
+                result.AddNotification("Veiculo", "Veiculo cadastrado com sucesso!");
+            }
+            return MountApplicationResultFromNotifiable(result);
         }
 
         public IEnumerable<VeiculoGetDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var veiculoDTO = _serviceVeiculo.GetAll().Select(veiculo => VeiculoGetDTO.MapEntityAsDTO(veiculo));
+            return veiculoDTO;
         }
 
-        public VeiculoGetDTO GetById(string Id)
+        public VeiculoGetDTO GetById(string id)
         {
-            throw new NotImplementedException();
+            var veiculo = _serviceVeiculo.GetById(id);
+            var veiculoDTO = VeiculoGetDTO.MapEntityAsDTO(veiculo);
+            return veiculoDTO;
         }
 
-        public ApplicationResult Remove(string Id)
+        public ApplicationResult Remove(string id)
         {
-            throw new NotImplementedException();
+            var result = _serviceVeiculo.Remove(id);
+            return MountApplicationResultFromNotifiable(result);
         }
 
-        public ApplicationResult Update(string id, VeiculoUpdateDTO obj)
+        public ApplicationResult Update(string id, VeiculoUpdateDTO veiculoDTO)
         {
-            throw new NotImplementedException();
+            veiculoDTO.Validate();
+            var veiculoAtual = _serviceVeiculo.GetById(id);
+            if (veiculoAtual == null)
+            {
+                veiculoDTO.AddNotification("Veiculo", "Não existe veiculo com o id informado!");
+            }
+            if (!veiculoDTO.IsValid)
+            {
+                return MountApplicationResultFromNotifiable(veiculoDTO);
+            }
+            var preco = new Preco(veiculoDTO.Valor);
+            veiculoAtual?.FillUpdate(preco);
+            var result = _serviceVeiculo.Update(veiculoAtual);
+            if (result.IsValid)
+            {
+                result.AddNotification("Veiculo", "Veiculo atualizado com sucesso!");
+            }
+            return MountApplicationResultFromNotifiable(result);
+        }
+
+        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable)
+        {
+            return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
         }
     }
 }

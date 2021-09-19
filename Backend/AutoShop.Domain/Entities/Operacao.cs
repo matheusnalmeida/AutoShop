@@ -10,7 +10,6 @@ namespace AutoShop.Domain.Entities
 {
     public class Operacao : Entity, IEntityValidate<Operacao>
     {
-        public Nome Nome { get; private set; } 
         public Preco ValorTotal { get; private set; }
         public Preco ValorFinanciado { get; private set; }
         public Preco ValorVeiculo { get; private set; }
@@ -20,14 +19,13 @@ namespace AutoShop.Domain.Entities
         public Veiculo Veiculo { get; private set; }
         public string IdCliente { get; private set; }
         public Usuario Cliente { get; private set; }
+        public string IdVendedor { get; private set; }
+        public Usuario Vendedor { get; private set; }
 
         private Operacao(){}
 
-        public Operacao(Nome nome, Preco valorTotal, Preco valorFinanciado, Preco valorVeiculo, int quantidadeDeParcelas, Veiculo veiculo, Usuario cliente)
+        public Operacao(Preco valorVeiculo, int quantidadeDeParcelas, Veiculo veiculo, Usuario cliente)
         {
-            Nome = nome;
-            ValorTotal = valorTotal;
-            ValorFinanciado = valorFinanciado;
             ValorVeiculo = valorVeiculo;
             QuantidadeDeParcelas = quantidadeDeParcelas;
             Veiculo = veiculo;
@@ -35,7 +33,7 @@ namespace AutoShop.Domain.Entities
 
             ProdutoOperacoes = new List<ProdutoOperacao>();
 
-            AddNotifications(Nome, ValorTotal, ValorFinanciado, veiculo, cliente);
+            AddNotifications(ValorTotal, ValorFinanciado, veiculo, cliente);
             AddEntityValidation();
         }
 
@@ -58,6 +56,26 @@ namespace AutoShop.Domain.Entities
                 "A quantidade de parcelas não pode ser nula ou negativa!");
 
             AddNotifications(valorTotalMaiorOuIgualQueFinanciadoContract, quantidadeDeParcelasContract);
+        }
+
+        public void AtualizarValorTotal(Preco valorTotal)
+        {
+            ValorTotal = valorTotal;
+            AddNotifications(ValorTotal);
+        }
+
+        public void AtualizarValorFinanciado(Preco valorFinanciado)
+        {
+            ValorFinanciado = valorFinanciado;
+            AddNotifications(ValorFinanciado);
+        }
+
+        public void AdicionarProdutoOperacao(ProdutoOperacao produtoOperacao) {
+            if (produtoOperacao == null || !produtoOperacao.IsValid) {
+                AddNotification("Operacao.Produto", "Produto inválido na operação!");
+                return;
+            }
+            ProdutoOperacoes.Add(produtoOperacao);
         }
     }
 }

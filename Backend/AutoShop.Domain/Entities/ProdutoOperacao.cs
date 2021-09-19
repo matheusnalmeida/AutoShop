@@ -27,6 +27,7 @@ namespace AutoShop.Domain.Entities
 
             AddNotifications(new Contract<ProdutoOperacao>()
                                 .Requires()
+                                .IsNotNullOrEmpty(IdOperacao, "ProdutoOperacao.IdOperacao", "O id da operação vinculado com o produto, não pode ser nulo")
                                 .IsNotNullOrEmpty(IdProduto, "ProdutoOperacao.IdProduto", "O id do produto vinculado com a operação, não pode ser nulo"));
         }
     }

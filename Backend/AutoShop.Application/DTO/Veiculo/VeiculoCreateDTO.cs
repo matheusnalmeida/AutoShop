@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AutoShop.Application.DTO.Veiculo
 {
-    public class VeiculoCreateDTO : Notifiable<Notification>, IDTO
+    public class Veoculo : Notifiable<Notification>, IDTO
     {
         public string Nome { get; set; }
         public string ImageURL { get; set; }
@@ -22,7 +22,7 @@ namespace AutoShop.Application.DTO.Veiculo
         public void Validate()
         {
             var tipoValido = Enum.IsDefined(typeof(VeiculoTipoEnum), Tipo);
-            AddNotifications(new Contract<VeiculoCreateDTO>()
+            AddNotifications(new Contract<Veoculo>()
                                 .Requires()
                                 .IsNotNullOrEmpty(Nome, "Veiculo.Nome", "Informe um nome válido para o veiculo!")
                                 .IsNotNullOrWhiteSpace(Nome, "Veiculo.Nome", "O nome não pode ser vazio!")

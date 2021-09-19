@@ -11,18 +11,17 @@ namespace AutoShop.Application.DTO.Operacao
 {
     public class OperacaoCreateDTO : Notifiable<Notification>, IDTO
     {
-        public string Nome { get; set; }
-        public decimal ValorVeiculo { get; set; }
         public int QuantidadeDeParcelas { get; set; }
+        public string IdVeiculo { get; set; }
+        public string IdCliente { get; set; }
         public IEnumerable<string> IdsProdutos { get; set; }
 
         public void Validate()
         {
             AddNotifications(new Contract<OperacaoCreateDTO>()
                                 .Requires()
-                                .IsNotNullOrEmpty(Nome, "Operacao.Nome", "Informe um nome válido para o veiculo!")
-                                .IsNotNullOrWhiteSpace(Nome, "Operacao.Nome", "O nome não pode ser vazio!")
-                                .IsGreaterThan(ValorVeiculo, 0, "Operacao.ValorVeiculo", "A operação não pode ter valor do veiculo nulo ou negativo!")
+                                .IsFalse(string.IsNullOrEmpty(IdVeiculo) || string.IsNullOrWhiteSpace(IdVeiculo), "Operacao.Veiculo", "É necessário informar um veiculo para a operação!")
+                                .IsFalse(string.IsNullOrEmpty(IdCliente) || string.IsNullOrWhiteSpace(IdCliente), "Operacao.Cliente", "É necessário informar um cliente para a operação!")
                                 .IsGreaterThan(QuantidadeDeParcelas, 0, "Veiculo.QuantidadeDeParcelas", "A quantidade de parcelas não pode ser nula ou negativa!"));
         }
     }

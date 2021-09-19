@@ -10,7 +10,7 @@ namespace AutoShop.Application.Interfaces
 {
     public interface IApplicationServiceVeiculo
     {
-        ApplicationResult Add(VeiculoCreateDTO obj);
+        ApplicationResult Add(Veoculo obj);
 
         VeiculoGetDTO GetById(string Id);
 

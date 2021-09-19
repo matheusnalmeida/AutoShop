@@ -59,7 +59,7 @@ namespace AutoShop.Domain.Service.Services
 
         private void ValidaProdutoExiste(Produto produto)
         {
-            var produtoAtual = _repository.GetById(produto?.Id);
+            var produtoAtual = _repository.GetById(produto.Id);
             if (produtoAtual == null)
             {
                 produto.AddNotification("Produto", "Não existe produto com o id informado");

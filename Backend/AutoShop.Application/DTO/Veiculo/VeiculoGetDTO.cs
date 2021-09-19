@@ -15,5 +15,18 @@ namespace AutoShop.Application.DTO.Veiculo
         public string Modelo { get; set; }
         public decimal Valor { get; set; }
         public string Tipo { get; set; }
+
+        public static VeiculoGetDTO MapEntityAsDTO(Domain.Entities.Veiculo veiculo)
+        {
+            return veiculo == null ? null : new VeiculoGetDTO()
+            {
+                Nome = veiculo.Nome.Valor,
+                Ano = veiculo.Ano,
+                Modelo = veiculo.Modelo,
+                Valor = veiculo.Preco.Valor,
+                ImageURL = veiculo.ImagemURL,
+                Tipo = veiculo.Tipo.ToString()
+            };
+        }
     }
 }

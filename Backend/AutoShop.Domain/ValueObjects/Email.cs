@@ -12,15 +12,15 @@ namespace AutoShop.Domain.ValueObjects
     public class Email : ValueObject
     {
         [Column("Email")]
-        public string Address { get; private set; }
+        public string Endereco { get; private set; }
 
         public Email(string address)
         {
-            Address = address;
+            Endereco = address;
 
             AddNotifications(new Contract<Email>()
                 .Requires()
-                .IsEmail(Address, "Email.Address", "E-mail inválido")
+                .IsEmail(Endereco, "Email.Address", "E-mail inválido")
             );
         }
     }
