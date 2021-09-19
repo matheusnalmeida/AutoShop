@@ -38,13 +38,13 @@ namespace AutoShop.Domain.Service.Services
             return _repository.GetById(id);
         }
 
-        public Notifiable<Notification> Remove(Veiculo veiculo)
+        public Notifiable<Notification> Remove(string id)
         {
-            var veiculoAtual = GetById(veiculo?.Id);
-            ValidaVeiculoExiste(veiculo, veiculoAtual);
-            if (veiculo.IsValid)
+            var veiculoAtual = GetById(id);
+            if (veiculoAtual == null)
             {
-                return veiculo;
+                veiculoAtual.AddNotification("Veiculo", "Não existe veiculo com o id informado");
+                return veiculoAtual;
             }
             _repository.Remove(veiculoAtual);
             return veiculoAtual;
@@ -52,22 +52,22 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Update(Veiculo veiculo)
         {
-            var veiculoAtual = GetById(veiculo?.Id);
-            ValidaVeiculoExiste(veiculo, veiculoAtual);
+            veiculo.ValidateUpdate();
+            ValidaVeiculoExiste(veiculo);
             if (veiculo.IsValid)
             {
                 return veiculo;
             }
-            veiculoAtual.FillUpdate(veiculo);
-            _repository.Update(veiculoAtual);
-            return veiculoAtual;
+            _repository.Update(veiculo);
+            return veiculo;
         }
 
-        private void ValidaVeiculoExiste(Veiculo veiculo, Veiculo veiculoAtual)
+        private void ValidaVeiculoExiste(Veiculo veiculo)
         {
+            var veiculoAtual = GetById(veiculo?.Id);
             if (veiculoAtual == null)
             {
-                veiculo.AddNotification("Instituição Financeira", "Não existe instituição financeira com o id informado");
+                veiculo.AddNotification("Veiculo", "Não existe veiculo com o id informado");
             }
         }
     }

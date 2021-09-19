@@ -47,12 +47,18 @@ namespace AutoShop.Domain.Entities
             AddNotifications(idadeContract);
         }
 
-        public void FillUpdate(Usuario usuario) {
-            if (usuario == null) return;
-            Telefone = usuario.Telefone;
-            Email = usuario.Email;
-            Senha = usuario.Senha;
+        public void FillUpdate(Telefone telefone, Email email, Senha senha) {
+            Telefone = telefone ?? Telefone;
+            Email = email ?? Email;
+            Senha = senha ?? Senha;
             AddNotifications(Telefone, Email, Senha);
+        }
+        public void ValidateUpdate()
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                AddNotification("Usuario.Id", "Para atualizar o usuario é necessário informar o seu id");
+            }
         }
     }
 }

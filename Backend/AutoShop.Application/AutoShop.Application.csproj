@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoShop.Domain\AutoShop.Domain.csproj" />
     <ProjectReference Include="..\AutoShop.Shared\AutoShop.Shared.csproj" />
   </ItemGroup>
 

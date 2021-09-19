@@ -54,7 +54,7 @@ namespace AutoShop.Domain.Service.Services
             return _repository.GetById(id);
         }
 
-        public Notifiable<Notification> Remove(Operacao operacao)
+        public Notifiable<Notification> Remove(string id)
         {
             throw new InvalidOperationException("Não é possivel remover uma operação!");
         }

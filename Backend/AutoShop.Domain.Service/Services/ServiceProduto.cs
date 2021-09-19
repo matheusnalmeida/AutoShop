@@ -33,13 +33,13 @@ namespace AutoShop.Domain.Service.Services
             return _repository.GetById(id);
         }
 
-        public Notifiable<Notification> Remove(Produto produto)
+        public Notifiable<Notification> Remove(string id)
         {
-            var produtoAtual = GetById(produto?.Id);
-            ValidaProdutoExiste(produto, produtoAtual);
-            if (!produto.IsValid)
+            var produtoAtual = GetById(id);
+            if (produtoAtual == null)
             {
-                return produto;
+                produtoAtual.AddNotification("Produto", "Não existe produto com o id informado");
+                return produtoAtual;
             }
             _repository.Remove(produtoAtual);
             return produtoAtual;
@@ -47,19 +47,19 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Update(Produto produto)
         {
-            var produtoAtual = _repository.GetById(produto?.Id);
-            ValidaProdutoExiste(produto, produtoAtual);
+            produto.ValidateUpdate();
+            ValidaProdutoExiste(produto);
             if (!produto.IsValid)
             {
                 return produto;
             }
-            produtoAtual.FillUpdate(produto);
-            _repository.Update(produtoAtual);
-            return produtoAtual;
+            _repository.Update(produto);
+            return produto;
         }
 
-        private void ValidaProdutoExiste(Produto produto, Produto produtoAtual)
+        private void ValidaProdutoExiste(Produto produto)
         {
+            var produtoAtual = _repository.GetById(produto?.Id);
             if (produtoAtual == null)
             {
                 produto.AddNotification("Produto", "Não existe produto com o id informado");

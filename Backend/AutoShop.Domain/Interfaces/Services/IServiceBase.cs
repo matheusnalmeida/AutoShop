@@ -14,7 +14,7 @@ namespace AutoShop.Domain.Interfaces.Services
 
         Notifiable<Notification> Update(TEntity obj);
 
-        Notifiable<Notification> Remove(TEntity obj);
+        Notifiable<Notification> Remove(string id);
 
         IEnumerable<TEntity> GetAll();
 

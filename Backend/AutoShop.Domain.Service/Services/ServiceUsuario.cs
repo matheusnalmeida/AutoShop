@@ -38,13 +38,13 @@ namespace AutoShop.Domain.Service.Services
             return _repository.GetById(id);
         }
 
-        public Notifiable<Notification> Remove(Usuario usuario)
+        public Notifiable<Notification> Remove(string id)
         {
-            var usuarioAtual = GetById(usuario?.Id);
-            ValidaUsuarioExiste(usuario, usuarioAtual);
-            if (usuario.IsValid) 
+            var usuarioAtual = GetById(id);
+            if (usuarioAtual == null) 
             {
-                return usuario;
+                usuarioAtual.AddNotification("Usuario", "Não existe usuario com o id informado");
+                return usuarioAtual;
             }
             _repository.Remove(usuarioAtual);
             return usuarioAtual;
@@ -52,19 +52,19 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Update(Usuario usuario)
         {
-            var usuarioAtual = GetById(usuario?.Id);
-            ValidaUsuarioExiste(usuario, usuarioAtual);
+            usuario.ValidateUpdate();
+            ValidaUsuarioExiste(usuario);
             if (usuario.IsValid)
             {
                 return usuario;
             }
-            usuarioAtual.FillUpdate(usuario);
-            _repository.Update(usuarioAtual);
-            return usuarioAtual;
+            _repository.Update(usuario);
+            return usuario;
         }
 
-        private void ValidaUsuarioExiste(Usuario usuario, Usuario usuarioAtual)
+        private void ValidaUsuarioExiste(Usuario usuario)
         {
+            var usuarioAtual = GetById(usuario?.Id);
             if (usuarioAtual == null)
             {
                 usuario.AddNotification("Usuario", "Não existe usuario com o id informado");

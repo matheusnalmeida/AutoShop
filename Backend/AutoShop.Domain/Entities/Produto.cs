@@ -29,11 +29,16 @@ namespace AutoShop.Domain.Entities
             AddNotifications(Nome, Preco);
         }
 
-        //Somente pode ser atualizado o valor de um produto
-        public void FillUpdate(Produto produto) {
-            if (produto == null) return;
-            Preco = produto.Preco;
+        public void FillUpdate(Preco preco) {
+            Preco = preco ?? Preco;
             AddNotifications(Preco);
+        }
+
+        public void ValidateUpdate() {
+            if (string.IsNullOrEmpty(Id))
+            {
+                AddNotification("Produto.Id", "Para atualizar o produto é necessário informar o seu id");
+            }
         }
     }
 }

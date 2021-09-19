@@ -31,7 +31,7 @@ namespace AutoShop.Application.Services
             throw new NotImplementedException();
         }
 
-        public ApplicationResult Update(VeiculoUpdateDTO obj)
+        public ApplicationResult Update(string id, VeiculoUpdateDTO obj)
         {
             throw new NotImplementedException();
         }

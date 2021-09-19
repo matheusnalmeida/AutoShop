@@ -57,11 +57,17 @@ namespace AutoShop.Domain.Entities
             AddNotifications(anoContract, modeloContract, imagemUrContract);
         }
 
-        public void FillUpdate(Veiculo veiculo) {
-            if (veiculo == null) return;
-            Preco = veiculo.Preco;
+        public void FillUpdate(Preco preco) {
+            Preco = preco ?? Preco;
             AddNotifications(Preco);
         }
 
+        public void ValidateUpdate()
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                AddNotification("Veiculo.Id", "Para atualizar o veiculo é necessário informar o seu id");
+            }
+        }
     }
 }
