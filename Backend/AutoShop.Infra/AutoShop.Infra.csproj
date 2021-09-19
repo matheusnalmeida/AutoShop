@@ -8,8 +8,4 @@
     <ProjectReference Include="..\AutoShop.Domain\AutoShop.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

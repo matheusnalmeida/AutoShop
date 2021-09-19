@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoShop.Application", "AutoShop.Application\AutoShop.Application.csproj", "{FD26099D-5B0B-4D22-99AD-13730747B90D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{DFA3204C-84EE-4AF3-93F9-213D64E393D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDWebAPI.Infrastruture.CrossCutting.IOC", "DDDWebAPI.Infrastruture.CrossCutting.IOC\DDDWebAPI.Infrastruture.CrossCutting.IOC.csproj", "{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,10 @@ Global
 		{FD26099D-5B0B-4D22-99AD-13730747B90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD26099D-5B0B-4D22-99AD-13730747B90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD26099D-5B0B-4D22-99AD-13730747B90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,7 @@ Global
 		{2C9E3BF3-E757-4682-86A9-97F537F67C48} = {0CBD261E-1B97-4C8B-9B5C-5BE424820ED0}
 		{C102B1BD-EE39-42F8-8557-5140CE754C2B} = {D9F47988-6C6D-4026-A571-86BA7D77E1A6}
 		{FD26099D-5B0B-4D22-99AD-13730747B90D} = {979B630F-4A2C-4FBD-A264-484C73BA616F}
+		{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F} = {DFA3204C-84EE-4AF3-93F9-213D64E393D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C79FB5D-00CC-4129-99AF-4FDDAF759844}
