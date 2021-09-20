@@ -1,5 +1,6 @@
 ﻿using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Repositories;
+using AutoShop.Infra.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,31 +9,47 @@ using System.Threading.Tasks;
 
 namespace AutoShop.Infra.Repositories
 {
-    public class RepositoryVeiculo : IRepositoryVeiculo
+    public class RepositoryVeiculo : BaseContext<Veiculo, AutoShopContext>, IRepositoryVeiculo
     {
-        public void Add(Veiculo obj)
+        public RepositoryVeiculo(AutoShopContext baseContext) : base(baseContext) { }
+
+        public void Add(Veiculo veiculo)
         {
-            throw new NotImplementedException();
+            if (veiculo.IsValid)
+            {
+                DbSet.Add(veiculo);
+            }
         }
 
         public IQueryable<Veiculo> GetAll()
         {
-            throw new NotImplementedException();
+            return DbSet.AsQueryable();
         }
 
         public Veiculo GetById(string id)
         {
-            throw new NotImplementedException();
+            return DbSet.FirstOrDefault(veiculo => veiculo.Id == id);
         }
 
-        public void Remove(Veiculo obj)
+        public IQueryable<Veiculo> GetByIds(IEnumerable<string> ids)
         {
-            throw new NotImplementedException();
+            return DbSet.Where(veiculo => ids.Contains(veiculo.Id));
         }
 
-        public void Update(Veiculo obj)
+        public void Remove(Veiculo veiculo)
         {
-            throw new NotImplementedException();
+            if (veiculo?.Id != null)
+            {
+                DbSet.Remove(veiculo);
+            }
+        }
+
+        public void Update(Veiculo veiculo)
+        {
+            if (veiculo.IsValid)
+            {
+                DbSet.Update(veiculo);
+            }
         }
     }
 }

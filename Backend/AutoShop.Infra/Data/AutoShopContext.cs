@@ -13,10 +13,7 @@ namespace AutoShop.Infra.Data
 {
     public class AutoShopContext : DbContext
     {
-        public AutoShopContext(DbContextOptions<AutoShopContext> options) : base(options)
-        {
-
-        }
+        public AutoShopContext(DbContextOptions<AutoShopContext> options) : base(options){}
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
