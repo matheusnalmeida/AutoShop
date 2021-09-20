@@ -332,9 +332,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasColumnType("nvarchar(120)")
                                 .HasColumnName("Cpf");
 
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
-
                             b1.HasKey("UsuarioId");
 
                             b1.ToTable("Usuario");
@@ -354,9 +351,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasColumnType("nvarchar(120)")
                                 .HasColumnName("Email");
 
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
-
                             b1.HasKey("UsuarioId");
 
                             b1.ToTable("Usuario");
@@ -369,9 +363,6 @@ namespace AutoShop.Infra.Migrations
                         {
                             b1.Property<string>("UsuarioId")
                                 .HasColumnType("nvarchar(40)");
-
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
@@ -397,9 +388,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)")
                                 .HasColumnName("Telefone");
-
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
 
                             b1.HasKey("UsuarioId");
 

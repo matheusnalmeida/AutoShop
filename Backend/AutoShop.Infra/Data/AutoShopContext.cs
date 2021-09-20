@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoShop.Infra.EntityConfig;
 using Flunt.Notifications;
+using AutoShop.Domain.ValueObjects;
 
 namespace AutoShop.Infra.Data
 {
@@ -24,12 +25,22 @@ namespace AutoShop.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<Notification>();
+            AddModelIgnores(modelBuilder);
             modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
             modelBuilder.ApplyConfiguration(new ProdutoConfiguration());
             modelBuilder.ApplyConfiguration(new VeiculoConfiguration());
             modelBuilder.ApplyConfiguration(new OperacaoConfiguration());
             modelBuilder.ApplyConfiguration(new ProdutoOperacaoConfiguration());
+        }
+
+        private void AddModelIgnores(ModelBuilder modelBuilder) {
+            modelBuilder.Ignore<Notification>();
+            modelBuilder.Ignore<Nome>();
+            modelBuilder.Ignore<CPF>();
+            modelBuilder.Ignore<Email>();
+            modelBuilder.Ignore<Senha>();
+            modelBuilder.Ignore<Preco>();
+            modelBuilder.Ignore<Telefone>();
         }
     }
 }

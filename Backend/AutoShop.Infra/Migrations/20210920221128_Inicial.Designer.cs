@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoShop.Infra.Migrations
 {
     [DbContext(typeof(AutoShopContext))]
-    [Migration("20210920025053_Inicial")]
+    [Migration("20210920221128_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -334,9 +334,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasColumnType("nvarchar(120)")
                                 .HasColumnName("Cpf");
 
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
-
                             b1.HasKey("UsuarioId");
 
                             b1.ToTable("Usuario");
@@ -356,9 +353,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasColumnType("nvarchar(120)")
                                 .HasColumnName("Email");
 
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
-
                             b1.HasKey("UsuarioId");
 
                             b1.ToTable("Usuario");
@@ -371,9 +365,6 @@ namespace AutoShop.Infra.Migrations
                         {
                             b1.Property<string>("UsuarioId")
                                 .HasColumnType("nvarchar(40)");
-
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
@@ -399,9 +390,6 @@ namespace AutoShop.Infra.Migrations
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)")
                                 .HasColumnName("Telefone");
-
-                            b1.Property<int>("TempId1")
-                                .HasColumnType("int");
 
                             b1.HasKey("UsuarioId");
 

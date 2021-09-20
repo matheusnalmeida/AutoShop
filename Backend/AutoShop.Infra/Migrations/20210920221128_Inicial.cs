@@ -28,24 +28,16 @@ namespace AutoShop.Infra.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Cpf_TempId1 = table.Column<int>(type: "int", nullable: false),
                     Idade = table.Column<int>(type: "int", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Telefone_TempId1 = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Email_TempId1 = table.Column<int>(type: "int", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    Senha_TempId1 = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.Id);
-                    table.UniqueConstraint("AK_Usuario_Cpf_TempId1", x => x.Cpf_TempId1);
-                    table.UniqueConstraint("AK_Usuario_Email_TempId1", x => x.Email_TempId1);
-                    table.UniqueConstraint("AK_Usuario_Senha_TempId1", x => x.Senha_TempId1);
-                    table.UniqueConstraint("AK_Usuario_Telefone_TempId1", x => x.Telefone_TempId1);
                 });
 
             migrationBuilder.CreateTable(

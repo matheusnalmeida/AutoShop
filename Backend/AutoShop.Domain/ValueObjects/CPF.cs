@@ -12,7 +12,7 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class CPF : ValueObject
     {
-        public string Numero { get; private set; }
+        public string Numero { get;  set; }
 
         private CPF() { }
 
