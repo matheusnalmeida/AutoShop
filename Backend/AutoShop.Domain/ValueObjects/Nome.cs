@@ -11,8 +11,10 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class Nome : ValueObject
     {
-        [Column("Nome")]
         public string Valor { get; set; }
+
+        private Nome() { }
+
         public Nome(string nome)
         {
             Valor = nome;

@@ -12,8 +12,10 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class Senha : ValueObject
     {
-        [Column("Senha")]
         public string Valor { get; set; }
+
+        private Senha() { }
+
         public Senha(string senha)
         {
             AddNotifications(

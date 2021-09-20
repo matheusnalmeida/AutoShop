@@ -12,13 +12,15 @@ namespace AutoShop.Domain.Entities
 {
     public class Usuario : Entity, IEntityValidate<Usuario>
     {
-        public CPF Cpf { get; set; }
-        public int Idade { get; set; }
-        public Telefone Telefone { get; set; }
-        public Email Email { get; set; }
-        public Senha Senha { get; set; }
-        public UsuarioTipoEnum Tipo { get; set; }
-        public List<Operacao> Operacoes { get; set; }
+        public CPF Cpf { get; private set; }
+        public int Idade { get; private set; }
+        public Telefone Telefone { get; private set; }
+        public Email Email { get; private set; }
+        public Senha Senha { get; private set; }
+        public UsuarioTipoEnum Tipo { get; private set; }
+        public List<Operacao> OperacoesCriadas { get; private set; }
+        public List<Operacao> OperacoesAprovadas { get; private set; }
+
         public bool Ativo { get; set; }
 
         private Usuario(){}
@@ -31,7 +33,8 @@ namespace AutoShop.Domain.Entities
             Email = email;
             Senha = senha;
             Tipo = tipo;
-            Operacoes = new List<Operacao>();
+            OperacoesCriadas = new List<Operacao>();
+            OperacoesAprovadas = new List<Operacao>();
             Ativo = true;
 
             AddNotifications(cpf, telefone, email, senha);

@@ -11,8 +11,10 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class CNPJ : ValueObject
     {
-        [Column("Cnpj")]
         public string Numero { get; set; }
+
+        private CNPJ() { }
+
         public CNPJ(string numero)
         {
             Numero = numero;

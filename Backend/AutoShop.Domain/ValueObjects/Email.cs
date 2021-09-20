@@ -11,8 +11,9 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class Email : ValueObject
     {
-        [Column("Email")]
         public string Endereco { get; private set; }
+
+        private Email() { }
 
         public Email(string address)
         {

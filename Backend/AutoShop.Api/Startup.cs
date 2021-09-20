@@ -1,8 +1,10 @@
 using Autofac;
+using AutoShop.Infra.Data;
 using DDDWebAPI.Infrastruture.CrossCutting.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +34,7 @@ namespace AutoShop
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AutoShop", Version = "v1" });
             });
+            services.AddDbContext<AutoShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         public void ConfigureContainer(ContainerBuilder Builder)

@@ -11,8 +11,9 @@ namespace AutoShop.Domain.ValueObjects
 {
     public class Telefone : ValueObject
     {
-        [Column("Telefone")]
         public string Numero { get; set; }
+
+        private Telefone() { }
 
         public Telefone(string numero)
         {

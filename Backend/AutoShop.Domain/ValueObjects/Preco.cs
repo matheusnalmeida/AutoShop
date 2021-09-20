@@ -11,6 +11,9 @@ namespace AutoShop.Domain.ValueObjects
     public class Preco : ValueObject
     {
         public decimal Valor { get; set; }
+
+        private Preco() { }
+
         public Preco(decimal valor)
         {
             Valor = valor;

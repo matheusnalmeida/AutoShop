@@ -23,7 +23,7 @@ namespace AutoShop.Application.Services
             _serviceVeiculo = serviceVeiculo;
         }
 
-        public ApplicationResult Add(Veoculo veiculoDTO)
+        public ApplicationResult Add(VeiculoCreateDTO veiculoDTO)
         {
             veiculoDTO.Validate();
             if (!veiculoDTO.IsValid)
