@@ -82,6 +82,8 @@ namespace AutoShop
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoShop v1"));
             }
 
+            app.UseHttpsRedirection();
+
             app.UseCors();
 
             app.UseRouting();

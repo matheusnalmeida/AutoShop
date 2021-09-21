@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoShop.Application", "Aut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{DFA3204C-84EE-4AF3-93F9-213D64E393D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDWebAPI.Infrastruture.CrossCutting.IOC", "DDDWebAPI.Infrastruture.CrossCutting.IOC\DDDWebAPI.Infrastruture.CrossCutting.IOC.csproj", "{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDDWebAPI.Infrastruture.CrossCutting.IOC", "DDDWebAPI.Infrastruture.CrossCutting.IOC\DDDWebAPI.Infrastruture.CrossCutting.IOC.csproj", "{8F7CEE62-2F3F-4569-BBDB-C2DBF9F7E22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -22,7 +22,10 @@ namespace AutoShop
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
+
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls("http://*:" + port);
                 });
     }
 }
