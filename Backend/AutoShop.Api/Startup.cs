@@ -65,8 +65,9 @@ namespace AutoShop
             var port = Configuration["DefaultConnectionString:DBPort"];
             var password = Configuration["DefaultConnectionString:DBPassword"];
             var database = Configuration["DefaultConnectionString:Database"];
+            var SslConfig = Configuration["DefaultConnectionString:DBSsl"] ?? "";
 
-            var connectionString = $"Host={server};Port={port};Database={database};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+            var connectionString = $"Host={server};Port={port};Database={database};Username={user};Password={password};{SslConfig}";
 
             services.AddDbContext<AutoShopContext>(options =>
                 options.UseNpgsql(connectionString));
@@ -81,8 +82,10 @@ namespace AutoShop
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoShop v1"));
             }
-
-            app.UseHttpsRedirection();
+            else 
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseCors();
 
