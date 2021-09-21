@@ -38,10 +38,6 @@ namespace AutoShop.Application.Services
             //Entidade
             var usuario = new Usuario(cpf, usuarioDTO.Idade, telefone, email, senha, (UsuarioTipoEnum)usuarioDTO.Tipo);
             var result = _serviceUsuario.Add(usuario);
-            if (result.IsValid)
-            {
-                result.AddNotification("Usuario", "Usuario cadastrado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 
@@ -81,10 +77,6 @@ namespace AutoShop.Application.Services
             var senha = new Senha(usuarioDTO.Senha);
             usuarioAtual?.FillUpdate(telefone, email, senha);
             var result = _serviceUsuario.Update(usuarioAtual);
-            if (result.IsValid)
-            {
-                result.AddNotification("Usuario", "Usuario atualizado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 

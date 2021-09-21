@@ -15,11 +15,13 @@ namespace AutoShop.Domain.Service.Services
     {
         private readonly IRepositoryOperacao _repository;
         private readonly IRepositoryProduto _repositoryProduto;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServiceOperacao(IRepositoryOperacao repository, IRepositoryProduto repositoryProduto)
+        public ServiceOperacao(IRepositoryOperacao repository, IRepositoryProduto repositoryProduto, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _repositoryProduto = repositoryProduto;
+            _unitOfWork = unitOfWork;
         }
 
         public Notifiable<Notification> Add(Operacao operacao)
@@ -49,6 +51,7 @@ namespace AutoShop.Domain.Service.Services
             if (operacao.IsValid) 
             {
                 _repository.Add(operacao);
+                _unitOfWork.PersistChanges();
             }
             return operacao;
         }

@@ -23,19 +23,19 @@ namespace AutoShop.Infra.EntityConfig
 
             builder.OwnsOne(x => x.ValorTotal)
                 .Property(x => x.Valor)
-                .HasColumnType("decimal(18,4)")
+                .HasColumnType("decimal(18,2)")
                 .IsRequired()
                 .HasColumnName("ValorTotal");
 
             builder.OwnsOne(x => x.ValorFinanciado)
                 .Property(x => x.Valor)
-                .HasColumnType("decimal(18,4)")
+                .HasColumnType("decimal(18,2)")
                 .IsRequired()
                 .HasColumnName("ValorFinanciado");
 
             builder.OwnsOne(x => x.ValorVeiculo)
                 .Property(x => x.Valor)
-                .HasColumnType("decimal(18,4)")
+                .HasColumnType("decimal(18,2)")
                 .IsRequired()
                 .HasColumnName("ValorVeiculo");
 

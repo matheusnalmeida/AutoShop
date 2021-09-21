@@ -36,10 +36,6 @@ namespace AutoShop.Application.Services
             //Entidade
             var veiculo = new Veiculo(nome, veiculoDTO.Ano,veiculoDTO.Modelo, preco, veiculoDTO.ImageURL, (VeiculoTipoEnum)veiculoDTO.Tipo);
             var result = _serviceVeiculo.Add(veiculo);
-            if (result.IsValid)
-            {
-                result.AddNotification("Veiculo", "Veiculo cadastrado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 
@@ -77,10 +73,6 @@ namespace AutoShop.Application.Services
             var preco = new Preco(veiculoDTO.Valor);
             veiculoAtual?.FillUpdate(preco);
             var result = _serviceVeiculo.Update(veiculoAtual);
-            if (result.IsValid)
-            {
-                result.AddNotification("Veiculo", "Veiculo atualizado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 

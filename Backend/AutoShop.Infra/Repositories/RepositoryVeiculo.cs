@@ -40,6 +40,7 @@ namespace AutoShop.Infra.Repositories
         {
             if (veiculo?.Id != null)
             {
+                veiculo.Ativo = false;
                 DbSet.Remove(veiculo);
             }
         }

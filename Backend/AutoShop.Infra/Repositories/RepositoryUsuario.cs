@@ -40,6 +40,7 @@ namespace AutoShop.Infra.Repositories
         {
             if (usuario?.Id != null)
             {
+                usuario.Ativo = false;
                 DbSet.Remove(usuario);
             }
         }

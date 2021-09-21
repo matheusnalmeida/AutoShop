@@ -53,10 +53,6 @@ namespace AutoShop.Application.Services
                 operacao.AdicionarProdutoOperacao(new ProdutoOperacao(operacao.Id, idProduto));
             }
             var result = _serviceOperacao.Add(operacao);
-            if (result.IsValid)
-            {
-                result.AddNotification("Veiculo", "Veiculo cadastrado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 

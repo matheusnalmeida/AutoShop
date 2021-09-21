@@ -14,6 +14,7 @@ namespace AutoShop.Infra.Repositories
     {
         protected DbSet<TEntity> DbSet;
         protected TContext DbContext;
+
         protected BaseContext(TContext dbContext)
         {
             DbContext = dbContext;

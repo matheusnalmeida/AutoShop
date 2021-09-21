@@ -47,7 +47,7 @@ namespace AutoShop.Api.Controllers
         }
 
         [HttpPut]
-        public ActionResult<ApplicationResult> Put([FromRoute] string id, [FromBody] VeiculoUpdateDTO veiculoDTO)
+        public ActionResult<ApplicationResult> Put([FromQuery] string id, [FromBody] VeiculoUpdateDTO veiculoDTO)
         {
             if (veiculoDTO == null)
                 return BadRequest();

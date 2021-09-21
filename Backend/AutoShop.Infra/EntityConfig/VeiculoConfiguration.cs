@@ -35,7 +35,7 @@ namespace AutoShop.Infra.EntityConfig
 
             builder.OwnsOne(x => x.Preco)
                 .Property(x => x.Valor)
-                .HasColumnType("decimal(18,4)")
+                .HasColumnType("decimal(18,2)")
                 .IsRequired()
                 .HasColumnName("Preco");
 

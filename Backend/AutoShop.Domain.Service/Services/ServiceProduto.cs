@@ -9,16 +9,19 @@ namespace AutoShop.Domain.Service.Services
     public class ServiceProduto : IServiceProduto 
     {
         private readonly IRepositoryProduto _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServiceProduto(IRepositoryProduto repository)
+        public ServiceProduto(IRepositoryProduto repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public Notifiable<Notification> Add(Produto produto)
         {
             if (produto.IsValid) {
                 _repository.Add(produto);
+                _unitOfWork.PersistChanges();
             }
             return produto;
         }
@@ -42,6 +45,7 @@ namespace AutoShop.Domain.Service.Services
                 return produtoAtual;
             }
             _repository.Remove(produtoAtual);
+            _unitOfWork.PersistChanges();
             return produtoAtual;
         }
 
@@ -54,6 +58,7 @@ namespace AutoShop.Domain.Service.Services
                 return produto;
             }
             _repository.Update(produto);
+            _unitOfWork.PersistChanges();
             return produto;
         }
 

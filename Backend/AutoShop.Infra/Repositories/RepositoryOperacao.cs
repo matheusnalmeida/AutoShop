@@ -38,18 +38,12 @@ namespace AutoShop.Infra.Repositories
 
         public void Remove(Operacao operacao)
         {
-            if (operacao?.Id != null)
-            {
-                DbSet.Remove(operacao);
-            }
+            throw new InvalidOperationException("Não é possivel remover uma operação!");
         }
 
         public void Update(Operacao operacao)
         {
-            if (operacao.IsValid)
-            {
-                DbSet.Update(operacao);
-            }
+            throw new InvalidOperationException("Não é possivel atualizar uma operação!");
         }
     }
 }

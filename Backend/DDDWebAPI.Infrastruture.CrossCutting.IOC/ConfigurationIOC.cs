@@ -36,6 +36,10 @@ namespace DDDWebAPI.Infrastruture.CrossCutting.IOC
             builder.RegisterType<RepositoryOperacao>().As<IRepositoryOperacao>();
             #endregion
 
+            #region Unity Of Work
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            #endregion
+
             #endregion
 
         }

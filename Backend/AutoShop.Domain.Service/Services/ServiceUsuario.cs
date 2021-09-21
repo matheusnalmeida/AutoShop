@@ -13,10 +13,12 @@ namespace AutoShop.Domain.Service.Services
     public class ServiceUsuario : IServiceUsuario
     {
         private readonly IRepositoryUsuario _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServiceUsuario(IRepositoryUsuario repository)
+        public ServiceUsuario(IRepositoryUsuario repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public Notifiable<Notification> Add(Usuario usuario)
@@ -24,6 +26,7 @@ namespace AutoShop.Domain.Service.Services
             if (usuario.IsValid)
             {
                 _repository.Add(usuario);
+                _unitOfWork.PersistChanges();
             }
             return usuario;
         }
@@ -47,6 +50,7 @@ namespace AutoShop.Domain.Service.Services
                 return usuarioAtual;
             }
             _repository.Remove(usuarioAtual);
+            _unitOfWork.PersistChanges();
             return usuarioAtual;
         }
 
@@ -54,11 +58,12 @@ namespace AutoShop.Domain.Service.Services
         {
             usuario.ValidateUpdate();
             ValidaUsuarioExiste(usuario);
-            if (usuario.IsValid)
+            if (!usuario.IsValid)
             {
                 return usuario;
             }
             _repository.Update(usuario);
+            _unitOfWork.PersistChanges();
             return usuario;
         }
 

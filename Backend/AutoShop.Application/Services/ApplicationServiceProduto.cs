@@ -36,10 +36,6 @@ namespace AutoShop.Application.Services
             //Entidade
             var produto = new Produto(nome, preco, (ProdutoTipoEnum)produtoDTO.Tipo);
             var result = _serviceProduto.Add(produto);
-            if (result.IsValid)
-            {
-                result.AddNotification("Produto", "Produto cadastrado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 
@@ -78,10 +74,6 @@ namespace AutoShop.Application.Services
             var novoPreco = new Preco(produtoDTO.Preco);
             produtoAtual?.FillUpdate(novoPreco);
             var result = _serviceProduto.Update(produtoAtual);
-            if (result.IsValid)
-            {
-                result.AddNotification("Produto", "Produto atualizado com sucesso!");
-            }
             return MountApplicationResultFromNotifiable(result);
         }
 

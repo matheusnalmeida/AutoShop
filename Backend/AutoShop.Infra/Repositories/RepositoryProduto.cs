@@ -41,7 +41,8 @@ namespace AutoShop.Infra.Repositories
         {
             if (produto?.Id != null) 
             {
-                DbSet.Remove(produto);
+                produto.Ativo = false;
+                DbSet.Update(produto);
             }
         }
 

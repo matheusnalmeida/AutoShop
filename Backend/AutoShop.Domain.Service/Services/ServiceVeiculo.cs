@@ -13,10 +13,12 @@ namespace AutoShop.Domain.Service.Services
     public class ServiceVeiculo : IServiceVeiculo
     {
         private readonly IRepositoryVeiculo _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServiceVeiculo(IRepositoryVeiculo repository)
+        public ServiceVeiculo(IRepositoryVeiculo repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public Notifiable<Notification> Add(Veiculo veiculo)
@@ -24,6 +26,7 @@ namespace AutoShop.Domain.Service.Services
             if (veiculo.IsValid)
             {
                 _repository.Add(veiculo);
+                _unitOfWork.PersistChanges();
             }
             return veiculo;
         }
@@ -47,6 +50,7 @@ namespace AutoShop.Domain.Service.Services
                 return veiculoAtual;
             }
             _repository.Remove(veiculoAtual);
+            _unitOfWork.PersistChanges();
             return veiculoAtual;
         }
 
@@ -54,11 +58,12 @@ namespace AutoShop.Domain.Service.Services
         {
             veiculo.ValidateUpdate();
             ValidaVeiculoExiste(veiculo);
-            if (veiculo.IsValid)
+            if (!veiculo.IsValid)
             {
                 return veiculo;
             }
             _repository.Update(veiculo);
+            _unitOfWork.PersistChanges();
             return veiculo;
         }
 
