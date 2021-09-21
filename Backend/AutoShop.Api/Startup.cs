@@ -50,15 +50,14 @@ namespace AutoShop
         private void ConfigureDatabase(IServiceCollection services)
         {
             var server = Configuration["DefaultConnectionString:DBServer"];
-            var port = Configuration["DefaultConnectionString:DBPort"];
             var user = Configuration["DefaultConnectionString:DBUser"];
             var password = Configuration["DefaultConnectionString:DBPassword"];
             var database = Configuration["DefaultConnectionString:Database"];
 
-            var connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+            var connectionString = $"Host={server};Database={database};Username={user};Password={password};";
 
             services.AddDbContext<AutoShopContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

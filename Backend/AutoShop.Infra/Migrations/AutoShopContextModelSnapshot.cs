@@ -3,8 +3,8 @@ using System;
 using AutoShop.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoShop.Infra.Migrations
 {
@@ -15,33 +15,33 @@ namespace AutoShop.Infra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.10")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("AutoShop.Domain.Entities.Operacao", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("IdCliente")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("IdVeiculo")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("IdVendedor")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<int>("QuantidadeDeParcelas")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -58,13 +58,13 @@ namespace AutoShop.Infra.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Tipo")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -75,20 +75,20 @@ namespace AutoShop.Infra.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("IdOperacao")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("IdProduto")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.HasKey("Id");
 
@@ -103,16 +103,16 @@ namespace AutoShop.Infra.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Idade")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Tipo")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -123,25 +123,25 @@ namespace AutoShop.Infra.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("character varying(40)");
 
                     b.Property<int>("Ano")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ImagemURL")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
                         .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasColumnType("character varying(120)");
 
                     b.Property<int>("Tipo")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -171,10 +171,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "ValorFinanciado", b1 =>
                         {
                             b1.Property<string>("OperacaoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("ValorFinanciado");
 
                             b1.HasKey("OperacaoId");
@@ -188,10 +188,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "ValorTotal", b1 =>
                         {
                             b1.Property<string>("OperacaoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("ValorTotal");
 
                             b1.HasKey("OperacaoId");
@@ -205,10 +205,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "ValorVeiculo", b1 =>
                         {
                             b1.Property<string>("OperacaoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("ValorVeiculo");
 
                             b1.HasKey("OperacaoId");
@@ -240,12 +240,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Nome", "Nome", b1 =>
                         {
                             b1.Property<string>("ProdutoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
                                 .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)")
+                                .HasColumnType("character varying(120)")
                                 .HasColumnName("Nome");
 
                             b1.HasKey("ProdutoId");
@@ -259,10 +259,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "Preco", b1 =>
                         {
                             b1.Property<string>("ProdutoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("Preco");
 
                             b1.HasKey("ProdutoId");
@@ -297,10 +297,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "Preco", b1 =>
                         {
                             b1.Property<string>("ProdutoOperacaoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("Preco");
 
                             b1.HasKey("ProdutoOperacaoId");
@@ -324,12 +324,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.CPF", "Cpf", b1 =>
                         {
                             b1.Property<string>("UsuarioId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Numero")
                                 .IsRequired()
                                 .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)")
+                                .HasColumnType("character varying(120)")
                                 .HasColumnName("Cpf");
 
                             b1.HasKey("UsuarioId");
@@ -343,12 +343,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Email", "Email", b1 =>
                         {
                             b1.Property<string>("UsuarioId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Endereco")
                                 .IsRequired()
                                 .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)")
+                                .HasColumnType("character varying(120)")
                                 .HasColumnName("Email");
 
                             b1.HasKey("UsuarioId");
@@ -362,12 +362,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Senha", "Senha", b1 =>
                         {
                             b1.Property<string>("UsuarioId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
                                 .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)")
+                                .HasColumnType("character varying(60)")
                                 .HasColumnName("Senha");
 
                             b1.HasKey("UsuarioId");
@@ -381,12 +381,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Telefone", "Telefone", b1 =>
                         {
                             b1.Property<string>("UsuarioId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Numero")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
+                                .HasColumnType("character varying(20)")
                                 .HasColumnName("Telefone");
 
                             b1.HasKey("UsuarioId");
@@ -415,12 +415,12 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Nome", "Nome", b1 =>
                         {
                             b1.Property<string>("VeiculoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<string>("Valor")
                                 .IsRequired()
                                 .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)")
+                                .HasColumnType("character varying(120)")
                                 .HasColumnName("Nome");
 
                             b1.HasKey("VeiculoId");
@@ -434,10 +434,10 @@ namespace AutoShop.Infra.Migrations
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "Preco", b1 =>
                         {
                             b1.Property<string>("VeiculoId")
-                                .HasColumnType("nvarchar(40)");
+                                .HasColumnType("character varying(40)");
 
                             b1.Property<decimal>("Valor")
-                                .HasColumnType("decimal(18,2)")
+                                .HasColumnType("numeric(18,2)")
                                 .HasColumnName("Preco");
 
                             b1.HasKey("VeiculoId");

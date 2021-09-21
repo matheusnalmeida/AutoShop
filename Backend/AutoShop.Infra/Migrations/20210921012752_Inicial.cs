@@ -11,11 +11,11 @@ namespace AutoShop.Infra.Migrations
                 name: "Produto",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Preco = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Nome = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Preco = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Tipo = table.Column<int>(type: "integer", nullable: false),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,14 +26,14 @@ namespace AutoShop.Infra.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Cpf = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Idade = table.Column<int>(type: "int", nullable: false),
-                    Telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Cpf = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Idade = table.Column<int>(type: "integer", nullable: false),
+                    Telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Senha = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
+                    Tipo = table.Column<int>(type: "integer", nullable: false),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,14 +44,14 @@ namespace AutoShop.Infra.Migrations
                 name: "Veiculo",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Ano = table.Column<int>(type: "int", nullable: false),
-                    Modelo = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Preco = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    ImagemURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Nome = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Ano = table.Column<int>(type: "integer", nullable: false),
+                    Modelo = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Preco = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    ImagemURL = table.Column<string>(type: "text", nullable: false),
+                    Tipo = table.Column<int>(type: "integer", nullable: false),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,14 +62,14 @@ namespace AutoShop.Infra.Migrations
                 name: "Operacao",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    ValorTotal = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    ValorFinanciado = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    ValorVeiculo = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    QuantidadeDeParcelas = table.Column<int>(type: "int", nullable: false),
-                    IdVeiculo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    IdCliente = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    IdVendedor = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    ValorFinanciado = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    ValorVeiculo = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    QuantidadeDeParcelas = table.Column<int>(type: "integer", nullable: false),
+                    IdVeiculo = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    IdCliente = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    IdVendedor = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,11 +96,11 @@ namespace AutoShop.Infra.Migrations
                 name: "ProdutoOperacao",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Preco = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdOperacao = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    IdProduto = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Preco = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IdOperacao = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    IdProduto = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
