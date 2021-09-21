@@ -29,6 +29,8 @@ namespace AutoShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureCors(services);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,6 +38,15 @@ namespace AutoShop
             });
 
             ConfigureDatabase(services);
+        }
+
+        public void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policys => policys
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()));
         }
 
         public void ConfigureContainer(ContainerBuilder Builder)
@@ -51,10 +62,11 @@ namespace AutoShop
         {
             var server = Configuration["DefaultConnectionString:DBServer"];
             var user = Configuration["DefaultConnectionString:DBUser"];
+            var port = Configuration["DefaultConnectionString:DBPort"];
             var password = Configuration["DefaultConnectionString:DBPassword"];
             var database = Configuration["DefaultConnectionString:Database"];
 
-            var connectionString = $"Host={server};Database={database};Username={user};Password={password};";
+            var connectionString = $"Host={server};Port={port};Database={database};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 
             services.AddDbContext<AutoShopContext>(options =>
                 options.UseNpgsql(connectionString));
@@ -70,10 +82,12 @@ namespace AutoShop
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoShop v1"));
             }
 
+            app.UseCors();
+
             app.UseRouting();
 
             app.UseAuthorization();
-
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
