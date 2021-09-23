@@ -18,7 +18,7 @@ namespace AutoShop.Application.DTO.Produto
             {
                 Nome = produto.Nome.Valor,
                 Preco = produto.Preco.Valor,
-                Tipo = produto.ToString()
+                Tipo = produto.Tipo.ToString()
             };
         }
     }
