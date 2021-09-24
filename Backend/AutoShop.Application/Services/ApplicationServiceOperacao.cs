@@ -3,13 +3,9 @@ using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
-using AutoShop.Domain.ValueObjects;
 using Flunt.Notifications;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.Application.Services
 {

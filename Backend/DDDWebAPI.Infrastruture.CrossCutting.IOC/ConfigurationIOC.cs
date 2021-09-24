@@ -5,7 +5,6 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Service.Services;
 using AutoShop.Infra.Repositories;
-using System;
 
 namespace DDDWebAPI.Infrastruture.CrossCutting.IOC
 {

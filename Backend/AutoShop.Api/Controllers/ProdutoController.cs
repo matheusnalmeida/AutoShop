@@ -2,10 +2,7 @@
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AutoShop.Api.Controllers
 {

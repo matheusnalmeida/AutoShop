@@ -1,12 +1,8 @@
 ﻿using AutoShop.Application.DTO.Produto;
 using AutoShop.Application.DTO.Usuario;
 using AutoShop.Application.DTO.Veiculo;
-using AutoShop.Shared.DTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.Application.DTO.Operacao
 {

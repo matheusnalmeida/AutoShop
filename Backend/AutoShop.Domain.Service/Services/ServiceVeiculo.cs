@@ -3,11 +3,7 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.Domain.Service.Services
 {

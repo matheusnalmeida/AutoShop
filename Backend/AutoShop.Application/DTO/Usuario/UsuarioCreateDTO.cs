@@ -4,10 +4,6 @@ using AutoShop.Shared.Util;
 using Flunt.Notifications;
 using Flunt.Validations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.Application.DTO.Usuario
 {
