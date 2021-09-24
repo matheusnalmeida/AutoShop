@@ -1,6 +1,7 @@
 ﻿using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
+using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
@@ -46,8 +47,8 @@ namespace AutoShop.Domain.Service.Services
             var veiculoAtual = GetById(id);
             if (veiculoAtual == null)
             {
-                veiculoAtual.AddNotification("Veiculo", "Não existe veiculo com o id informado");
-                return veiculoAtual;
+                var veiculoNaoExistenteResult = new ServiceNotification(new Notification("Veiculo", "Não existe veiculo com o id informado"));
+                return veiculoNaoExistenteResult;
             }
             _repository.Remove(veiculoAtual);
             _unitOfWork.PersistChanges();
