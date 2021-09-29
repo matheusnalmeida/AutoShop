@@ -1,4 +1,4 @@
-# auto_shop
+# autoshop_application
 
 A new Flutter project.
 

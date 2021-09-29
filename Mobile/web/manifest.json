@@ -1,6 +1,6 @@
 {
-    "name": "auto_shop",
-    "short_name": "auto_shop",
+    "name": "autoshop_application",
+    "short_name": "autoshop_application",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
