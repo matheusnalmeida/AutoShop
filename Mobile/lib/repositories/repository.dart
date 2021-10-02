@@ -1,0 +1,1 @@
+export './veiculo/veiculo_repository.dart';
