@@ -28,6 +28,8 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
       yield LoadedSucessState(albums);
     } on HttpException catch (ex) {
       yield ErrorState(ex.message);
+    } catch (_){
+        yield const ErrorState("Erro ao tentar obter os veiculos!");
     }
   }
 }

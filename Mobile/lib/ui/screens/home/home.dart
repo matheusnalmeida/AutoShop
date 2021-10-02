@@ -1,4 +1,5 @@
-import 'package:autoshop_application/ui/widgets/app_custom_drawer.dart';
+import 'package:autoshop_application/constants/assets.dart';
+import 'package:autoshop_application/ui/widgets/shared/app_custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: const <Widget>[
             Image(
-              image: AssetImage('assets/images/autoshop_icon.png'),
+              image: AssetImage(Assets.appLogo),
               width: 175),
             Text(
               'Bem vindo ao auto shop!',

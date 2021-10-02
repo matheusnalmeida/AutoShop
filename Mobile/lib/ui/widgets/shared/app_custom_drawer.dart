@@ -1,6 +1,6 @@
-import 'package:autoshop_application/themes/colors.dart';
+import 'package:autoshop_application/constants/assets.dart';
+import 'package:autoshop_application/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import 'custom_list_tile.dart';
 
@@ -20,7 +20,7 @@ class AppCustomDrawer extends StatelessWidget {
             const DrawerHeader(
               decoration: BoxDecoration(color: AppColor.drawerHeaderColor),
               child:
-                  Image(image: AssetImage('assets/images/autoshop_icon.png')),
+                  Image(image: AssetImage(Assets.appLogo)),
             ),
             Column(
               children: [

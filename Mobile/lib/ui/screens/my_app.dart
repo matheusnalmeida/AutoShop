@@ -1,6 +1,6 @@
 import 'package:autoshop_application/blocs/veiculo/veiculo_bloc.dart';
 import 'package:autoshop_application/repositories/repository.dart';
-import 'package:autoshop_application/themes/colors.dart';
+import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/tools/custom_routes.dart';
 import 'package:autoshop_application/tools/material_customcolor_helper.dart';
 import 'package:flutter/material.dart';

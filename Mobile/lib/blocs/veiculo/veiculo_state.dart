@@ -9,17 +9,6 @@ abstract class VeiculoState extends Equatable {
 
 class VeiculoInitial extends VeiculoState {}
 
-class EmptyState extends VeiculoState {
-  @override
-  List<Object> get props => [];
-}
-
-class InitialState extends VeiculoState {
-  const InitialState();
-  @override
-  List<Object> get props => [];
-}
-
 class LoadingState extends VeiculoState {
   const LoadingState();
   @override
