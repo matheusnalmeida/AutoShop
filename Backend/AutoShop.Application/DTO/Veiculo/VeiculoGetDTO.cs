@@ -2,6 +2,7 @@
 {
     public class VeiculoGetDTO
     {
+        public string Id { get; set; }
         public string Nome { get; set; }
         public string ImageURL { get; set; }
         public int Ano { get; set; }
@@ -13,6 +14,7 @@
         {
             return veiculo == null ? null : new VeiculoGetDTO()
             {
+                Id = veiculo.Id,
                 Nome = veiculo.Nome.Valor,
                 Ano = veiculo.Ano,
                 Modelo = veiculo.Modelo,

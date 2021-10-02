@@ -8,6 +8,7 @@ namespace AutoShop.Application.DTO.Operacao
 {
     public class OperacaoGetDTO
     {
+        public string Id { get; set; }
         public decimal ValorTotal { get; set; }
         public decimal ValorFinanciado { get; set; }
         public decimal ValorVeiculo { get; set; }
@@ -21,6 +22,7 @@ namespace AutoShop.Application.DTO.Operacao
         {
             return operacao == null ? null : new OperacaoGetDTO()
             {
+                Id = operacao.Id,
                 ValorTotal = operacao.ValorTotal.Valor,
                 ValorFinanciado = operacao.ValorFinanciado.Valor,
                 ValorVeiculo = operacao.ValorVeiculo.Valor,

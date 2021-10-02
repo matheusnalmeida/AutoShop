@@ -2,6 +2,7 @@
 {
     public class UsuarioGetDTO
     {
+        public string Id { get; set; }
         public string Cpf { get; set; }
         public int Idade { get; set; }
         public string Telefone { get; set; }
@@ -12,6 +13,7 @@
         {
             return usuario == null ? null : new UsuarioGetDTO()
             {
+                Id = usuario.Id,
                 Cpf = usuario.Cpf.Numero,
                 Idade = usuario.Idade,
                 Telefone = usuario.Telefone.Numero,
