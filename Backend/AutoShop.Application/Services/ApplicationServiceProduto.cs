@@ -1,6 +1,7 @@
 ﻿using AutoShop.Application.DTO.Produto;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using AutoShop.Application.Result.Mapper;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.ValueObjects;
@@ -20,12 +21,12 @@ namespace AutoShop.Application.Services
             _serviceProduto = serviceProduto;
         }
 
-        public ApplicationResult Add(ProdutoCreateDTO produtoDTO)
+        public ApplicationCreateResult Add(ProdutoCreateDTO produtoDTO)
         {
             produtoDTO.Validate();
             if (!produtoDTO.IsValid) 
             {
-                return MountApplicationResultFromNotifiable(produtoDTO);
+                return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(null, produtoDTO);
             }
             //VO
             var nome = new Nome(produtoDTO.Nome);
@@ -33,7 +34,7 @@ namespace AutoShop.Application.Services
             //Entidade
             var produto = new Produto(nome, preco, (ProdutoTipoEnum)produtoDTO.Tipo);
             var result = _serviceProduto.Add(produto);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(produto.Id, result);
         }
 
         public IEnumerable<ProdutoGetDTO> GetAll()
@@ -52,7 +53,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Remove(string id)
         {
             var result = _serviceProduto.Remove(id);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
 
         public ApplicationResult Update(string id, ProdutoUpdateDTO produtoDTO)
@@ -62,20 +63,16 @@ namespace AutoShop.Application.Services
             if (produtoAtual == null)
             {
                 produtoDTO.AddNotification("Produto", "Não existe produto com o id informado!");
-                return MountApplicationResultFromNotifiable(produtoDTO);
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(produtoDTO);
             }
             if (!produtoDTO.IsValid)
             {
-                return MountApplicationResultFromNotifiable(produtoDTO);
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(produtoDTO);
             }
             var novoPreco = new Preco(produtoDTO.Preco);
             produtoAtual?.FillUpdate(novoPreco);
             var result = _serviceProduto.Update(produtoAtual);
-            return MountApplicationResultFromNotifiable(result);
-        }
-
-        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable) {
-            return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
     }
 }

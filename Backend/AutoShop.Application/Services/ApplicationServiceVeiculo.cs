@@ -1,6 +1,7 @@
 ﻿using AutoShop.Application.DTO.Veiculo;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using AutoShop.Application.Result.Mapper;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.ValueObjects;
@@ -20,12 +21,12 @@ namespace AutoShop.Application.Services
             _serviceVeiculo = serviceVeiculo;
         }
 
-        public ApplicationResult Add(VeiculoCreateDTO veiculoDTO)
+        public ApplicationCreateResult Add(VeiculoCreateDTO veiculoDTO)
         {
             veiculoDTO.Validate();
             if (!veiculoDTO.IsValid)
             {
-                return MountApplicationResultFromNotifiable(veiculoDTO);
+                return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(null, veiculoDTO);
             }
             // VO
             var nome = new Nome(veiculoDTO.Nome);
@@ -33,7 +34,7 @@ namespace AutoShop.Application.Services
             //Entidade
             var veiculo = new Veiculo(nome, veiculoDTO.Ano,veiculoDTO.Modelo, preco, veiculoDTO.ImageURL, (VeiculoTipoEnum)veiculoDTO.Tipo);
             var result = _serviceVeiculo.Add(veiculo);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(veiculo.Id, result);
         }
 
         public IEnumerable<VeiculoGetDTO> GetAll()
@@ -52,7 +53,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Remove(string id)
         {
             var result = _serviceVeiculo.Remove(id);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
 
         public ApplicationResult Update(string id, VeiculoUpdateDTO veiculoDTO)
@@ -65,17 +66,12 @@ namespace AutoShop.Application.Services
             }
             if (!veiculoDTO.IsValid)
             {
-                return MountApplicationResultFromNotifiable(veiculoDTO);
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(veiculoDTO);
             }
             var preco = new Preco(veiculoDTO.Valor);
             veiculoAtual?.FillUpdate(preco);
             var result = _serviceVeiculo.Update(veiculoAtual);
-            return MountApplicationResultFromNotifiable(result);
-        }
-
-        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable)
-        {
-            return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
     }
 }

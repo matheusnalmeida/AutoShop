@@ -1,6 +1,7 @@
 ﻿using AutoShop.Application.DTO.Usuario;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using AutoShop.Application.Result.Mapper;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.ValueObjects;
@@ -20,12 +21,12 @@ namespace AutoShop.Application.Services
             _serviceUsuario = serviceUsuario;
         }
 
-        public ApplicationResult Add(UsuarioCreateDTO usuarioDTO)
+        public ApplicationCreateResult Add(UsuarioCreateDTO usuarioDTO)
         {
             usuarioDTO.Validate();
             if (!usuarioDTO.IsValid) 
             {
-                return MountApplicationResultFromNotifiable(usuarioDTO);
+                return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(null, usuarioDTO);
             }
             // VO
             var cpf = new CPF(usuarioDTO.Cpf);
@@ -35,7 +36,7 @@ namespace AutoShop.Application.Services
             //Entidade
             var usuario = new Usuario(cpf, usuarioDTO.Idade, telefone, email, senha, (UsuarioTipoEnum)usuarioDTO.Tipo);
             var result = _serviceUsuario.Add(usuario);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(usuario.Id, result);
         }
 
         public IEnumerable<UsuarioGetDTO> GetAll()
@@ -54,7 +55,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Remove(string id)
         {
             var result = _serviceUsuario.Remove(id);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
 
         public ApplicationResult Update(string id, UsuarioUpdateDTO usuarioDTO)
@@ -67,19 +68,14 @@ namespace AutoShop.Application.Services
             }
             if (!usuarioDTO.IsValid)
             {
-                return MountApplicationResultFromNotifiable(usuarioDTO);
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(usuarioDTO);
             }
             var telefone = new Telefone(usuarioDTO.Telefone);
             var email = new Email(usuarioDTO.Email);
             var senha = new Senha(usuarioDTO.Senha);
             usuarioAtual?.FillUpdate(telefone, email, senha);
             var result = _serviceUsuario.Update(usuarioAtual);
-            return MountApplicationResultFromNotifiable(result);
-        }
-
-        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable)
-        {
-            return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
     }
 }

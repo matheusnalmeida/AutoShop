@@ -6,7 +6,7 @@ namespace AutoShop.Application.Interfaces
 {
     public interface IApplicationServiceProduto
     {
-        ApplicationResult Add(ProdutoCreateDTO obj);
+        ApplicationCreateResult Add(ProdutoCreateDTO obj);
 
         ProdutoGetDTO GetById(string Id);
 

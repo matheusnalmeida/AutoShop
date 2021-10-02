@@ -1,6 +1,7 @@
 ﻿using AutoShop.Application.DTO.Operacao;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using AutoShop.Application.Result.Mapper;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
 using Flunt.Notifications;
@@ -25,7 +26,7 @@ namespace AutoShop.Application.Services
             _serviceUsuario = serviceUsuario;
         }
 
-        public ApplicationResult Add(OperacaoCreateDTO operacaoDTO)
+        public ApplicationCreateResult Add(OperacaoCreateDTO operacaoDTO)
         {
             var veiculo = _serviceVeiculo.GetById(operacaoDTO.IdVeiculo);
             var cliente = _serviceUsuario.GetById(operacaoDTO.IdCliente);
@@ -40,7 +41,7 @@ namespace AutoShop.Application.Services
             operacaoDTO.Validate();
             if (!operacaoDTO.IsValid)
             {
-                return MountApplicationResultFromNotifiable(operacaoDTO);
+                return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(null, operacaoDTO);
             }
             //Entidade
             var operacao = new Operacao(veiculo.Preco, operacaoDTO.QuantidadeDeParcelas, veiculo, cliente);
@@ -49,7 +50,7 @@ namespace AutoShop.Application.Services
                 operacao.AdicionarProdutoOperacao(new ProdutoOperacao(operacao.Id, idProduto));
             }
             var result = _serviceOperacao.Add(operacao);
-            return MountApplicationResultFromNotifiable(result);
+            return ApplicationResultMapper.MountApplicationCreateResultFromNotifiable(operacao.Id, result);
         }
 
         public IEnumerable<OperacaoGetDTO> GetAll()
@@ -63,11 +64,6 @@ namespace AutoShop.Application.Services
             var operacao = _serviceOperacao.GetById(id);
             var operacaoDTO = OperacaoGetDTO.MapEntityAsDTO(operacao);
             return operacaoDTO;
-        }
-
-        private static ApplicationResult MountApplicationResultFromNotifiable(Notifiable<Notification> notifiable)
-        {
-            return new ApplicationResult(notifiable.IsValid, notifiable.Notifications.Select(x => x.Message));
         }
     }
 }

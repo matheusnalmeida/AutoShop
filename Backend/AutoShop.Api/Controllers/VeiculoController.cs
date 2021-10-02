@@ -30,7 +30,7 @@ namespace AutoShop.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ApplicationResult> Post([FromBody] VeiculoCreateDTO veiculoDTO)
+        public ActionResult<ApplicationCreateResult> Post([FromBody] VeiculoCreateDTO veiculoDTO)
         {
             if (veiculoDTO == null)
                 return BadRequest();
