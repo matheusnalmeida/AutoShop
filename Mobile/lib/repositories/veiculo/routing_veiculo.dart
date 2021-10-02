@@ -1,7 +1,7 @@
  import 'package:autoshop_application/tools/common.dart';
 
-class RoutingVeiculo extends Common{
+class RoutingVeiculo{
   static const baseName = "/Veiculo";
   
-  static const veiculoURL = "${Common.apiURL}$baseName";
+  static Uri veiculoURL = Uri.parse("${Common.apiURL}$baseName");
 }

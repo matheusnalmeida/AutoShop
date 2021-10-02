@@ -1,7 +1,7 @@
 import 'package:autoshop_application/blocs/veiculo/bloc.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/constants/colors.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_custom_drawer.dart';
+import 'package:autoshop_application/ui/widgets/app_custom_drawer.dart';
 import 'package:autoshop_application/ui/widgets/shared/error.dart';
 import 'package:autoshop_application/ui/widgets/shared/noresult_found.dart';
 import 'package:flutter/material.dart';
@@ -100,8 +100,6 @@ class _VeiculoListState extends State<VeiculoList> {
           style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
         subtitle: Row(
           children: <Widget>[
             Text(veiculo.modelo,
