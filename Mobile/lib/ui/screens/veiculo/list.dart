@@ -35,7 +35,7 @@ class _VeiculoListState extends State<VeiculoList> {
           builder: (BuildContext context, VeiculoState state) {
         if (state is LoadingState) {
           return const Center(
-              child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           );
         }
         if (state is ErrorState) {
@@ -43,7 +43,8 @@ class _VeiculoListState extends State<VeiculoList> {
         }
         if (state is LoadedSucessState) {
           if (state.veiculos.isEmpty) {
-            return const NoResultFound(customMessage: "Nenhum veiculo cadastrado");
+            return const NoResultFound(
+                customMessage: "Nenhum veiculo cadastrado");
           }
           return ListView.builder(
             itemCount: state.veiculos.length,
@@ -60,11 +61,25 @@ class _VeiculoListState extends State<VeiculoList> {
 
   Card _vehicleCard(Veiculo veiculo, BuildContext context) {
     return Card(
+      color: AppColor.vehicleCardColor,
       elevation: 8.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
-        decoration: const BoxDecoration(color: AppColor.vehicleCardColor),
-        child: _vehicleListTitle(veiculo, context),
+      child: Row(
+        children: [
+          Flexible(
+            child: Container(
+              child: _vehicleListTitle(veiculo, context),
+            ),
+          ),
+          IconButton(
+            onPressed: () => {},
+            icon: const Icon(Icons.edit, color: Colors.yellow),
+          ),
+          IconButton(
+            onPressed: () => {},
+            icon: const Icon(Icons.delete, color: Colors.red)
+          ),
+        ],
       ),
     );
   }
@@ -72,7 +87,7 @@ class _VeiculoListState extends State<VeiculoList> {
   ListTile _vehicleListTitle(Veiculo veiculo, BuildContext context) {
     return ListTile(
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
         leading: Container(
           padding: const EdgeInsets.only(right: 12.0),
           decoration: const BoxDecoration(
@@ -83,18 +98,16 @@ class _VeiculoListState extends State<VeiculoList> {
         title: Text(
           veiculo.nome,
           style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
         subtitle: Row(
           children: <Widget>[
             Text(veiculo.modelo,
-                style: const TextStyle(color: Colors.white, fontSize: 25))
+                style: const TextStyle(color: Colors.white, fontSize: 20))
           ],
-        ),
-        trailing: const Icon(Icons.keyboard_arrow_right,
-            color: Colors.white, size: 30.0));
+        ));
   }
 
   @override
