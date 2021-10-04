@@ -1,7 +1,8 @@
 import 'package:autoshop_application/blocs/veiculo/bloc.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/constants/colors.dart';
-import 'package:autoshop_application/ui/screens/veiculo/form/form.dart';
+import 'package:autoshop_application/ui/screens/veiculo/details.dart';
+import 'package:autoshop_application/ui/screens/veiculo/form.dart';
 import 'package:autoshop_application/ui/widgets/app_custom_drawer.dart';
 import 'package:autoshop_application/ui/widgets/shared/error.dart';
 import 'package:autoshop_application/ui/widgets/shared/noresult_found.dart';
@@ -55,7 +56,8 @@ class _VeiculoListState extends State<VeiculoList> {
           return RefreshIndicator(
             onRefresh: () {
               return Future.delayed(const Duration(seconds: 1), () {
-                BlocProvider.of<VeiculoBloc>(context).add(GetAllVeiculosEvent());
+                BlocProvider.of<VeiculoBloc>(context)
+                    .add(GetAllVeiculosEvent());
               });
             },
             child: ListView.builder(
@@ -73,31 +75,40 @@ class _VeiculoListState extends State<VeiculoList> {
     );
   }
 
-  Card _vehicleCard(Veiculo veiculo, BuildContext context) {
-    return Card(
-      color: AppColor.vehicleCardColor,
-      elevation: 8.0,
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Row(
-        children: [
-          Flexible(
-            child: Container(
-              child: _vehicleListTitle(veiculo, context),
+  InkWell _vehicleCard(Veiculo veiculo, BuildContext context) {
+    return InkWell(
+      onTap: () => {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return VeiculoDetails(newVeiculo: false, veiculo: veiculo);
+        }))
+      },
+      child: Card(
+        color: AppColor.vehicleCardColor,
+        elevation: 8.0,
+        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Row(
+          children: [
+            Flexible(
+              child: Container(
+                child: _vehicleListTitle(veiculo, context),
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return VeiculoForm(newVeiculo: false, veiculo: veiculo);
-              }))
-            },
-            icon: const Icon(Icons.edit, color: Colors.yellow),
-          ),
-          IconButton(
-              onPressed: () => {},
-              icon: const Icon(Icons.delete, color: Colors.red)),
-        ],
+            IconButton(
+              onPressed: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return VeiculoForm(newVeiculo: false, veiculo: veiculo);
+                }))
+              },
+              icon: const Icon(Icons.edit, color: Colors.yellow),
+            ),
+            IconButton(
+                onPressed: () =>
+                    {_showDeleteDialog(DeleteVeiculoEvent(veiculo))},
+                icon: const Icon(Icons.delete, color: Colors.red)),
+          ],
+        ),
       ),
     );
   }
@@ -129,5 +140,29 @@ class _VeiculoListState extends State<VeiculoList> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _showDeleteDialog(DeleteVeiculoEvent event) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirmar Deleção'),
+            content: const Text("Deseja realmente deletar este veiculo?"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'OK');
+                  BlocProvider.of<VeiculoBloc>(context).add(event);
+                },
+                child: const Text('Sim'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('Não'),
+              ),
+            ],
+          );
+        });
   }
 }

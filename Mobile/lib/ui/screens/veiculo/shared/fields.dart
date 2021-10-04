@@ -1,3 +1,4 @@
+import 'package:autoshop_application/ui/widgets/shared/fields_validator.dart';
 import 'package:autoshop_application/ui/widgets/shared/regex_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class VeiculoNomeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: formData["isCreate"],
+      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o nome do veiculo';
@@ -42,7 +43,7 @@ class VeiculoAnoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: formData["isCreate"],
+      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o ano do veiculo';
@@ -76,7 +77,7 @@ class VeiculoModeloField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: formData["isCreate"],
+      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor informe o modelo do veiculo';
@@ -112,6 +113,7 @@ class VeiculoPrecoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor informe o preço do veiculo';
@@ -147,6 +149,7 @@ class VeiculoImagemUrlField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor informe a url para a imagem do veiculo';

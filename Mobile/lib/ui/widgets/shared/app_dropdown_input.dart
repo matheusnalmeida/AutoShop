@@ -1,3 +1,4 @@
+import 'package:autoshop_application/ui/widgets/shared/fields_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,11 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
 
   @override
   Widget build(BuildContext context) {
-    selectedValue = widget.formData[widget.formProperty];
+    var formData = widget.formData;
+    selectedValue = formData[widget.formProperty];
 
     return FormField<T>(
-      enabled: widget.formData["isCreate"],
+      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
       builder: (FormFieldState<T> state) {
         return InputDecorator(
           decoration: InputDecoration(
@@ -46,7 +48,7 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
                 FocusScope.of(context).requestFocus(FocusNode()),
                 setState(() {
                   selectedValue = newValue;
-                  widget.formData[widget.formProperty] = newValue;
+                  formData[widget.formProperty] = newValue;
                 })
               },
               items: widget.options.map((T value) {

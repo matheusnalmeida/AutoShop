@@ -12,8 +12,9 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
 
   VeiculoBloc(this.repository) : super(const LoadingState()) {
     on<GetAllVeiculosEvent>(_onPostFetched);
-    on<CreateVeiculoEvent>(_onPostCreate);
-    on<UpdateVeiculoEvent>(_onPostUpdate);
+    on<CreateVeiculoEvent>(_onCreate);
+    on<UpdateVeiculoEvent>(_onUpdate);
+    on<DeleteVeiculoEvent>(_onDelete);
   }
 
   Future<void> _onPostFetched(
@@ -29,7 +30,7 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
     }
   }
 
-  Future<void> _onPostCreate(
+  Future<void> _onCreate(
       CreateVeiculoEvent event, Emitter<VeiculoState> emit) async {
     try {
       emit(const LoadingState());
@@ -46,7 +47,7 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
     }
   }
 
-  Future<void> _onPostUpdate(
+  Future<void> _onUpdate(
       UpdateVeiculoEvent event, Emitter<VeiculoState> emit) async {
     try {
       emit(const LoadingState());
@@ -59,6 +60,22 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
       return emit(ErrorState(ex.message));
     } catch (_) {
       return emit(const ErrorState("Erro ao tentar atualizar veiculo!"));
+    }
+  }
+
+  Future<void> _onDelete(
+      DeleteVeiculoEvent event, Emitter<VeiculoState> emit) async {
+    try {
+      emit(const LoadingState());
+      var result = await repository.deleteVeiculo(event.veiculo.id!);
+      if (result.sucesso) {
+        add(GetAllVeiculosEvent());
+        return;
+      }
+    } on HttpException catch (ex) {
+      return emit(ErrorState(ex.message));
+    } catch (_) {
+      return emit(const ErrorState("Erro ao tentar remover veiculo!"));
     }
   }
 }

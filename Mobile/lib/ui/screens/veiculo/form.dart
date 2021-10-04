@@ -2,7 +2,7 @@ import 'package:autoshop_application/blocs/veiculo/veiculo_bloc.dart';
 import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/enums/veiculo_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
-import 'package:autoshop_application/ui/screens/veiculo/form/form_fields.dart';
+import 'package:autoshop_application/ui/screens/veiculo/shared/fields.dart';
 import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';

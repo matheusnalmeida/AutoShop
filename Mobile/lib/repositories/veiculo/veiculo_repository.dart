@@ -55,7 +55,7 @@ class VeiculoRepository {
     return ApiResult.fromJson(json.decode(response.body));
   }
 
-  Future<ApiResult> deleteAlbum(String id) async {
+  Future<ApiResult> deleteVeiculo(String id) async {
       final response = await http.delete(
         Uri.parse('${RoutingVeiculo.veiculoURL}/$id'),
         headers: Common.apiHeaders,
