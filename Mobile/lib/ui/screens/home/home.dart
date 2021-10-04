@@ -1,5 +1,5 @@
 import 'package:autoshop_application/constants/assets.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_custom_drawer.dart';
+import 'package:autoshop_application/ui/widgets/app_custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

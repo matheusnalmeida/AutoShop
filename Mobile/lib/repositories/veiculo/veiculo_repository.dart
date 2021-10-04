@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:autoshop_application/exceptions/http_exception.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/models/results/api_creation_result.dart';
 import 'package:autoshop_application/models/results/api_result.dart';
@@ -13,10 +12,6 @@ class VeiculoRepository {
 
   Future<List<Veiculo>> fetchAllVeiculos() async {
     final response = await http.get(RoutingVeiculo.veiculoURL);
-
-    if (response.statusCode != 200) {
-      throw HttpException('Não foi possivel obter a lista de veiculos!');
-    }
 
     final Iterable result = json.decode(response.body);
     return result.map((veiculo) => Veiculo.fromJson(veiculo)).toList();
@@ -40,7 +35,7 @@ class VeiculoRepository {
         'ano': veiculo.ano,
         'modelo': veiculo.modelo,
         'valor': veiculo.preco,
-        'tipo': veiculo.tipo,
+        'tipo': veiculo.tipo!.index + 1,
       }),
     );
 

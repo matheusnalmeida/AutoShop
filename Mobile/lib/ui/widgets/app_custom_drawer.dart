@@ -1,8 +1,7 @@
 import 'package:autoshop_application/constants/assets.dart';
 import 'package:autoshop_application/constants/colors.dart';
+import 'package:autoshop_application/ui/widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';
-
-import 'custom_list_tile.dart';
 
 class AppCustomDrawer extends StatelessWidget {
   const AppCustomDrawer({Key? key}) : super(key: key);

@@ -1,6 +1,7 @@
 import 'package:autoshop_application/blocs/veiculo/bloc.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/constants/colors.dart';
+import 'package:autoshop_application/ui/screens/veiculo/form/form.dart';
 import 'package:autoshop_application/ui/widgets/app_custom_drawer.dart';
 import 'package:autoshop_application/ui/widgets/shared/error.dart';
 import 'package:autoshop_application/ui/widgets/shared/noresult_found.dart';
@@ -26,7 +27,12 @@ class _VeiculoListState extends State<VeiculoList> {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) {
+            return const VeiculoForm(newVeiculo: true);
+          }));
+        },
         child: const Icon(Icons.add),
         backgroundColor: AppColor.headerBarColor,
       ),
@@ -46,12 +52,20 @@ class _VeiculoListState extends State<VeiculoList> {
             return const NoResultFound(
                 customMessage: "Nenhum veiculo cadastrado");
           }
-          return ListView.builder(
-            itemCount: state.veiculos.length,
-            itemBuilder: (context, index) {
-              final item = state.veiculos[index];
-              return _vehicleCard(item, context);
+          return RefreshIndicator(
+            onRefresh: () {
+              return Future.delayed(const Duration(seconds: 1), () {
+                BlocProvider.of<VeiculoBloc>(context).add(GetAllVeiculosEvent());
+              });
             },
+            child: ListView.builder(
+              itemCount: state.veiculos.length,
+              itemBuilder: (context, index) {
+                final item = state.veiculos[index];
+                return _vehicleCard(item, context);
+              },
+              physics: const AlwaysScrollableScrollPhysics(),
+            ),
           );
         }
         return Container();
@@ -72,13 +86,17 @@ class _VeiculoListState extends State<VeiculoList> {
             ),
           ),
           IconButton(
-            onPressed: () => {},
+            onPressed: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return VeiculoForm(newVeiculo: false, veiculo: veiculo);
+              }))
+            },
             icon: const Icon(Icons.edit, color: Colors.yellow),
           ),
           IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.delete, color: Colors.red)
-          ),
+              onPressed: () => {},
+              icon: const Icon(Icons.delete, color: Colors.red)),
         ],
       ),
     );
@@ -93,16 +111,16 @@ class _VeiculoListState extends State<VeiculoList> {
           decoration: const BoxDecoration(
               border:
                   Border(right: BorderSide(width: 1.0, color: Colors.white24))),
-          child: Image.network(veiculo.imagemURL),
+          child: Image.network(veiculo.imagemURL!),
         ),
         title: Text(
-          veiculo.nome,
+          veiculo.nome!,
           style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
         subtitle: Row(
           children: <Widget>[
-            Text(veiculo.modelo,
+            Text(veiculo.modelo!,
                 style: const TextStyle(color: Colors.white, fontSize: 20))
           ],
         ));

@@ -2,28 +2,51 @@ import 'package:autoshop_application/enums/veiculo_tipo_enum.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
 
-class Veiculo extends Equatable{
+class Veiculo extends Equatable {
+  final String? id;
+  final String? nome;
+  final int? ano;
+  final String? modelo;
+  final double? preco;
+  final String? imagemURL;
+  final VeiculoTipoEnum? tipo;
 
-  final String id;
-  final String nome;
-  final int ano;
-  final String modelo;
-  final double preco;
-  final String imagemURL;
-  final VeiculoTipoEnum tipo;
+  const Veiculo(
+      {this.id,
+      this.nome,
+      this.ano,
+      this.modelo,
+      this.preco,
+      this.imagemURL,
+      this.tipo});
 
-  const Veiculo({required this.id, required this.nome, required this.ano, required this.modelo, required this.preco, required this.imagemURL, required this.tipo});
-  
   static Veiculo fromJson(dynamic json) {
     return Veiculo(
-      id: json['id'],
-      nome: json['nome'],
-      ano: json['ano'],
-      modelo: json['modelo'],
-      preco: json['valor'],
-      imagemURL: json['imageURL'],
-      tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!
-    );
+        id: json['id'],
+        nome: json['nome'],
+        ano: json['ano'],
+        modelo: json['modelo'],
+        preco: json['valor'],
+        imagemURL: json['imageURL'],
+        tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!);
+  }
+
+  static Veiculo jsonMapInsert(dynamic json) {
+    return Veiculo(
+        nome: json['nome'],
+        ano: json['ano'],
+        modelo: json['modelo'],
+        preco: json['valor'],
+        imagemURL: json['imageURL'],
+        tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!);
+  }
+
+  static Veiculo jsonMapUpdate(dynamic json) {
+    return Veiculo(
+        id: json['id'],
+        preco: json['valor'],
+        imagemURL: json['imageURL'],
+        tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!);
   }
 
   @override
