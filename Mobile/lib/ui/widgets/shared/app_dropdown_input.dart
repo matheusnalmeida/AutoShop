@@ -31,7 +31,6 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
     selectedValue = formData[widget.formProperty];
 
     return FormField<T>(
-      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
       builder: (FormFieldState<T> state) {
         return InputDecorator(
           decoration: InputDecoration(
@@ -44,13 +43,16 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
             child: DropdownButton<T>(
               value: selectedValue,
               isDense: true,
-              onChanged: (T? newValue) => {
-                FocusScope.of(context).requestFocus(FocusNode()),
-                setState(() {
-                  selectedValue = newValue;
-                  formData[widget.formProperty] = newValue;
-                })
-              },
+              onChanged: FieldsValidator.isCreate(formData) ||
+                      !FieldsValidator.isDetails(formData)
+                  ? (T? newValue) => {
+                        FocusScope.of(context).requestFocus(FocusNode()),
+                        setState(() {
+                          selectedValue = newValue;
+                          formData[widget.formProperty] = newValue;
+                        })
+                      }
+                  : null,
               items: widget.options.map((T value) {
                 return DropdownMenuItem<T>(
                   value: value,

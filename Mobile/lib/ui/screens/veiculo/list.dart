@@ -46,7 +46,34 @@ class _VeiculoListState extends State<VeiculoList> {
           );
         }
         if (state is ErrorState) {
-          return CustomError(customMessage: state.message);
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomError(customMessage: state.message),
+              GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<VeiculoBloc>(context)
+                        .add(GetAllVeiculosEvent());
+                  },
+                  child: RichText(
+                    text: const TextSpan(
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Clique'),
+                        TextSpan(
+                            text: ' Aqui ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue)),
+                        TextSpan(text: 'para recarregar a lista de veiculos'),
+                      ],
+                    ),
+                  ))
+            ],
+          );
         }
         if (state is LoadedSucessState) {
           if (state.veiculos.isEmpty) {
