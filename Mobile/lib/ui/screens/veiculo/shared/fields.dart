@@ -12,7 +12,7 @@ class VeiculoNomeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o nome do veiculo';
@@ -43,7 +43,7 @@ class VeiculoAnoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o ano do veiculo';
@@ -77,7 +77,7 @@ class VeiculoModeloField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor informe o modelo do veiculo';

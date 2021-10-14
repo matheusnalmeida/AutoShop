@@ -11,7 +11,7 @@ class ProdutoNomeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) || !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o nome do produto';

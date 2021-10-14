@@ -43,7 +43,7 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
             child: DropdownButton<T>(
               value: selectedValue,
               isDense: true,
-              onChanged: FieldsValidator.isCreate(formData) ||
+              onChanged: FieldsValidator.isCreate(formData) &&
                       !FieldsValidator.isDetails(formData)
                   ? (T? newValue) => {
                         FocusScope.of(context).requestFocus(FocusNode()),
