@@ -4,6 +4,7 @@ using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AutoShop.Domain.Service.Services
 {
@@ -29,7 +30,7 @@ namespace AutoShop.Domain.Service.Services
 
         public IEnumerable<Produto> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().Where(x => x.Ativo);
         }
 
         public Produto GetById(string id)
