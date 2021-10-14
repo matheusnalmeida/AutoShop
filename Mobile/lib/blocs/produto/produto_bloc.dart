@@ -21,8 +21,8 @@ class ProdutoBloc extends Bloc<ProdutoEvent, ProdutoState> {
       GetAllProdutosEvent event, Emitter<ProdutoState> emit) async {
     try {
       emit(const LoadingState());
-      var albums = (await repository.fetchAllProdutos());
-      return emit(LoadedSucessState(albums));
+      var result = (await repository.fetchAllProdutos());
+      return emit(LoadedSucessState(result));
     } on HttpException catch (ex) {
       return emit(ErrorState(ex.message));
     } catch (_) {

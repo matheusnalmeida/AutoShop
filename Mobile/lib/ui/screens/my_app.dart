@@ -1,3 +1,4 @@
+import 'package:autoshop_application/blocs/produto/bloc.dart';
 import 'package:autoshop_application/blocs/veiculo/veiculo_bloc.dart';
 import 'package:autoshop_application/repositories/repository.dart';
 import 'package:autoshop_application/constants/colors.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<VeiculoBloc>(
           create: (BuildContext context) => VeiculoBloc(VeiculoRepository()),
+        ),
+        BlocProvider<ProdutoBloc>(
+          create: (BuildContext context) => ProdutoBloc(ProdutoRepository()),
         ),
       ],
       child: MaterialApp(

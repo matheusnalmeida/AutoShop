@@ -32,20 +32,7 @@ class _VeiculoDetailsState extends State<VeiculoDetails> {
         title: const Text(
           'Detalhes',
           style: TextStyle(color: Colors.white),
-        ),
-        //leading: IconButton(
-        //  icon: const Icon(
-        //    Icons.arrow_back,
-        //    color: Colors.white,
-        //  ),
-        //  onPressed: () {
-        //    VeiculoBloc bloc = BlocProvider.of<VeiculoBloc>(context);
-        //    if (bloc.state is ErrorState) {
-        //      BlocProvider.of<VeiculoBloc>(context).add(GetAllVeiculosEvent());
-        //    }
-        //    Navigator.pop(context);
-        //  },
-        //),
+        )
       ),
       body: SingleChildScrollView(
         child: Form(

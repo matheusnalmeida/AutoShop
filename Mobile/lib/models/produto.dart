@@ -18,21 +18,21 @@ class Produto extends Equatable {
     return Produto(
         id: json['id'],
         nome: json['nome'],
-        preco: json['valor'],
+        preco: json['preco'],
         tipo: EnumToString.fromString(ProdutoTipoEnum.values, json['tipo'])!);
   }
 
   static Produto jsonMapInsert(dynamic json) {
     return Produto(
         nome: json['nome'],
-        preco: json['valor'],
+        preco: json['preco'],
         tipo: EnumToString.fromString(ProdutoTipoEnum.values, json['tipo'])!);
   }
 
   static Produto jsonMapUpdate(dynamic json) {
     return Produto(
         id: json['id'],
-        preco: json['valor'],
+        preco: json['preco'],
         tipo: EnumToString.fromString(ProdutoTipoEnum.values, json['tipo'])!);
   }
 

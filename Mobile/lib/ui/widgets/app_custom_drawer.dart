@@ -40,7 +40,7 @@ class AppCustomDrawer extends StatelessWidget {
                 CustomListTile(
                     icon: Icons.add_shopping_cart,
                     text: 'Produtos',
-                    onTap: () => {}),
+                    onTap: () => {doRoute(context, '/produtos')}),
                 CustomListTile(
                     icon: Icons.monetization_on,
                     text: 'Operação',

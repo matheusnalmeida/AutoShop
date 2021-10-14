@@ -21,8 +21,8 @@ class VeiculoBloc extends Bloc<VeiculoEvent, VeiculoState> {
       GetAllVeiculosEvent event, Emitter<VeiculoState> emit) async {
     try {
       emit(const LoadingState());
-      var albums = (await repository.fetchAllVeiculos());
-      return emit(LoadedSucessState(albums));
+      var result = (await repository.fetchAllVeiculos());
+      return emit(LoadedSucessState(result));
     } on HttpException catch (ex) {
       return emit(ErrorState(ex.message));
     } catch (_) {

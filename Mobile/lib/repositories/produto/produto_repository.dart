@@ -31,10 +31,7 @@ class ProdutoRepository {
       headers: Common.apiHeaders,
       body: jsonEncode(<String, dynamic>{
         'nome': produto.nome,
-        'imageURL': produto.imagemURL,
-        'ano': produto.ano,
-        'modelo': produto.modelo,
-        'valor': produto.preco,
+        'preco': produto.preco,
         'tipo': produto.tipo!.index + 1,
       }),
     );
@@ -47,8 +44,7 @@ class ProdutoRepository {
       Uri.parse('${RoutingProduto.produtoURL}?id=${produto.id}'),
       headers: Common.apiHeaders,
       body: jsonEncode(<String, dynamic>{
-        'imageURL': produto.imagemURL,
-        'valor': produto.preco
+        'preco': produto.preco
       }),
     );
 
