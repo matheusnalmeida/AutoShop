@@ -45,7 +45,7 @@ namespace AutoShop.Application.Services
 
         public VeiculoGetDTO GetById(string id)
         {
-            var veiculo = _serviceVeiculo.GetById(id);
+            var veiculo = _serviceVeiculo.GetById(new string[] { id }).FirstOrDefault();
             var veiculoDTO = VeiculoGetDTO.MapEntityAsDTO(veiculo);
             return veiculoDTO;
         }
@@ -59,7 +59,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Update(string id, VeiculoUpdateDTO veiculoDTO)
         {
             veiculoDTO.Validate();
-            var veiculoAtual = _serviceVeiculo.GetById(id);
+            var veiculoAtual = _serviceVeiculo.GetById(new string[] { id }).FirstOrDefault();
             if (veiculoAtual == null)
             {
                 veiculoDTO.AddNotification("Veiculo", "Não existe veiculo com o id informado!");

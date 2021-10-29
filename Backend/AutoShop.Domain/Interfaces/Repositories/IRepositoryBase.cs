@@ -1,5 +1,7 @@
 ﻿using AutoShop.Shared.Entities;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Domain.Interfaces.Repositories
 {
@@ -7,9 +9,9 @@ namespace AutoShop.Domain.Interfaces.Repositories
     {
         void Add(TEntity obj);
 
-        TEntity GetById(string id);
+        IQueryable<TEntity> GetById(string[] ids, params Expression<Func<TEntity, object>>[] includeProperties);
 
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
 
         void Update(TEntity obj);
 

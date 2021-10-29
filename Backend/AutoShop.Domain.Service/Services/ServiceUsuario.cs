@@ -3,7 +3,10 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Domain.Service.Services
 {
@@ -28,19 +31,19 @@ namespace AutoShop.Domain.Service.Services
             return usuario;
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public IQueryable<Usuario> GetAll(params Expression<Func<Usuario, object>>[] includeProperties)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(includeProperties);
         }
 
-        public Usuario GetById(string id)
+        public IQueryable<Usuario> GetById(string[] ids, params Expression<Func<Usuario, object>>[] includeProperties)
         {
-            return _repository.GetById(id);
+            return _repository.GetById(ids, includeProperties);
         }
 
         public Notifiable<Notification> Remove(string id)
         {
-            var usuarioAtual = GetById(id);
+            var usuarioAtual = GetById(new string[] { id }).FirstOrDefault();
             if (usuarioAtual == null) 
             {
                 var usuarioNaoExistenteResult = new ServiceNotification(new Notification("Usuario", "Não existe usuario com o id informado"));
@@ -54,7 +57,11 @@ namespace AutoShop.Domain.Service.Services
         public Notifiable<Notification> Update(Usuario usuario)
         {
             usuario.ValidateUpdate();
-            ValidaUsuarioExiste(usuario);
+            var usuarioAtual = GetById(new string[] { usuario?.Id }).FirstOrDefault();
+            if (usuarioAtual == null)
+            {
+                usuario.AddNotification("Usuario", "Não existe usuario com o id informado");
+            }
             if (!usuario.IsValid)
             {
                 return usuario;
@@ -62,15 +69,6 @@ namespace AutoShop.Domain.Service.Services
             _repository.Update(usuario);
             _unitOfWork.PersistChanges();
             return usuario;
-        }
-
-        private void ValidaUsuarioExiste(Usuario usuario)
-        {
-            var usuarioAtual = GetById(usuario?.Id);
-            if (usuarioAtual == null)
-            {
-                usuario.AddNotification("Usuario", "Não existe usuario com o id informado");
-            }
         }
     }
 }

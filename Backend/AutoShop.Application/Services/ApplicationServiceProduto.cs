@@ -45,7 +45,7 @@ namespace AutoShop.Application.Services
 
         public ProdutoGetDTO GetById(string id)
         {
-            var produto = _serviceProduto.GetById(id);
+            var produto = _serviceProduto.GetById(new string[] { id }).FirstOrDefault();
             var produtoDTO = ProdutoGetDTO.MapEntityAsDTO(produto);
             return produtoDTO;
         }
@@ -59,7 +59,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Update(string id, ProdutoUpdateDTO produtoDTO)
         {
             produtoDTO.Validate();
-            var produtoAtual = _serviceProduto.GetById(id);
+            var produtoAtual = _serviceProduto.GetById(new string[] { id }).FirstOrDefault();
             if (produtoAtual == null)
             {
                 produtoDTO.AddNotification("Produto", "Não existe produto com o id informado!");

@@ -6,6 +6,7 @@ using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Domain.Service.Services
 {
@@ -25,7 +26,7 @@ namespace AutoShop.Domain.Service.Services
         public Notifiable<Notification> Add(Operacao operacao)
         {
             var produtosOperacaoAtual = operacao.ProdutoOperacoes ?? new List<ProdutoOperacao>();
-            var produtosExistentes = _repositoryProduto.GetByIds(produtosOperacaoAtual.Select(obj => obj.IdProduto)).ToDictionary(x => x.Id, y => y);
+            var produtosExistentes = _repositoryProduto.GetById(produtosOperacaoAtual.Select(obj => obj.IdProduto).ToArray()).ToDictionary(x => x.Id, y => y);
             if (produtosOperacaoAtual.Count() != produtosExistentes.Count) 
             {
                 var idProdutosExistentes = produtosExistentes.Select(x => x.Key).ToHashSet();
@@ -54,14 +55,14 @@ namespace AutoShop.Domain.Service.Services
             return operacao;
         }
 
-        public IEnumerable<Operacao> GetAll()
+        public IQueryable<Operacao> GetAll(params Expression<Func<Operacao, object>>[] includeProperties)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(includeProperties);
         }
 
-        public Operacao GetById(string id)
+        public IQueryable<Operacao> GetById(string[] ids, params Expression<Func<Operacao, object>>[] includeProperties)
         {
-            return _repository.GetById(id);
+            return _repository.GetById(ids, includeProperties);
         }
 
         public Preco CalcularValorFinanciado(decimal valorTotal, int quantidadeDeParcelas)

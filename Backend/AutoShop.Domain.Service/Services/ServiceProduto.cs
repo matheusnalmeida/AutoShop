@@ -3,8 +3,10 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Domain.Service.Services
 {
@@ -28,19 +30,19 @@ namespace AutoShop.Domain.Service.Services
             return produto;
         }
 
-        public IEnumerable<Produto> GetAll()
+        public IQueryable<Produto> GetAll(params Expression<Func<Produto, object>>[] includeProperties)
         {
-            return _repository.GetAll().Where(x => x.Ativo);
+            return _repository.GetAll(includeProperties).Where(x => x.Ativo);
         }
 
-        public Produto GetById(string id)
+        public IQueryable<Produto> GetById(string[] ids, params Expression<Func<Produto, object>>[] includeProperties)
         {
-            return _repository.GetById(id);
+            return _repository.GetById(ids, includeProperties);
         }
 
         public Notifiable<Notification> Remove(string id)
         {
-            var produtoAtual = GetById(id);
+            var produtoAtual = GetById(new string[] { id }).FirstOrDefault();
             if (produtoAtual == null)
             {
                 var produtoNaoExistenteResult = new ServiceNotification(new Notification("Produto", "Não existe produto com o id informado"));
@@ -54,7 +56,11 @@ namespace AutoShop.Domain.Service.Services
         public Notifiable<Notification> Update(Produto produto)
         {
             produto.ValidateUpdate();
-            ValidaProdutoExiste(produto);
+            var produtoAtual = _repository.GetById(new string[] { produto.Id }).FirstOrDefault();
+            if (produtoAtual == null)
+            {
+                produto.AddNotification("Produto", "Não existe produto com o id informado");
+            }
             if (!produto.IsValid)
             {
                 return produto;
@@ -62,15 +68,6 @@ namespace AutoShop.Domain.Service.Services
             _repository.Update(produto);
             _unitOfWork.PersistChanges();
             return produto;
-        }
-
-        private void ValidaProdutoExiste(Produto produto)
-        {
-            var produtoAtual = _repository.GetById(produto.Id);
-            if (produtoAtual == null)
-            {
-                produto.AddNotification("Produto", "Não existe produto com o id informado");
-            }
         }
     }
 }

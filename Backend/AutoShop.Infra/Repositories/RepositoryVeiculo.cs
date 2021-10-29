@@ -3,7 +3,9 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Infra.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Infra.Repositories
 {
@@ -19,19 +21,22 @@ namespace AutoShop.Infra.Repositories
             }
         }
 
-        public IQueryable<Veiculo> GetAll()
+        public IQueryable<Veiculo> GetAll(params Expression<Func<Veiculo, object>>[] includeProperties)
         {
+            foreach (var property in includeProperties)
+            {
+                DbSet.Include(property);
+            }
             return DbSet.AsQueryable();
         }
 
-        public Veiculo GetById(string id)
+        public IQueryable<Veiculo> GetById(string[] ids, params Expression<Func<Veiculo, object>>[] includeProperties)
         {
-            return DbSet.FirstOrDefault(veiculo => veiculo.Id == id);
-        }
-
-        public IQueryable<Veiculo> GetByIds(IEnumerable<string> ids)
-        {
-            return DbSet.Where(veiculo => ids.Contains(veiculo.Id));
+            foreach (var property in includeProperties)
+            {
+                DbSet.Include(property);
+            }
+            return DbSet.Where(veiculo => ids.Contains(veiculo.Id)).AsQueryable();
         }
 
         public void Remove(Veiculo veiculo)

@@ -3,8 +3,10 @@ using AutoShop.Domain.Interfaces.Repositories;
 using AutoShop.Domain.Interfaces.Services;
 using AutoShop.Domain.Notifications;
 using Flunt.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoShop.Domain.Service.Services
 {
@@ -29,19 +31,19 @@ namespace AutoShop.Domain.Service.Services
             return veiculo;
         }
 
-        public IEnumerable<Veiculo> GetAll()
+        public IQueryable<Veiculo> GetAll(params Expression<Func<Veiculo, object>>[] includeProperties)
         {
-            return _repository.GetAll().Where(x => x.Ativo);
+            return _repository.GetAll(includeProperties).Where(x => x.Ativo);
         }
 
-        public Veiculo GetById(string id)
+        public IQueryable<Veiculo> GetById(string[] ids, params Expression<Func<Veiculo, object>>[] includeProperties)
         {
-            return _repository.GetById(id);
+            return _repository.GetById(ids, includeProperties);
         }
 
         public Notifiable<Notification> Remove(string id)
         {
-            var veiculoAtual = GetById(id);
+            var veiculoAtual = GetById(new string[] { id }).FirstOrDefault();
             if (veiculoAtual == null)
             {
                 var veiculoNaoExistenteResult = new ServiceNotification(new Notification("Veiculo", "Não existe veiculo com o id informado"));
@@ -55,7 +57,11 @@ namespace AutoShop.Domain.Service.Services
         public Notifiable<Notification> Update(Veiculo veiculo)
         {
             veiculo.ValidateUpdate();
-            ValidaVeiculoExiste(veiculo);
+            var veiculoAtual = GetById(new string[] { veiculo?.Id }).FirstOrDefault();
+            if (veiculoAtual == null)
+            {
+                veiculo.AddNotification("Veiculo", "Não existe veiculo com o id informado");
+            }
             if (!veiculo.IsValid)
             {
                 return veiculo;
@@ -63,15 +69,6 @@ namespace AutoShop.Domain.Service.Services
             _repository.Update(veiculo);
             _unitOfWork.PersistChanges();
             return veiculo;
-        }
-
-        private void ValidaVeiculoExiste(Veiculo veiculo)
-        {
-            var veiculoAtual = GetById(veiculo?.Id);
-            if (veiculoAtual == null)
-            {
-                veiculo.AddNotification("Veiculo", "Não existe veiculo com o id informado");
-            }
         }
     }
 }

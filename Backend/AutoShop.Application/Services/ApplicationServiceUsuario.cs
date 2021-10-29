@@ -47,7 +47,7 @@ namespace AutoShop.Application.Services
 
         public UsuarioGetDTO GetById(string id)
         {
-            var usuario = _serviceUsuario.GetById(id);
+            var usuario = _serviceUsuario.GetById(new string[] { id }).FirstOrDefault();
             var usuarioDTO = UsuarioGetDTO.MapEntityAsDTO(usuario);
             return usuarioDTO;
         }
@@ -61,7 +61,7 @@ namespace AutoShop.Application.Services
         public ApplicationResult Update(string id, UsuarioUpdateDTO usuarioDTO)
         {
             usuarioDTO.Validate();
-            var usuarioAtual = _serviceUsuario.GetById(id);
+            var usuarioAtual = _serviceUsuario.GetById(new string[] { id }).FirstOrDefault();
             if (usuarioAtual == null)
             {
                 usuarioDTO.AddNotification("Usuario", "Não existe usuario com o id informado!");

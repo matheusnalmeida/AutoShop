@@ -30,7 +30,7 @@ namespace AutoShop.Domain.Entities
             QuantidadeDeParcelas = quantidadeDeParcelas;
             Veiculo = veiculo;
             Cliente = cliente;
-            Situacao = OperacaoSituacaoEnum.EmAguardo;
+            Situacao = OperacaoSituacaoEnum.EmAnalise;
             DataCriacao = DateTime.Now;
 
             ProdutoOperacoes = new List<ProdutoOperacao>();
