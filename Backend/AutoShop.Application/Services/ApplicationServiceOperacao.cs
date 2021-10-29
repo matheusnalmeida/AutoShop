@@ -4,6 +4,7 @@ using AutoShop.Application.Result;
 using AutoShop.Application.Result.Mapper;
 using AutoShop.Domain.Entities;
 using AutoShop.Domain.Interfaces.Services;
+using AutoShop.Shared.Enums;
 using Flunt.Notifications;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,24 @@ namespace AutoShop.Application.Services
             var operacao = _serviceOperacao.GetById(new string[] { id }).FirstOrDefault();
             var operacaoDTO = OperacaoGetDTO.MapEntityAsDTO(operacao);
             return operacaoDTO;
+        }
+
+        public ApplicationResult Update(string id, OperacaoUpdateDTO operacaoDTO)
+        {
+            operacaoDTO.Validate();
+            var operacaoAtual = _serviceOperacao.GetById(new string[] { id }).FirstOrDefault();
+            if (operacaoAtual == null)
+            {
+                operacaoDTO.AddNotification("Operacao", "Não existe operacao com o id informado!");
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(operacaoDTO);
+            }
+            if (!operacaoDTO.IsValid)
+            {
+                return ApplicationResultMapper.MountApplicationResultFromNotifiable(operacaoDTO);
+            }
+            operacaoAtual?.FillUpdate((OperacaoSituacaoEnum)operacaoDTO.Situacao);
+            var result = _serviceOperacao.Update(operacaoAtual);
+            return ApplicationResultMapper.MountApplicationResultFromNotifiable(result);
         }
     }
 }

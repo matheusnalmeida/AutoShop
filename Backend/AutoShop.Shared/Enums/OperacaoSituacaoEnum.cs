@@ -8,9 +8,9 @@ namespace AutoShop.Shared.Enums
 {
     public enum OperacaoSituacaoEnum
     {
-        EmAnalise,
-        Aprovada,
-        Recusada,
-        Cancelada
+        EmAnalise = 1,
+        Aprovada = 2,
+        Recusada = 3,
+        Cancelada = 4
     }
 }

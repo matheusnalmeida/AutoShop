@@ -11,5 +11,7 @@ namespace AutoShop.Application.Interfaces
         OperacaoGetDTO GetById(string Id);
 
         IEnumerable<OperacaoGetDTO> GetAll();
+
+        ApplicationResult Update(string id, OperacaoUpdateDTO obj);
     }
 }

@@ -84,7 +84,19 @@ namespace AutoShop.Domain.Service.Services
 
         public Notifiable<Notification> Update(Operacao operacao)
         {
-            throw new InvalidOperationException("Não é possivel atualizar uma operação!");
+            operacao.ValidateUpdate();
+            var operacaoAtual = _repository.GetById(new string[] { operacao.Id }).FirstOrDefault();
+            if (operacaoAtual == null)
+            {
+                operacao.AddNotification("Operação", "Não existe operação com o id informado");
+            }
+            if (!operacao.IsValid)
+            {
+                return operacao;
+            }
+            _repository.Update(operacao);
+            _unitOfWork.PersistChanges();
+            return operacao;
         }
     }
 }

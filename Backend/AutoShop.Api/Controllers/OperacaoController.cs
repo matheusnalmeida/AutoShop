@@ -41,5 +41,18 @@ namespace AutoShop.Api.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpPut]
+        public ActionResult<ApplicationResult> Put([FromQuery] string id, [FromBody] OperacaoUpdateDTO operacaoDTO)
+        {
+            if (operacaoDTO == null)
+                return BadRequest();
+
+            var result = _applicationServiceOperacao.Update(id, operacaoDTO);
+            if (result.Sucesso)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
     }
 }

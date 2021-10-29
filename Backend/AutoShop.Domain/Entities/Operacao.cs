@@ -79,5 +79,18 @@ namespace AutoShop.Domain.Entities
             }
             ProdutoOperacoes.Add(produtoOperacao);
         }
+
+        public void FillUpdate(OperacaoSituacaoEnum situacao)
+        {
+            Situacao = situacao;
+        }
+
+        public void ValidateUpdate()
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                AddNotification("Operacao.Id", "Para atualizar a operacao é necessário informar o seu id");
+            }
+        }
     }
 }
