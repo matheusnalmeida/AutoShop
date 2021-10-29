@@ -21,7 +21,7 @@ namespace AutoShop.Infra.EntityConfig
                 .IsRequired()
                 .HasColumnName("Preco");
 
-            builder.Property(x => x.DataCriacao)
+            builder.Property(x => x.DataDeCompra)
                 .IsRequired();
 
             builder.Navigation(x => x.Preco).IsRequired();

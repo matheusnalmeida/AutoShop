@@ -1,6 +1,8 @@
 ﻿using AutoShop.Domain.ValueObjects;
 using AutoShop.Shared.Entities;
+using AutoShop.Shared.Enums;
 using Flunt.Validations;
+using System;
 using System.Collections.Generic;
 namespace AutoShop.Domain.Entities
 {
@@ -17,6 +19,8 @@ namespace AutoShop.Domain.Entities
         public Usuario Cliente { get; private set; }
         public string IdVendedor { get; private set; }
         public Usuario Vendedor { get; private set; }
+        public OperacaoSituacaoEnum Situacao { get; set; }
+        public DateTime DataCriacao { get; set; }
 
         private Operacao(){}
 
@@ -26,6 +30,8 @@ namespace AutoShop.Domain.Entities
             QuantidadeDeParcelas = quantidadeDeParcelas;
             Veiculo = veiculo;
             Cliente = cliente;
+            Situacao = OperacaoSituacaoEnum.EmAguardo;
+            DataCriacao = DateTime.Now;
 
             ProdutoOperacoes = new List<ProdutoOperacao>();
 

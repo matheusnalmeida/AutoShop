@@ -3,15 +3,17 @@ using System;
 using AutoShop.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoShop.Infra.Migrations
 {
     [DbContext(typeof(AutoShopContext))]
-    partial class AutoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211029000129_Rename_Column_DataCriacao_To_DataDeCompra_Table_ProdutoOperacao")]
+    partial class Rename_Column_DataCriacao_To_DataDeCompra_Table_ProdutoOperacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +26,6 @@ namespace AutoShop.Infra.Migrations
                     b.Property<string>("Id")
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("IdCliente")
                         .IsRequired()

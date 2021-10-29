@@ -36,6 +36,13 @@ namespace AutoShop.Infra.EntityConfig
             builder.Property(x => x.QuantidadeDeParcelas)
                 .IsRequired();
 
+            builder.Property(x => x.Situacao)
+                .IsRequired()
+                .HasColumnName("Situacao");
+
+            builder.Property(x => x.DataCriacao)
+                .IsRequired();
+
             builder.Navigation(x => x.ValorTotal).IsRequired();
             builder.Navigation(x => x.ValorFinanciado).IsRequired();
             builder.Navigation(x => x.ValorVeiculo).IsRequired();

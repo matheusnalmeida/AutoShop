@@ -8,7 +8,7 @@ namespace AutoShop.Domain.Entities
     public class ProdutoOperacao : Entity
     {
         public Preco Preco { get; set; }
-        public DateTime DataCriacao { get; set; }
+        public DateTime DataDeCompra { get; set; }
         public string IdOperacao { get; set; }
         public Operacao Operacao { get; set; }
         public string IdProduto { get; set; }
@@ -20,7 +20,7 @@ namespace AutoShop.Domain.Entities
         {
             IdOperacao = idOperacao;
             IdProduto = idProduto;
-            DataCriacao = DateTime.Now;
+            DataDeCompra = DateTime.Now;
 
             AddNotifications(new Contract<ProdutoOperacao>()
                                 .Requires()
