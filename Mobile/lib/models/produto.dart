@@ -22,6 +22,10 @@ class Produto extends Equatable {
         tipo: EnumToString.fromString(ProdutoTipoEnum.values, json['tipo'])!);
   }
 
+  static List<Produto> fromJsonIterable(Iterable json) {
+    return json.map((produto) => Produto.fromJson(produto)).toList();
+  }
+
   static Produto jsonMapInsert(dynamic json) {
     return Produto(
         nome: json['nome'],
