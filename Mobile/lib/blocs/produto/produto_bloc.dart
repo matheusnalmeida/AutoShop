@@ -1,5 +1,5 @@
 import 'package:autoshop_application/exceptions/http_exception.dart';
-import 'package:autoshop_application/models/produto.dart';
+import 'package:autoshop_application/models/produto/produto.dart';
 import 'package:autoshop_application/repositories/repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

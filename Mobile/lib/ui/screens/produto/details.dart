@@ -1,5 +1,5 @@
 import 'package:autoshop_application/enums/produto_tipo_enum.dart';
-import 'package:autoshop_application/models/produto.dart';
+import 'package:autoshop_application/models/produto/produto.dart';
 import 'package:autoshop_application/ui/screens/produto/shared/fields.dart';
 import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
