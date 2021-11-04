@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:autoshop_application/enums/produto_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/models/results/api_creation_result.dart';
 import 'package:autoshop_application/models/results/api_result.dart';
@@ -32,7 +33,7 @@ class ProdutoRepository {
       body: jsonEncode(<String, dynamic>{
         'nome': produto.nome,
         'preco': produto.preco,
-        'tipo': produto.tipo!.index + 1,
+        'tipo': produto.tipo!.value,
       }),
     );
 

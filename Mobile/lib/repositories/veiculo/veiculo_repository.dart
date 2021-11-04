@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:autoshop_application/enums/veiculo_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/models/results/api_creation_result.dart';
 import 'package:autoshop_application/models/results/api_result.dart';
@@ -35,7 +36,7 @@ class VeiculoRepository {
         'ano': veiculo.ano,
         'modelo': veiculo.modelo,
         'valor': veiculo.preco,
-        'tipo': veiculo.tipo!.index + 1,
+        'tipo': veiculo.tipo!.value,
       }),
     );
 

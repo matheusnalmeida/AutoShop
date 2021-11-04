@@ -5,3 +5,18 @@ enum VeiculoTipoEnum {
     Motocicleta,
     Triciclo
 }
+
+extension VeiculoTipoEnumExtension on VeiculoTipoEnum {
+  int get value {
+    switch (this) {
+      case VeiculoTipoEnum.Automovel:
+        return 1;
+      case VeiculoTipoEnum.Motocicleta:
+        return 2;
+      case VeiculoTipoEnum.Triciclo:
+        return 3;
+      default:
+        return -1;
+    }
+  }
+}
