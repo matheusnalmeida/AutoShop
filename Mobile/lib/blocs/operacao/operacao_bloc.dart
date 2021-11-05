@@ -1,5 +1,6 @@
 import 'package:autoshop_application/exceptions/http_exception.dart';
-import 'package:autoshop_application/models/models.dart';
+import 'package:autoshop_application/models/operacao/operacao.dart';
+import 'package:autoshop_application/models/operacao/operacao_create.dart';
 import 'package:autoshop_application/repositories/operacao/operacao_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -10,13 +11,11 @@ part 'operacao_state.dart';
 class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
   final OperacaoRepository repository;
 
-  OperacaoBloc(this.repository) : super(OperacaoInitial()) {
-    on<OperacaoEvent>((event, emit) {
-      on<GetAllOperacoesEvent>(_onPostFetched);
-      on<CreateOperacaoEvent>(_onCreate);
-      on<UpdateOperacaoEvent>(_onUpdate);
-      //on<DeleteOperacaoEvent>(_onDelete);
-    });
+  OperacaoBloc(this.repository) : super(const LoadingState()) {
+    on<GetAllOperacoesEvent>(_onPostFetched);
+    on<CreateOperacaoEvent>(_onCreate);
+    on<UpdateOperacaoEvent>(_onUpdate);
+    //on<DeleteOperacaoEvent>(_onDelete);
   }
 
   Future<void> _onPostFetched(

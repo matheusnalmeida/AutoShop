@@ -18,7 +18,7 @@ class ProdutoRepository {
     return result.map((produto) => Produto.fromJson(produto)).toList();
   }
 
-  Future<Produto?> fetchByIdAlbum(String id) async {
+  Future<Produto?> fetchByIdProduto(String id) async {
     final response = await http.get(Uri.parse('${RoutingProduto.produtoURL}/$id'));
     
     var jsonResponse = json.decode(response.body);

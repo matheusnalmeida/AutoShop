@@ -1,5 +1,6 @@
+import 'package:autoshop_application/blocs/operacao/bloc.dart';
 import 'package:autoshop_application/blocs/produto/bloc.dart';
-import 'package:autoshop_application/blocs/veiculo/veiculo_bloc.dart';
+import 'package:autoshop_application/blocs/veiculo/bloc.dart';
 import 'package:autoshop_application/repositories/repository.dart';
 import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/tools/custom_routes.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home/home.dart';
-import 'package:autoshop_application/blocs/veiculo/bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProdutoBloc>(
           create: (BuildContext context) => ProdutoBloc(ProdutoRepository()),
         ),
+        BlocProvider<OperacaoBloc>(
+          create: (BuildContext context) => OperacaoBloc(OperacaoRepository()),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

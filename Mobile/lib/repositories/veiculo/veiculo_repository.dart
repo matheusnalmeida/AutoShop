@@ -18,7 +18,7 @@ class VeiculoRepository {
     return result.map((veiculo) => Veiculo.fromJson(veiculo)).toList();
   }
 
-  Future<Veiculo?> fetchByIdAlbum(String id) async {
+  Future<Veiculo?> fetchByIdVeiculo(String id) async {
     final response = await http.get(Uri.parse('${RoutingVeiculo.veiculoURL}/$id'));
     
     var jsonResponse = json.decode(response.body);

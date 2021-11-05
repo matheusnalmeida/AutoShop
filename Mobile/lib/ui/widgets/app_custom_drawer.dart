@@ -44,7 +44,7 @@ class AppCustomDrawer extends StatelessWidget {
                 CustomListTile(
                     icon: Icons.monetization_on,
                     text: 'Operação',
-                    onTap: () => {})
+                    onTap: () => {doRoute(context, '/operacoes')})
               ],
             )
           ],
