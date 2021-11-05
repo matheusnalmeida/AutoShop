@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:autoshop_application/enums/produto_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/models/results/api_creation_result.dart';
 import 'package:autoshop_application/models/results/api_result.dart';
 import 'package:autoshop_application/repositories/operacao/routing_operacao.dart';
-import 'package:autoshop_application/repositories/produto/routing_produto.dart';
 import 'package:autoshop_application/tools/common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class OperacaoRepository {
@@ -28,7 +25,7 @@ class OperacaoRepository {
     return jsonResponse == null ? null : Operacao.fromJson(jsonResponse);
   }
 
-  Future<ApiCreationResult> createProduto(OperacaoCreate operacao) async {
+  Future<ApiCreationResult> createOperacao(OperacaoCreate operacao) async {
     final response = await http.post(
       RoutingOperacao.operacaoURL,
       headers: Common.apiHeaders,
@@ -43,7 +40,7 @@ class OperacaoRepository {
     return ApiCreationResult.fromJson(json.decode(response.body));
   }
 
-  Future<ApiResult> updateProduto(Operacao operacao) async {
+  Future<ApiResult> updateOperacao(Operacao operacao) async {
     final response = await http.put(
       Uri.parse('${RoutingOperacao.operacaoURL}?id=${operacao.id}'),
       headers: Common.apiHeaders,
@@ -55,7 +52,7 @@ class OperacaoRepository {
     return ApiResult.fromJson(json.decode(response.body));
   }
 
-  //Future<ApiResult> deleteProduto(String id) async {
+  //Future<ApiResult> deleteOperacao(String id) async {
   //    final response = await http.delete(
   //      Uri.parse('${RoutingOperacao.operacaoURL}/$id'),
   //      headers: Common.apiHeaders,

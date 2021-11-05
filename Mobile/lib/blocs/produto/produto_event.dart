@@ -13,7 +13,7 @@ class GetAllProdutosEvent extends ProdutoEvent {
 }
 
 class GetProdutoEvent extends ProdutoEvent {
-  final int id;
+  final String id;
   const GetProdutoEvent(this.id);
   
   @override

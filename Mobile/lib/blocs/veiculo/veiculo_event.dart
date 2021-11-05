@@ -13,7 +13,7 @@ class GetAllVeiculosEvent extends VeiculoEvent {
 }
 
 class GetVeiculoEvent extends VeiculoEvent {
-  final int id;
+  final String id;
   const GetVeiculoEvent(this.id);
   
   @override
