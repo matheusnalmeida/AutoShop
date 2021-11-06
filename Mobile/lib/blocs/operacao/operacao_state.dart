@@ -28,3 +28,19 @@ class OperacaoErrorState extends OperacaoState {
   @override
   List<Object> get props => [message];
 }
+
+class OperacaoLoadedSucessCreateState extends OperacaoState {
+  final List<Veiculo> veiculos;
+  final List<Produto> produtos;
+
+  const OperacaoLoadedSucessCreateState(this.veiculos, this.produtos);
+  @override
+  List<Object> get props => [veiculos, produtos];
+}
+
+class OperacaoLoadedErrorCreateState extends OperacaoState {
+  final String message;
+  const OperacaoLoadedErrorCreateState(this.message);
+  @override
+  List<Object> get props => [message];
+}

@@ -11,20 +11,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home/home.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final veiculoRepository = VeiculoRepository();
+  final produtoRepository = ProdutoRepository();
+  final operacaoRepository = OperacaoRepository();
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<VeiculoBloc>(
-          create: (BuildContext context) => VeiculoBloc(VeiculoRepository()),
+          create: (BuildContext context) => VeiculoBloc(veiculoRepository),
         ),
         BlocProvider<ProdutoBloc>(
-          create: (BuildContext context) => ProdutoBloc(ProdutoRepository()),
+          create: (BuildContext context) => ProdutoBloc(produtoRepository),
         ),
         BlocProvider<OperacaoBloc>(
-          create: (BuildContext context) => OperacaoBloc(OperacaoRepository()),
+          create: (BuildContext context) => OperacaoBloc(operacaoRepository, veiculoRepository, produtoRepository),
         )
       ],
       child: MaterialApp(

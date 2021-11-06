@@ -20,6 +20,11 @@ class GetOperacaoEvent extends OperacaoEvent {
   List<Object> get props => [id];
 }
 
+class GetOperacaoCreateEvent extends OperacaoEvent {  
+  @override
+  List<Object> get props => [];
+}
+
 class CreateOperacaoEvent extends OperacaoEvent {
   final OperacaoCreate operacao;
   const CreateOperacaoEvent(this.operacao);

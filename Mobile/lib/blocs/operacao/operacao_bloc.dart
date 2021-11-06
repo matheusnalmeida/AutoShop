@@ -1,7 +1,9 @@
 import 'package:autoshop_application/exceptions/http_exception.dart';
+import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/models/operacao/operacao.dart';
 import 'package:autoshop_application/models/operacao/operacao_create.dart';
 import 'package:autoshop_application/repositories/operacao/operacao_repository.dart';
+import 'package:autoshop_application/repositories/repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,9 +12,12 @@ part 'operacao_state.dart';
 
 class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
   final OperacaoRepository repository;
+  final VeiculoRepository repositoryVeiculo;
+  final ProdutoRepository repositoryProduto;
 
-  OperacaoBloc(this.repository) : super(const OperacaoLoadingState()) {
+  OperacaoBloc(this.repository, this.repositoryVeiculo, this.repositoryProduto) : super(const OperacaoLoadingState()) {
     on<GetAllOperacoesEvent>(_onPostFetched);
+    on<GetOperacaoCreateEvent>(_onFetchCreate);
     on<CreateOperacaoEvent>(_onCreate);
     on<UpdateOperacaoEvent>(_onUpdate);
     //on<DeleteOperacaoEvent>(_onDelete);
@@ -28,6 +33,20 @@ class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
       return emit(OperacaoErrorState(ex.message));
     } catch (_) {
       return emit(const OperacaoErrorState("Erro ao tentar obter os operação!"));
+    }
+  }
+
+  Future<void> _onFetchCreate(
+      GetOperacaoCreateEvent event, Emitter<OperacaoState> emit) async {
+    try {
+      emit(const OperacaoLoadingState());
+      var resultVeiculos = (await repositoryVeiculo.fetchAllVeiculos());
+      var resultProdutos = (await repositoryProduto.fetchAllProdutos());
+      return emit(OperacaoLoadedSucessCreateState(resultVeiculos, resultProdutos));
+    } on HttpException catch (ex) {
+      return emit(OperacaoLoadedErrorCreateState(ex.message));
+    } catch (_) {
+      return emit(const OperacaoErrorState("Erro ao tentar obter os dados para cadastro da operação!"));
     }
   }
 

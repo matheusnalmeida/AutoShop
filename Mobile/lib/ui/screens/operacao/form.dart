@@ -33,8 +33,7 @@ class _OperacaoFormState extends State<OperacaoForm> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ProdutoBloc>(context).add(GetAllProdutosEvent());
-    BlocProvider.of<VeiculoBloc>(context).add(GetAllVeiculosEvent());
+    BlocProvider.of<OperacaoBloc>(context).add(GetOperacaoCreateEvent());
   }
 
   @override
@@ -46,6 +45,9 @@ class _OperacaoFormState extends State<OperacaoForm> {
       listener: (BuildContext context, OperacaoState state) {
         if (state is OperacaoErrorState) {
           _showErrorDialog(state);
+        }
+        if (state is OperacaoLoadedErrorCreateState) {
+          _showLoadErrorDialog(state);
         }
         if (state is OperacaoLoadedSucessState) {
           Navigator.pop(context);
@@ -64,31 +66,36 @@ class _OperacaoFormState extends State<OperacaoForm> {
             ),
             onPressed: () {
               OperacaoBloc bloc = BlocProvider.of<OperacaoBloc>(context);
-              if (bloc.state is OperacaoErrorState) {
+              if (bloc.state is! GetAllOperacoesEvent) {
                 BlocProvider.of<OperacaoBloc>(context)
                     .add(GetAllOperacoesEvent());
               }
-              Navigator.pop(context);
             },
           ),
         ),
         floatingActionButton: Padding(
             padding: const EdgeInsets.only(left: 10, bottom: 10),
-            child: FloatingActionButton.extended(
-                backgroundColor: AppColor.headerBarColor,
-                icon: const Icon(Icons.add),
-                label: Text(widget.newOperacao ? 'Adicionar' : 'Atualizar'),
-                onPressed: () {
-                  if (_formValidState()) {
-                    widget.newOperacao
-                        ? BlocProvider.of<OperacaoBloc>(context).add(
-                            CreateOperacaoEvent(
-                                OperacaoCreate.jsonMapInsert(_formData)))
-                        : BlocProvider.of<OperacaoBloc>(context).add(
-                            UpdateOperacaoEvent(
-                                Operacao.jsonMapUpdate(_formData)));
-                  }
-                })),
+            child: BlocBuilder<OperacaoBloc, OperacaoState>(
+                builder: (BuildContext context, OperacaoState state) {
+              return FloatingActionButton.extended(
+                  backgroundColor: _shouldEnableAddButton(state) ? AppColor.headerBarColor : Colors.grey,
+                  icon: const Icon(Icons.add),
+                  label: Text(widget.newOperacao ? 'Adicionar' : 'Atualizar'),
+                  onPressed: () {
+                    if(!_shouldEnableAddButton(state)){
+                      return;
+                    }
+                    if (_formValidState()) {
+                      widget.newOperacao
+                          ? BlocProvider.of<OperacaoBloc>(context).add(
+                              CreateOperacaoEvent(
+                                  OperacaoCreate.jsonMapInsert(_formData)))
+                          : BlocProvider.of<OperacaoBloc>(context).add(
+                              UpdateOperacaoEvent(
+                                  Operacao.jsonMapUpdate(_formData)));
+                    }
+                  });
+            })),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -100,11 +107,11 @@ class _OperacaoFormState extends State<OperacaoForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Center(child: BlocBuilder<VeiculoBloc, VeiculoState>(
-                        builder: (BuildContext context, VeiculoState state) {
-                      if (state is VeiculoLoadingState) {
+                    BlocBuilder<OperacaoBloc, OperacaoState>(
+                        builder: (BuildContext context, OperacaoState state) {
+                      if (state is OperacaoLoadingState) {
                         return const CircularProgressIndicator();
-                      } else if (state is VeiculoLoadedSucessState) {
+                      } else if (state is OperacaoLoadedSucessCreateState) {
                         return AppSelectInput<String>(
                           hintText: "Veiculo",
                           options: state.veiculos
@@ -118,58 +125,21 @@ class _OperacaoFormState extends State<OperacaoForm> {
                           formProperty: "veiculo",
                         );
                       }
-                      throw InvalidStateException(
-                          "Estado de listagem dos veiculos é inválido!");
-                    })),
+                      return Container();
+                    }),
                     const SizedBox(
                       height: 20,
                     ),
-                    Center(child: BlocBuilder<ProdutoBloc, ProdutoState>(
-                        builder: (BuildContext context, ProdutoState state) {
-                      if (state is ProdutoLoadingState) {
+                    BlocBuilder<OperacaoBloc, OperacaoState>(
+                        builder: (BuildContext context, OperacaoState state) {
+                      if (state is OperacaoLoadingState) {
                         return const CircularProgressIndicator();
-                      } else if (state is ProdutoLoadedSucessState) {
-                        return Container(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, bottom: 10.0, left: 5),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: const Color(0x61000000))),
-                          child: MultiSelectDialogField<String?>(
-                            title: const Text("Selecione"),
-                            decoration: const BoxDecoration(border: null),
-                            buttonText: const Text(
-                              "Produtos",
-                              style: TextStyle(
-                                  color: Color(0x99000000), fontSize: 22),
-                            ),
-                            backgroundColor: AppColor.backgroundColor,
-                            buttonIcon: const Icon(Icons.add),
-                            items: state.produtos
-                                .map((produto) => MultiSelectItem(produto.id, "${produto.nome!} - R\$ ${produto.preco!}"))
-                                .toList(),
-                            chipDisplay: MultiSelectChipDisplay(
-                              chipColor: AppColor.headerBarColor,
-                              textStyle: const TextStyle(
-                                  color: Colors.black, fontSize: 17),
-                            ),
-                            //key: _formFieldKey,
-                            //validator: (value) {
-                            //  if (value == null || value.isEmpty) {
-                            //    return "Selecione ao menos um produto";
-                            //  }
-                            //  return null;
-                            //},
-                            onConfirm: (values) {
-                              _formData["Produtos"] = values;
-                              //_formFieldKey.currentState!.validate();
-                            },
-                          ),
-                        );
+                      } else if (state is OperacaoLoadedSucessCreateState) {
+                        return OperacaoMultiSelectProdutosField(
+                            formData: _formData, produtos: state.produtos);
                       }
-                      throw InvalidStateException(
-                          "Estado de listagem dos produtos é inválido!");
-                    }))
+                      return Container();
+                    })
                   ],
                 )),
           ),
@@ -190,8 +160,13 @@ class _OperacaoFormState extends State<OperacaoForm> {
 
   bool _formValidState() {
     var generalFieldsValid = _formKey.currentState!.validate();
-    var produtosFormFieldValid = _formFieldKey.currentState!.validate();
-    return generalFieldsValid && produtosFormFieldValid;
+    //var produtosFormFieldValid = _formFieldKey.currentState!.validate();
+    return generalFieldsValid;
+  }
+
+  bool _shouldEnableAddButton(OperacaoState state){
+    var result = state is! OperacaoLoadingState && state is! OperacaoLoadedErrorCreateState;
+    return result;
   }
 
   void _showErrorDialog(OperacaoErrorState errorState) {
@@ -209,5 +184,37 @@ class _OperacaoFormState extends State<OperacaoForm> {
             ],
           );
         });
+  }
+
+  void _showLoadErrorDialog(OperacaoLoadedErrorCreateState errorState) async {
+    var result = await showDialog<bool>(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Erro no carregamento'),
+            content: Text(errorState.message),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  BlocProvider.of<OperacaoBloc>(context)
+                      .add(GetOperacaoCreateEvent());
+                },
+                child: const Text('Tente novamente!'),
+              ),
+            ],
+          );
+        });
+
+    if (result!) {
+      BlocProvider.of<OperacaoBloc>(context).add(GetAllOperacoesEvent());
+    }
   }
 }
