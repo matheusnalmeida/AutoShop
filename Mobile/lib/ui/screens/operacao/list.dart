@@ -39,12 +39,12 @@ class _OperacaoListState extends State<OperacaoList> {
       drawer: const AppCustomDrawer(),
       body: Center(child: BlocBuilder<OperacaoBloc, OperacaoState>(
           builder: (BuildContext context, OperacaoState state) {
-        if (state is LoadingState) {
+        if (state is OperacaoLoadingState) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is ErrorState) {
+        if (state is OperacaoErrorState) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -74,7 +74,7 @@ class _OperacaoListState extends State<OperacaoList> {
             ],
           );
         }
-        if (state is LoadedSucessState) {
+        if (state is OperacaoLoadedSucessState) {
           if (state.operacoes.isEmpty) {
             return const NoResultFound(
                 customMessage: "Nenhuma operação cadastrada");

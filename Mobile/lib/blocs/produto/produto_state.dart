@@ -9,22 +9,22 @@ abstract class ProdutoState extends Equatable {
 
 class ProdutoInitial extends ProdutoState {}
 
-class LoadingState extends ProdutoState {
-  const LoadingState();
+class ProdutoLoadingState extends ProdutoState {
+  const ProdutoLoadingState();
   @override
   List<Object> get props => [];
 }
 
-class LoadedSucessState extends ProdutoState {
+class ProdutoLoadedSucessState extends ProdutoState {
   final List<Produto> produtos;
-  const LoadedSucessState(this.produtos);
+  const ProdutoLoadedSucessState(this.produtos);
   @override
   List<Object> get props => [produtos];
 }
 
-class ErrorState extends ProdutoState {
+class ProdutoErrorState extends ProdutoState {
   final String message;
-  const ErrorState(this.message);
+  const ProdutoErrorState(this.message);
   @override
   List<Object> get props => [message];
 }

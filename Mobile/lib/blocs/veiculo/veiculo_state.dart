@@ -9,22 +9,22 @@ abstract class VeiculoState extends Equatable {
 
 class VeiculoInitial extends VeiculoState {}
 
-class LoadingState extends VeiculoState {
-  const LoadingState();
+class VeiculoLoadingState extends VeiculoState {
+  const VeiculoLoadingState();
   @override
   List<Object> get props => [];
 }
 
-class LoadedSucessState extends VeiculoState {
+class VeiculoLoadedSucessState extends VeiculoState {
   final List<Veiculo> veiculos;
-  const LoadedSucessState(this.veiculos);
+  const VeiculoLoadedSucessState(this.veiculos);
   @override
   List<Object> get props => [veiculos];
 }
 
-class ErrorState extends VeiculoState {
+class VeiculoErrorState extends VeiculoState {
   final String message;
-  const ErrorState(this.message);
+  const VeiculoErrorState(this.message);
   @override
   List<Object> get props => [message];
 }

@@ -1,5 +1,6 @@
 import 'package:autoshop_application/blocs/produto/bloc.dart';
 import 'package:autoshop_application/constants/colors.dart';
+import 'package:autoshop_application/exceptions/invalid_state_exception.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/ui/screens/produto/details.dart';
 import 'package:autoshop_application/ui/screens/produto/form.dart';
@@ -40,12 +41,12 @@ class _ProdutoListState extends State<ProdutoList> {
       drawer: const AppCustomDrawer(),
       body: Center(child: BlocBuilder<ProdutoBloc, ProdutoState>(
           builder: (BuildContext context, ProdutoState state) {
-        if (state is LoadingState) {
+        if (state is ProdutoLoadingState) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is ErrorState) {
+        if (state is ProdutoErrorState) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -75,7 +76,7 @@ class _ProdutoListState extends State<ProdutoList> {
             ],
           );
         }
-        if (state is LoadedSucessState) {
+        if (state is ProdutoLoadedSucessState) {
           if (state.produtos.isEmpty) {
             return const NoResultFound(
                 customMessage: "Nenhum produto cadastrado");
@@ -97,7 +98,7 @@ class _ProdutoListState extends State<ProdutoList> {
             ),
           );
         }
-        return Container();
+        throw InvalidStateException("Estado de listagem dos produtos é inválido!");
       })),
     );
   }

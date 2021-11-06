@@ -11,7 +11,7 @@ part 'operacao_state.dart';
 class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
   final OperacaoRepository repository;
 
-  OperacaoBloc(this.repository) : super(const LoadingState()) {
+  OperacaoBloc(this.repository) : super(const OperacaoLoadingState()) {
     on<GetAllOperacoesEvent>(_onPostFetched);
     on<CreateOperacaoEvent>(_onCreate);
     on<UpdateOperacaoEvent>(_onUpdate);
@@ -21,46 +21,46 @@ class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
   Future<void> _onPostFetched(
       GetAllOperacoesEvent event, Emitter<OperacaoState> emit) async {
     try {
-      emit(const LoadingState());
+      emit(const OperacaoLoadingState());
       var result = (await repository.fetchAllOperacoes());
-      return emit(LoadedSucessState(result));
+      return emit(OperacaoLoadedSucessState(result));
     } on HttpException catch (ex) {
-      return emit(ErrorState(ex.message));
+      return emit(OperacaoErrorState(ex.message));
     } catch (_) {
-      return emit(const ErrorState("Erro ao tentar obter os operação!"));
+      return emit(const OperacaoErrorState("Erro ao tentar obter os operação!"));
     }
   }
 
   Future<void> _onCreate(
       CreateOperacaoEvent event, Emitter<OperacaoState> emit) async {
     try {
-      emit(const LoadingState());
+      emit(const OperacaoLoadingState());
       var result = await repository.createOperacao(event.operacao);
       if (result.sucesso) {
         add(GetAllOperacoesEvent());
         return;
       }
-      emit(ErrorState(result.mensagens[0]));
+      emit(OperacaoErrorState(result.mensagens[0]));
     } on HttpException catch (ex) {
-      return emit(ErrorState(ex.message));
+      return emit(OperacaoErrorState(ex.message));
     } catch (_) {
-      return emit(const ErrorState("Erro ao tentar cadastrar operação!"));
+      return emit(const OperacaoErrorState("Erro ao tentar cadastrar operação!"));
     }
   }
 
   Future<void> _onUpdate(
       UpdateOperacaoEvent event, Emitter<OperacaoState> emit) async {
     try {
-      emit(const LoadingState());
+      emit(const OperacaoLoadingState());
       var result = await repository.updateOperacao(event.operacao);
       if (result.sucesso) {
         add(GetAllOperacoesEvent());
         return;
       }
     } on HttpException catch (ex) {
-      return emit(ErrorState(ex.message));
+      return emit(OperacaoErrorState(ex.message));
     } catch (_) {
-      return emit(const ErrorState("Erro ao tentar atualizar operação!"));
+      return emit(const OperacaoErrorState("Erro ao tentar atualizar operação!"));
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:autoshop_application/enums/veiculo_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/ui/screens/veiculo/shared/fields.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
+import 'package:autoshop_application/ui/widgets/shared/app_select_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -61,12 +61,12 @@ class _VeiculoDetailsState extends State<VeiculoDetails> {
                   const SizedBox(
                     height: 20,
                   ),
-                  AppDropdonwInput<String>(
+                  AppSelectInput<String>(
                     hintText: "Tipo",
                     options: EnumToString.toList(VeiculoTipoEnum.values),
+                    values: EnumToString.toList(VeiculoTipoEnum.values),
                     formData: _formData,
                     formProperty: "tipo",
-                    getLabel: (String value) => value,
                   )
                 ],
               )),

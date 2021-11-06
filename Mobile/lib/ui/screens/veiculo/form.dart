@@ -3,7 +3,7 @@ import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/enums/veiculo_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/ui/screens/veiculo/shared/fields.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
+import 'package:autoshop_application/ui/widgets/shared/app_select_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +33,10 @@ class _VeiculoFormState extends State<VeiculoForm> {
     return BlocListener(
       bloc: BlocProvider.of<VeiculoBloc>(context),
       listener: (BuildContext context, VeiculoState state) {
-        if (state is ErrorState) {
+        if (state is VeiculoErrorState) {
           _showErrorDialog(state);
         }
-        if (state is LoadedSucessState) {
+        if (state is VeiculoLoadedSucessState) {
           Navigator.pop(context);
         }
       },
@@ -53,7 +53,7 @@ class _VeiculoFormState extends State<VeiculoForm> {
             ),
             onPressed: () {
               VeiculoBloc bloc = BlocProvider.of<VeiculoBloc>(context);
-              if(bloc.state is ErrorState){
+              if(bloc.state is VeiculoErrorState){
                 BlocProvider.of<VeiculoBloc>(context).add(GetAllVeiculosEvent());
               }
               Navigator.pop(context);            
@@ -104,12 +104,12 @@ class _VeiculoFormState extends State<VeiculoForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    AppDropdonwInput<String>(
+                    AppSelectInput<String>(
                       hintText: "Tipo",
                       options: EnumToString.toList(VeiculoTipoEnum.values),
+                      values: EnumToString.toList(VeiculoTipoEnum.values),
                       formData: _formData,
                       formProperty: "tipo",
-                      getLabel: (String value) => value,
                     )
                   ],
                 )),
@@ -138,7 +138,7 @@ class _VeiculoFormState extends State<VeiculoForm> {
     }
   }
 
-  void _showErrorDialog(ErrorState errorState) {
+  void _showErrorDialog(VeiculoErrorState errorState) {
     showDialog(
         context: context,
         builder: (BuildContext context) {

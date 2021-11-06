@@ -2,27 +2,27 @@ import 'package:autoshop_application/ui/widgets/shared/fields_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppDropdonwInput<T> extends StatefulWidget {
+class AppSelectInput<T> extends StatefulWidget {
   final String hintText;
-  final List<T> options;
+  final List<String> options;
+  final List<T> values;
   final Map<String, dynamic> formData;
   final String formProperty;
-  final String Function(T) getLabel;
 
-  const AppDropdonwInput(
+  const AppSelectInput(
       {Key? key,
       this.hintText = 'Selecione uma opção',
       this.options = const [],
-      required this.getLabel,
+      this.values = const [],
       required this.formData,
       required this.formProperty})
       : super(key: key);
 
   @override
-  _AppDropdonwInputState createState() => _AppDropdonwInputState<T>();
+  _AppSelectInputState createState() => _AppSelectInputState<T>();
 }
 
-class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
+class _AppSelectInputState<T> extends State<AppSelectInput<T>> {
   T? selectedValue;
 
   @override
@@ -53,12 +53,13 @@ class _AppDropdonwInputState<T> extends State<AppDropdonwInput<T>> {
                         })
                       }
                   : null,
-              items: widget.options.map((T value) {
-                return DropdownMenuItem<T>(
-                  value: value,
-                  child: Text(widget.getLabel(value)),
-                );
-              }).toList(),
+                items: widget.values.asMap().map((index, value) => MapEntry<int, DropdownMenuItem<T>>(
+                  index
+                  ,DropdownMenuItem<T>(
+                    value: value,
+                    child: Text(widget.options[index].toString()),
+                  )
+                )).values.toList()
             ),
           ),
         );

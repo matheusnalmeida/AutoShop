@@ -3,7 +3,7 @@ import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/enums/produto_tipo_enum.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/ui/screens/produto/shared/fields.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
+import 'package:autoshop_application/ui/widgets/shared/app_select_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +32,10 @@ class _ProdutoFormState extends State<ProdutoForm> {
     return BlocListener(
       bloc: BlocProvider.of<ProdutoBloc>(context),
       listener: (BuildContext context, ProdutoState state) {
-        if (state is ErrorState) {
+        if (state is ProdutoErrorState) {
           _showErrorDialog(state);
         }
-        if (state is LoadedSucessState) {
+        if (state is ProdutoLoadedSucessState) {
           Navigator.pop(context);
         }
       },
@@ -52,7 +52,7 @@ class _ProdutoFormState extends State<ProdutoForm> {
             ),
             onPressed: () {
               ProdutoBloc bloc = BlocProvider.of<ProdutoBloc>(context);
-              if(bloc.state is ErrorState){
+              if(bloc.state is ProdutoErrorState){
                 BlocProvider.of<ProdutoBloc>(context).add(GetAllProdutosEvent());
               }
               Navigator.pop(context);            
@@ -91,12 +91,12 @@ class _ProdutoFormState extends State<ProdutoForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    AppDropdonwInput<String>(
+                    AppSelectInput<String>(
                       hintText: "Tipo",
                       options: EnumToString.toList(ProdutoTipoEnum.values),
+                      values: EnumToString.toList(ProdutoTipoEnum.values),
                       formData: _formData,
                       formProperty: "tipo",
-                      getLabel: (String value) => value,
                     )
                   ],
                 )),
@@ -121,7 +121,7 @@ class _ProdutoFormState extends State<ProdutoForm> {
     }
   }
 
-  void _showErrorDialog(ErrorState errorState) {
+  void _showErrorDialog(ProdutoErrorState errorState) {
     showDialog(
         context: context,
         builder: (BuildContext context) {

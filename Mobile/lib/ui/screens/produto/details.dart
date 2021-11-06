@@ -1,7 +1,7 @@
 import 'package:autoshop_application/enums/produto_tipo_enum.dart';
 import 'package:autoshop_application/models/produto/produto.dart';
 import 'package:autoshop_application/ui/screens/produto/shared/fields.dart';
-import 'package:autoshop_application/ui/widgets/shared/app_dropdown_input.dart';
+import 'package:autoshop_application/ui/widgets/shared/app_select_input.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
@@ -48,12 +48,12 @@ class _ProdutoDetailsState extends State<ProdutoDetails> {
                   const SizedBox(
                     height: 20,
                   ),
-                  AppDropdonwInput<String>(
+                  AppSelectInput<String>(
                     hintText: "Tipo",
                     options: EnumToString.toList(ProdutoTipoEnum.values),
+                    values: EnumToString.toList(ProdutoTipoEnum.values),
                     formData: _formData,
                     formProperty: "tipo",
-                    getLabel: (String value) => value,
                   )
                 ],
               )),

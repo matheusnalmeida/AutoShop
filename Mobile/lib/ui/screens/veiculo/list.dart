@@ -1,4 +1,5 @@
 import 'package:autoshop_application/blocs/veiculo/bloc.dart';
+import 'package:autoshop_application/exceptions/invalid_state_exception.dart';
 import 'package:autoshop_application/models/models.dart';
 import 'package:autoshop_application/constants/colors.dart';
 import 'package:autoshop_application/ui/screens/veiculo/details.dart';
@@ -40,12 +41,12 @@ class _VeiculoListState extends State<VeiculoList> {
       drawer: const AppCustomDrawer(),
       body: Center(child: BlocBuilder<VeiculoBloc, VeiculoState>(
           builder: (BuildContext context, VeiculoState state) {
-        if (state is LoadingState) {
+        if (state is VeiculoLoadingState) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is ErrorState) {
+        if (state is VeiculoErrorState) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -75,7 +76,7 @@ class _VeiculoListState extends State<VeiculoList> {
             ],
           );
         }
-        if (state is LoadedSucessState) {
+        if (state is VeiculoLoadedSucessState) {
           if (state.veiculos.isEmpty) {
             return const NoResultFound(
                 customMessage: "Nenhum veiculo cadastrado");
@@ -97,7 +98,7 @@ class _VeiculoListState extends State<VeiculoList> {
             ),
           );
         }
-        return Container();
+        throw InvalidStateException("Estado de listagem dos veiculos é inválido!");
       })),
     );
   }

@@ -9,22 +9,22 @@ abstract class OperacaoState extends Equatable {
 
 class OperacaoInitial extends OperacaoState {}
 
-class LoadingState extends OperacaoState {
-  const LoadingState();
+class OperacaoLoadingState extends OperacaoState {
+  const OperacaoLoadingState();
   @override
   List<Object> get props => [];
 }
 
-class LoadedSucessState extends OperacaoState {
+class OperacaoLoadedSucessState extends OperacaoState {
   final List<Operacao> operacoes;
-  const LoadedSucessState(this.operacoes);
+  const OperacaoLoadedSucessState(this.operacoes);
   @override
   List<Object> get props => [operacoes];
 }
 
-class ErrorState extends OperacaoState {
+class OperacaoErrorState extends OperacaoState {
   final String message;
-  const ErrorState(this.message);
+  const OperacaoErrorState(this.message);
   @override
   List<Object> get props => [message];
 }
