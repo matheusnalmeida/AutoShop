@@ -35,15 +35,25 @@ namespace AutoShop.Domain.Entities
 
             ProdutoOperacoes = new List<ProdutoOperacao>();
 
-            AddNotifications(ValorTotal, ValorFinanciado, veiculo, cliente);
+            AddNotifications(veiculo, cliente);
             AddEntityValidation();
         }
 
         public void AddEntityValidation()
-        {
-            var possuiValorFinanciadoMaiorOuIgualQueFinanciado = ValorTotal != null 
-                                                                && ValorFinanciado != null
-                                                                && ValorTotal.Valor >= ValorFinanciado.Valor ;
+        {            
+            var quantidadeDeParcelasContract = new Contract<Operacao>()
+                .Requires()
+                .IsGreaterThan(QuantidadeDeParcelas,0,
+                "Operacao",
+                "A quantidade de parcelas não pode ser nula ou negativa!");
+
+            AddNotifications(quantidadeDeParcelasContract);
+        }
+
+        public void ValidateValorTotal() {
+            var possuiValorFinanciadoMaiorOuIgualQueFinanciado = ValorTotal != null
+                                                        && ValorFinanciado != null
+                                                        && ValorTotal.Valor >= ValorFinanciado.Valor;
 
             var valorTotalMaiorOuIgualQueFinanciadoContract = new Contract<Operacao>()
                     .Requires()
@@ -51,13 +61,7 @@ namespace AutoShop.Domain.Entities
                     "Operacao",
                     "O valor total da operação tem que ser maior ou igual ao valor financiado!");
             
-            var quantidadeDeParcelasContract = new Contract<Operacao>()
-                .Requires()
-                .IsGreaterThan(QuantidadeDeParcelas,0,
-                "Operacao",
-                "A quantidade de parcelas não pode ser nula ou negativa!");
-
-            AddNotifications(valorTotalMaiorOuIgualQueFinanciadoContract, quantidadeDeParcelasContract);
+            AddNotifications(valorTotalMaiorOuIgualQueFinanciadoContract);
         }
 
         public void AtualizarValorTotal(Preco valorTotal)

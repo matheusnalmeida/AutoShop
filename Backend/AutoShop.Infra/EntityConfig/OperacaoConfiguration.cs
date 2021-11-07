@@ -49,7 +49,7 @@ namespace AutoShop.Infra.EntityConfig
 
             builder.Property(x => x.IdVeiculo).IsRequired().HasMaxLength(40);
             builder.Property(x => x.IdCliente).IsRequired().HasMaxLength(40);
-            builder.Property(x => x.IdVendedor).IsRequired().HasMaxLength(40);
+            builder.Property(x => x.IdVendedor).HasMaxLength(40);
 
             builder.HasOne(x => x.Veiculo).WithMany(x => x.Operacoes).HasForeignKey(x => x.IdVeiculo);
             builder.HasOne(x => x.Cliente).WithMany(x => x.OperacoesCriadas).HasForeignKey(x => x.IdCliente).OnDelete(DeleteBehavior.NoAction);

@@ -8,6 +8,7 @@ using AutoShop.Shared.Enums;
 using Flunt.Notifications;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 
 namespace AutoShop.Application.Services
 {
@@ -56,14 +57,23 @@ namespace AutoShop.Application.Services
 
         public IEnumerable<OperacaoGetDTO> GetAll()
         {
-            var veiculoDTO = _serviceOperacao.GetAll().Select(operacao => OperacaoGetDTO.MapEntityAsDTO(operacao));
+            var veiculoDTO = _serviceOperacao.GetAll(
+                operacao => operacao.Veiculo,
+                operacao => operacao.ProdutoOperacoes.Select(x => x.Produto),
+                operacao => operacao.Cliente,
+                operacao => operacao.Vendedor
+            ).ToList().Select((operacao, index) => OperacaoGetDTO.MapEntityAsDTO(operacao, index + 1));
             return veiculoDTO;
         }
 
         public OperacaoGetDTO GetById(string id)
         {
-            var operacao = _serviceOperacao.GetById(new string[] { id }).FirstOrDefault();
-            var operacaoDTO = OperacaoGetDTO.MapEntityAsDTO(operacao);
+            var operacao = _serviceOperacao.GetById(new string[] { id }, 
+                operacao => operacao.Veiculo,
+                operacao => operacao.ProdutoOperacoes.Select(x => x.Produto),
+                operacao => operacao.Cliente,
+                operacao => operacao.Vendedor).FirstOrDefault();
+            var operacaoDTO = OperacaoGetDTO.MapEntityAsDTO(operacao, 1);
             return operacaoDTO;
         }
 

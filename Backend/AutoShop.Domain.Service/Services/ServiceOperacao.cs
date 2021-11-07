@@ -46,6 +46,7 @@ namespace AutoShop.Domain.Service.Services
             var valorFinanciado = CalcularValorFinanciado(valorTotal.Valor, operacao.QuantidadeDeParcelas);
             operacao.AtualizarValorTotal(valorTotal);
             operacao.AtualizarValorFinanciado(valorFinanciado);
+            operacao.ValidateValorTotal();
 
             if (operacao.IsValid) 
             {

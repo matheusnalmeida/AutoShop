@@ -3,15 +3,17 @@ using System;
 using AutoShop.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoShop.Infra.Migrations
 {
     [DbContext(typeof(AutoShopContext))]
-    partial class AutoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211106200332_Alter_Column_Usuario_Senha_MaxLenght200")]
+    partial class Alter_Column_Usuario_Senha_MaxLenght200
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +41,7 @@ namespace AutoShop.Infra.Migrations
                         .HasColumnType("character varying(40)");
 
                     b.Property<string>("IdVendedor")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
@@ -171,7 +174,8 @@ namespace AutoShop.Infra.Migrations
                     b.HasOne("AutoShop.Domain.Entities.Usuario", "Vendedor")
                         .WithMany("OperacoesAprovadas")
                         .HasForeignKey("IdVendedor")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.OwnsOne("AutoShop.Domain.ValueObjects.Preco", "ValorFinanciado", b1 =>
                         {

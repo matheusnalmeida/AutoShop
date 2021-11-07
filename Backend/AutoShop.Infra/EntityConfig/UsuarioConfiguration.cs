@@ -39,7 +39,7 @@ namespace AutoShop.Infra.EntityConfig
             builder.OwnsOne(x => x.Senha)
                 .Property(x => x.Valor)
                 .IsRequired()
-                .HasMaxLength(60)
+                .HasMaxLength(200)
                 .HasColumnName("Senha");
 
             builder.Property(x => x.Tipo)

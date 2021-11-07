@@ -3,15 +3,17 @@ using System;
 using AutoShop.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoShop.Infra.Migrations
 {
     [DbContext(typeof(AutoShopContext))]
-    partial class AutoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211106202719_Alter_Column_Operacao_IdVendedor_AllowNull")]
+    partial class Alter_Column_Operacao_IdVendedor_AllowNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
