@@ -16,7 +16,7 @@ class ProdutoLoadingState extends ProdutoState {
 }
 
 class ProdutoLoadedSucessState extends ProdutoState {
-  final List<Produto> produtos;
+  final List<Produto?> produtos;
   const ProdutoLoadedSucessState(this.produtos);
   @override
   List<Object> get props => [produtos];

@@ -20,8 +20,8 @@ class Veiculo extends Equatable {
       this.imagemURL,
       this.tipo});
 
-  static Veiculo fromJson(dynamic json) {
-    return Veiculo(
+  static Veiculo? fromJson(dynamic json) {
+    return json == null ? null : Veiculo(
         id: json['id'],
         nome: json['nome'],
         ano: json['ano'],
@@ -31,8 +31,8 @@ class Veiculo extends Equatable {
         tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!);
   }
 
-  static Veiculo jsonMapInsert(dynamic json) {
-    return Veiculo(
+  static Veiculo? jsonMapInsert(dynamic json) {
+    return json == null ? null : Veiculo(
         nome: json['nome'],
         ano: json['ano'],
         modelo: json['modelo'],
@@ -41,8 +41,8 @@ class Veiculo extends Equatable {
         tipo: EnumToString.fromString(VeiculoTipoEnum.values, json['tipo'])!);
   }
 
-  static Veiculo jsonMapUpdate(dynamic json) {
-    return Veiculo(
+  static Veiculo? jsonMapUpdate(dynamic json) {
+    return json == null ? null : Veiculo(
         id: json['id'],
         preco: json['valor'],
         imagemURL: json['imageURL'],

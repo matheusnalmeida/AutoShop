@@ -27,7 +27,7 @@ class OperacaoForm extends StatefulWidget {
 
 class _OperacaoFormState extends State<OperacaoForm> {
   final _formKey = GlobalKey<FormState>();
-  final _formFieldKey = GlobalKey<FormFieldState>();
+  final _formFielVeiculodKey = GlobalKey<FormFieldState>();
   final Map<String, dynamic> _formData = {};
 
   @override
@@ -109,20 +109,22 @@ class _OperacaoFormState extends State<OperacaoForm> {
                     ),
                     BlocBuilder<OperacaoBloc, OperacaoState>(
                         builder: (BuildContext context, OperacaoState state) {
-                      if (state is OperacaoLoadingState) {
+                      if (state is OperacaoLoadingCreateState) {
                         return const CircularProgressIndicator();
                       } else if (state is OperacaoLoadedSucessCreateState) {
                         return AppSelectInput<String>(
+                          formFieldKey: _formFielVeiculodKey,
                           hintText: "Veiculo",
+                          validatorText: "Selecione um veiculo",
                           options: state.veiculos
                               .map<String>((veiculo) =>
-                                  "${veiculo.nome!} - R\$ ${veiculo.preco!}")
+                                  "${veiculo!.nome!} - R\$ ${veiculo.preco!}")
                               .toList(),
                           values: state.veiculos
-                              .map<String>((veiculo) => veiculo.id!)
+                              .map<String>((veiculo) => veiculo!.id!)
                               .toList(),
                           formData: _formData,
-                          formProperty: "veiculo",
+                          formProperty: "idVeiculo",
                         );
                       }
                       return Container();
@@ -132,7 +134,7 @@ class _OperacaoFormState extends State<OperacaoForm> {
                     ),
                     BlocBuilder<OperacaoBloc, OperacaoState>(
                         builder: (BuildContext context, OperacaoState state) {
-                      if (state is OperacaoLoadingState) {
+                      if (state is OperacaoLoadingCreateState) {
                         return const CircularProgressIndicator();
                       } else if (state is OperacaoLoadedSucessCreateState) {
                         return OperacaoMultiSelectProdutosField(
@@ -153,24 +155,28 @@ class _OperacaoFormState extends State<OperacaoForm> {
     if (!widget.newOperacao) {
       Operacao operacaoAtual = widget.operacao!;
     } else {
-      _formData['quantidadeParcelas'] = "";
-      _formData["Produtos"] = [];
+      _formData['quantidadeDeParcelas'] = "";
+      _formData["idVeiculo"] = null;
+      _formData["idsProdutos"] = <String>[];
+      //TODO: Pegar id do cliente logado aqui
+      _formData["idCliente"] = "dfc5c327-6096-4a81-9681-dc1883365ac4";
     }
   }
 
   bool _formValidState() {
     var generalFieldsValid = _formKey.currentState!.validate();
-    //var produtosFormFieldValid = _formFieldKey.currentState!.validate();
-    return generalFieldsValid;
+    var veiculoFormFieldValid = _formFielVeiculodKey.currentState!.validate();
+    return generalFieldsValid && veiculoFormFieldValid;
   }
 
   bool _shouldEnableAddButton(OperacaoState state){
-    var result = state is! OperacaoLoadingState && state is! OperacaoLoadedErrorCreateState;
+    var result = state is! OperacaoLoadingState && state is! OperacaoErrorState && state is! OperacaoLoadedErrorCreateState;
     return result;
   }
 
   void _showErrorDialog(OperacaoErrorState errorState) {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -178,7 +184,11 @@ class _OperacaoFormState extends State<OperacaoForm> {
             content: Text(errorState.message),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
+                onPressed: (){
+                  Navigator.pop(context, 'OK');
+                  BlocProvider.of<OperacaoBloc>(context)
+                      .add(GetOperacaoCreateEvent());
+                },
                 child: const Text('OK'),
               ),
             ],

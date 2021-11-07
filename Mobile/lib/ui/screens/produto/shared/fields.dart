@@ -27,6 +27,7 @@ class ProdutoNomeField extends StatelessWidget {
         border: OutlineInputBorder(),
         labelText: 'Nome',
       ),
+      style: const TextStyle(fontSize: 20),
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(150),
       ],
@@ -59,6 +60,7 @@ class ProdutoPrecoField extends StatelessWidget {
         border: OutlineInputBorder(),
         labelText: 'Preço',
       ),
+      style: const TextStyle(fontSize: 20),
       keyboardType: TextInputType.number,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,

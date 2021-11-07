@@ -22,17 +22,18 @@ class OperacaoQuantidadeParcelasField extends StatelessWidget {
         }
         return null;
       },
-      initialValue: formData["quantidadeParcelas"].toString(),
-      onChanged: (value) => {formData["quantidadeParcelas"] = int.parse(value)},
+      initialValue: formData["quantidadeDeParcelas"].toString(),
+      onChanged: (value) => {formData["quantidadeDeParcelas"] = int.parse(value)},
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Quantidade de parcelas',
       ),
+      style: const TextStyle(fontSize: 20),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(5),
+        LengthLimitingTextInputFormatter(2),
       ],
     );
   }
@@ -43,7 +44,7 @@ class OperacaoMultiSelectProdutosField extends StatelessWidget {
       : super(key: key);
 
   final Map<String, dynamic> formData;
-  final List<Produto> produtos;
+  final List<Produto?> produtos;
   
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class OperacaoMultiSelectProdutosField extends StatelessWidget {
         buttonIcon: const Icon(Icons.add),
         items: produtos
             .map((produto) => MultiSelectItem(
-                produto.id, "${produto.nome!} - R\$ ${produto.preco!}"))
+                produto!.id, "${produto.nome!} - R\$ ${produto.preco!}"))
             .toList(),
         chipDisplay: MultiSelectChipDisplay(
           chipColor: AppColor.headerBarColor,
@@ -76,7 +77,7 @@ class OperacaoMultiSelectProdutosField extends StatelessWidget {
         //  return null;
         //},
         onConfirm: (values) {
-          formData["Produtos"] = values;
+          formData["idsProdutos"] = values;
           //_formFieldKey.currentState!.validate();
         },
       ),

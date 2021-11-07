@@ -16,7 +16,7 @@ class VeiculoLoadingState extends VeiculoState {
 }
 
 class VeiculoLoadedSucessState extends VeiculoState {
-  final List<Veiculo> veiculos;
+  final List<Veiculo?> veiculos;
   const VeiculoLoadedSucessState(this.veiculos);
   @override
   List<Object> get props => [veiculos];

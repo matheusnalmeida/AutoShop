@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppSelectInput<T> extends StatefulWidget {
+  final GlobalKey<FormFieldState>? formFieldKey;
   final String hintText;
+  final String validatorText;
   final List<String> options;
   final List<T> values;
   final Map<String, dynamic> formData;
@@ -11,7 +13,9 @@ class AppSelectInput<T> extends StatefulWidget {
 
   const AppSelectInput(
       {Key? key,
+      this.formFieldKey,
       this.hintText = 'Selecione uma opção',
+      this.validatorText = 'Por favor selecione um valor',
       this.options = const [],
       this.values = const [],
       required this.formData,
@@ -31,16 +35,23 @@ class _AppSelectInputState<T> extends State<AppSelectInput<T>> {
     selectedValue = formData[widget.formProperty];
 
     return FormField<T>(
+      key: widget.formFieldKey,
       builder: (FormFieldState<T> state) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            labelStyle: const TextStyle(fontSize: 25),
-            border: const OutlineInputBorder(),
-            labelText: widget.hintText,
-          ),
-          isEmpty: selectedValue == null || selectedValue == '',
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<T>(
+        return DropdownButtonHideUnderline(
+          child: DropdownButtonFormField<T>(
+              validator: (value) {
+                if (value == null) {
+                  return widget.validatorText;
+                }
+                return null;
+              },                
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(15),
+                labelStyle: const TextStyle(fontSize: 25),
+                border: const OutlineInputBorder(),
+                labelText: widget.hintText,
+              ),
+              style: const TextStyle(fontSize: 20, color: Colors.black),
               value: selectedValue,
               isDense: true,
               onChanged: FieldsValidator.isCreate(formData) &&
@@ -53,15 +64,16 @@ class _AppSelectInputState<T> extends State<AppSelectInput<T>> {
                         })
                       }
                   : null,
-                items: widget.values.asMap().map((index, value) => MapEntry<int, DropdownMenuItem<T>>(
-                  index
-                  ,DropdownMenuItem<T>(
-                    value: value,
-                    child: Text(widget.options[index].toString()),
-                  )
-                )).values.toList()
-            ),
-          ),
+              items: widget.values
+                  .asMap()
+                  .map((index, value) => MapEntry<int, DropdownMenuItem<T>>(
+                      index,
+                      DropdownMenuItem<T>(
+                        value: value,
+                        child: Text(widget.options[index].toString()),
+                      )))
+                  .values
+                  .toList()),
         );
       },
     );

@@ -12,7 +12,8 @@ class VeiculoNomeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) &&
+          !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o nome do veiculo';
@@ -20,14 +21,13 @@ class VeiculoNomeField extends StatelessWidget {
         return null;
       },
       initialValue: formData["nome"],
-      onChanged: (value) => {
-        formData["nome"] = value
-      },
+      onChanged: (value) => {formData["nome"] = value},
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Nome',
       ),
+      style: const TextStyle(fontSize: 20),
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(150),
       ],
@@ -43,7 +43,8 @@ class VeiculoAnoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) &&
+          !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor o ano do veiculo';
@@ -51,14 +52,13 @@ class VeiculoAnoField extends StatelessWidget {
         return null;
       },
       initialValue: formData["ano"].toString(),
-      onChanged: (value) => {
-        formData["ano"] = int.parse(value)
-      },
+      onChanged: (value) => {formData["ano"] = int.parse(value)},
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Ano',
       ),
+      style: const TextStyle(fontSize: 20),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly,
@@ -77,7 +77,8 @@ class VeiculoModeloField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: FieldsValidator.isCreate(formData) && !FieldsValidator.isDetails(formData),
+      enabled: FieldsValidator.isCreate(formData) &&
+          !FieldsValidator.isDetails(formData),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor informe o modelo do veiculo';
@@ -85,14 +86,13 @@ class VeiculoModeloField extends StatelessWidget {
         return null;
       },
       initialValue: formData["modelo"],
-      onChanged: (value) => {
-        formData["modelo"] = value
-      },
+      onChanged: (value) => {formData["modelo"] = value},
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Modelo',
       ),
+      style: const TextStyle(fontSize: 20),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(150),
@@ -125,12 +125,13 @@ class VeiculoPrecoField extends StatelessWidget {
         String _onlyDigits = value.replaceAll(RegExp('[^0-9]'), "");
         double _doubleValue = double.parse(_onlyDigits) / 100;
         formData["valor"] = _doubleValue;
-      },      
+      },
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Preço',
       ),
+      style: const TextStyle(fontSize: 20),
       keyboardType: TextInputType.number,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
@@ -157,14 +158,13 @@ class VeiculoImagemUrlField extends StatelessWidget {
         return null;
       },
       initialValue: formData["imageURL"],
-      onChanged: (value) => {
-        formData["imageURL"] = value
-      },      
+      onChanged: (value) => {formData["imageURL"] = value},
       decoration: const InputDecoration(
         labelStyle: TextStyle(fontSize: 25),
         border: OutlineInputBorder(),
         labelText: 'Imagem URL',
       ),
+      style: const TextStyle(fontSize: 20),
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(150),
       ],

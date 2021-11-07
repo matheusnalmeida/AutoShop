@@ -39,7 +39,7 @@ class OperacaoBloc extends Bloc<OperacaoEvent, OperacaoState> {
   Future<void> _onFetchCreate(
       GetOperacaoCreateEvent event, Emitter<OperacaoState> emit) async {
     try {
-      emit(const OperacaoLoadingState());
+      emit(const OperacaoLoadingCreateState());
       var resultVeiculos = (await repositoryVeiculo.fetchAllVeiculos());
       var resultProdutos = (await repositoryProduto.fetchAllProdutos());
       return emit(OperacaoLoadedSucessCreateState(resultVeiculos, resultProdutos));

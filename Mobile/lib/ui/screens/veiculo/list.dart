@@ -92,7 +92,7 @@ class _VeiculoListState extends State<VeiculoList> {
               itemCount: state.veiculos.length,
               itemBuilder: (context, index) {
                 final item = state.veiculos[index];
-                return _vehicleCard(item, context);
+                return _vehicleCard(item!, context);
               },
               physics: const AlwaysScrollableScrollPhysics(),
             ),

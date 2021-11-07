@@ -14,15 +14,15 @@ class Produto extends Equatable {
     this.preco,
     this.tipo});
 
-  static Produto fromJson(dynamic json) {
-    return Produto(
+  static Produto? fromJson(dynamic json) {
+    return json == null ? null : Produto(
         id: json['id'],
         nome: json['nome'],
         preco: json['preco'],
         tipo: EnumToString.fromString(ProdutoTipoEnum.values, json['tipo'])!);
   }
 
-  static List<Produto> fromJsonIterable(Iterable json) {
+  static List<Produto?> fromJsonIterable(Iterable json) {
     return json.map((produto) => Produto.fromJson(produto)).toList();
   }
 

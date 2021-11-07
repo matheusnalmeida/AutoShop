@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 class ProdutoRepository {
   ProdutoRepository();
 
-  Future<List<Produto>> fetchAllProdutos() async {
+  Future<List<Produto?>> fetchAllProdutos() async {
     final response = await http.get(RoutingProduto.produtoURL);
 
     final Iterable result = json.decode(response.body);

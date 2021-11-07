@@ -103,7 +103,7 @@ class _ProdutoListState extends State<ProdutoList> {
     );
   }
 
-  InkWell _productCard(Produto produto, BuildContext context) {
+  InkWell _productCard(Produto? produto, BuildContext context) {
     return InkWell(
       onTap: () => {
         Navigator.push(context,
@@ -133,7 +133,7 @@ class _ProdutoListState extends State<ProdutoList> {
             ),
             IconButton(
                 onPressed: () =>
-                    {_showDeleteDialog(DeleteProdutoEvent(produto))},
+                    {_showDeleteDialog(DeleteProdutoEvent(produto!))},
                 icon: const Icon(Icons.delete, color: Colors.red)),
           ],
         ),
@@ -141,12 +141,12 @@ class _ProdutoListState extends State<ProdutoList> {
     );
   }
 
-  ListTile _productListTitle(Produto produto, BuildContext context) {
+  ListTile _productListTitle(Produto? produto, BuildContext context) {
     return ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
         title: Text(
-          produto.nome!,
+          produto!.nome!,
           style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),

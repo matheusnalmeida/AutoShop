@@ -5,7 +5,7 @@ class OperacaoCreate extends Equatable {
   final int? quantidadeDeParcelas;
   final String? idVeiculo;
   final String? idCliente;
-  final List<String>? idsProdutos;
+  final List<String?>? idsProdutos;
 
   const OperacaoCreate(
     {this.quantidadeDeParcelas,

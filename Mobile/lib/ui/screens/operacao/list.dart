@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OperacaoList extends StatefulWidget {
-  const OperacaoList({ Key? key }) : super(key: key);
+  const OperacaoList({Key? key}) : super(key: key);
 
   @override
   _OperacaoListState createState() => _OperacaoListState();
@@ -110,6 +110,9 @@ class _OperacaoListState extends State<OperacaoList> {
         //}))
       },
       child: Card(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            side: BorderSide(width: 5, color: Colors.black)),
         color: AppColor.vehicleCardColor,
         elevation: 8.0,
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -117,7 +120,69 @@ class _OperacaoListState extends State<OperacaoList> {
           children: [
             Flexible(
               child: Container(
-                child: _operacaoListTitle(operacao, context),
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Operação: ${operacao.number.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Nº de parcelas: ${operacao.quantidadeDeParcelas.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Valor financ.: R\$ ${operacao.valorFinanciado.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Veiculo: ${operacao.veiculo!.nome.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      "Vendedor: TODO nome vendedor",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      "Cliente: TODO nome cliente",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
             //IconButton(
@@ -135,18 +200,18 @@ class _OperacaoListState extends State<OperacaoList> {
     );
   }
 
-  ListTile _operacaoListTitle(Operacao Operacao, BuildContext context) {
+  ListTile _operacaoListTitle(Operacao operacao, BuildContext context) {
     return ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
         title: Text(
-          Operacao.id!,
+          "Operação: ${operacao.number.toString()}",
           style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
         subtitle: Row(
           children: <Widget>[
-            Text(Operacao.valorTotal.toString(),
+            Text(operacao.valorTotal.toString(),
                 style: const TextStyle(color: Colors.white, fontSize: 20))
           ],
         ));
@@ -156,5 +221,4 @@ class _OperacaoListState extends State<OperacaoList> {
   void dispose() {
     super.dispose();
   }
-
 }

@@ -71,10 +71,10 @@ class _VeiculoFormState extends State<VeiculoForm> {
                     widget.newVeiculo
                         ? BlocProvider.of<VeiculoBloc>(context).add(
                             CreateVeiculoEvent(
-                                Veiculo.jsonMapInsert(_formData)))
+                                Veiculo.jsonMapInsert(_formData)!))
                         : BlocProvider.of<VeiculoBloc>(context).add(
                             UpdateVeiculoEvent(
-                                Veiculo.jsonMapUpdate(_formData)));
+                                Veiculo.jsonMapUpdate(_formData)!));
                   }
                 })),
         body: SingleChildScrollView(
