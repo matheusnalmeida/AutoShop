@@ -45,6 +45,12 @@ namespace AutoShop.Application.Services
             return produtosDTO;
         }
 
+        public IEnumerable<UsuarioGetDTO> GetAllLogin()
+        {
+            var produtosDTO = _serviceUsuario.GetAllLogin().Select(usuario => UsuarioGetDTO.MapEntityAsDTO(usuario));
+            return produtosDTO;
+        }
+
         public UsuarioGetDTO GetById(string id)
         {
             var usuario = _serviceUsuario.GetById(new string[] { id }).FirstOrDefault();

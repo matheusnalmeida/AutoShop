@@ -34,8 +34,8 @@ namespace AutoShop.Application.Services
 
 			LoginGetDTO loginGetDTO = new LoginGetDTO();
 			var senha = new Senha(obj.Senha);
-			var usuario = _serviceUsuario.GetAll()?.Where(u => u.Email.Endereco == obj.Email && u.Senha.Valor == senha.Valor).FirstOrDefault();
-
+			var usuarios = _serviceUsuario.GetAllLogin();
+			var usuario = usuarios?.Where(u => u.Email.Endereco.Equals(obj.Email) && u.Senha.Valor.Equals(senha.Valor)).FirstOrDefault();
 			if (usuario != null)
 			{
 				var token = GerarToken(usuario.Email?.Endereco, Convert.ToInt32(usuario.Tipo));

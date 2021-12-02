@@ -12,6 +12,8 @@ namespace AutoShop.Application.Interfaces
 
         IEnumerable<UsuarioGetDTO> GetAll();
 
+        IEnumerable<UsuarioGetDTO> GetAllLogin();
+
         ApplicationResult Update(string id, UsuarioUpdateDTO obj);
 
         ApplicationResult Remove(string Id);

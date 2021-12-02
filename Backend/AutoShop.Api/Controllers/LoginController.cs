@@ -18,7 +18,7 @@ namespace AutoShop.Api.Controllers
 		}
 
 		[Route("GerarToken")]
-		[HttpGet]
+		[HttpPost]
 		public ActionResult<LoginGetDTO> GerarToken([FromBody] LoginCreateDTO loginDTO)
 		{
 			if (loginDTO == null)

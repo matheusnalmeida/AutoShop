@@ -33,12 +33,17 @@ namespace AutoShop.Domain.Service.Services
 
         public IQueryable<Usuario> GetAll(params Expression<Func<Usuario, object>>[] includeProperties)
         {
-            return _repository.GetAll(includeProperties);
+            return _repository.GetAll(includeProperties).Where(x => x.Ativo && x.Id != "1");
+        }
+
+        public IQueryable<Usuario> GetAllLogin(params Expression<Func<Usuario, object>>[] includeProperties)
+        {
+            return _repository.GetAll(includeProperties).Where(x => x.Ativo);
         }
 
         public IQueryable<Usuario> GetById(string[] ids, params Expression<Func<Usuario, object>>[] includeProperties)
         {
-            return _repository.GetById(ids, includeProperties);
+            return _repository.GetById(ids, includeProperties).Where(x => x.Id != "1");
         }
 
         public Notifiable<Notification> Remove(string id)

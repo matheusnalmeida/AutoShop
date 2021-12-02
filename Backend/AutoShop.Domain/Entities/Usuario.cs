@@ -1,6 +1,7 @@
 ﻿using AutoShop.Domain.ValueObjects;
 using AutoShop.Shared.Entities;
 using AutoShop.Shared.Enums;
+using AutoShop.Shared.Util;
 using Flunt.Validations;
 using System.Collections.Generic;
 
@@ -59,5 +60,7 @@ namespace AutoShop.Domain.Entities
                 AddNotification("Usuario.Id", "Para atualizar o usuario é necessário informar o seu id");
             }
         }
+
+
     }
 }
