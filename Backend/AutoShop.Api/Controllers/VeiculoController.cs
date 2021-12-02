@@ -1,11 +1,13 @@
 ﻿using AutoShop.Application.DTO.Veiculo;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace AutoShop.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class VeiculoController : Controller

@@ -1,6 +1,7 @@
 ﻿using AutoShop.Application.DTO.Usuario;
 using AutoShop.Application.Interfaces;
 using AutoShop.Application.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -17,6 +18,7 @@ namespace AutoShop.Api.Controllers
             _applicationServiceUsuario = applicationServiceUsuario;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<UsuarioGetDTO>> Get()
         {

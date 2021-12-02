@@ -1,5 +1,6 @@
 using Autofac;
 using AutoShop.Infra.Data;
+using AutoShop.Api.Config;
 using DDDWebAPI.Infrastruture.CrossCutting.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,9 +27,33 @@ namespace AutoShop
             ConfigureCors(services);
 
             services.AddControllers();
+
+            services.AddJwtConfiguration(Configuration);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AutoShop", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Insira o token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }});
             });
 
             ConfigureDatabase(services);
@@ -81,7 +106,7 @@ namespace AutoShop
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseJwtConfiguration();
            
             app.UseEndpoints(endpoints =>
             {
